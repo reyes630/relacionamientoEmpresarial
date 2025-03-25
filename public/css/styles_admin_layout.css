@@ -1,0 +1,241 @@
+  /* Estilo general para el body */
+  body {
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    transition: margin-left 0.3s ease;
+}
+
+/* Estilo para el header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #39a900;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 10px 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header .search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.header img {
+    margin-left: 15px;
+    height: 40px;
+    width: auto;
+}
+.cerrar-sesion {
+    margin-right: 20px;
+}
+
+header button {
+    border: none;
+    background: none;
+}
+
+/* Estilo para la barra de búsqueda */
+.search-bar {
+    position: relative;
+    flex-grow: 1;
+    max-width: 250px;
+    margin-left: 50px;
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 10px 15px 10px 35px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    outline: none;
+    background-color: white;
+}
+
+.search-bar .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: gray;
+}
+
+/* Estilo para el sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 60px; 
+    background-color: #f9f9f9;
+    border-right: 2px solid #d1d5db;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.5s ease;
+}
+
+/* Cuando el sidebar está abierto, se expande */
+.sidebar.open {
+    width: 200px; /* Ampliar el sidebar */
+}
+
+/* Estilo para los elementos del sidebar */
+.sidebar-item {
+    position: relative;
+    padding: 5px;
+    background: none;
+    border: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo para los textos de los botones (siempre visibles) */
+.sidebar-text {
+    display: none; 
+    margin-left: 10px;
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    transition: transform 0.7s ease;
+}
+
+/* Mostrar el texto cuando el sidebar está abierto */
+.sidebar.open .sidebar-text {
+    display: inline-block; 
+}
+
+/* Mostrar los iconos siempre visibles */
+.sidebar img {
+    width: 40px;
+    height: 40px;
+}
+
+
+.sidebar-item:hover {
+    height: 40px;
+    width: 100%;
+    background-color: #d1d5db;
+    border-bottom: 1px solid #39a900; 
+}
+
+
+/* Estilo para el contenedor principal */
+main {
+    transition: margin-left 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+main.sidebar-open {
+    margin-left: 200px;
+}
+main .Container {
+    width: 100%;
+    height: 100vh;
+    margin-top: 69px;
+    box-shadow: 0 0px 5px #515151;
+    border-radius: 2px;
+    position: relative;
+    margin-left: 73px;
+    margin-right: 2px;
+    padding: 2rem;
+}
+
+.site-footer {
+    background-color: #39a900;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    width: auto;
+}
+/* Estilos generales para pantallas más pequeñas que 1200px */
+@media (max-width: 1200px) {
+    .header {
+        padding: 10px; 
+    }
+
+    .search-bar {
+        max-width: 200px; 
+        margin-left: 30px; 
+    }
+
+    .sidebar {
+        width: 70px; /* Reducir el ancho del sidebar */
+        padding: 15px 5px; /* Ajustar el padding */
+    }
+
+    .sidebar button {
+         width: 40px; /* Reducir el tamaño de los botones del sidebar */
+        height: 40px;
+        margin-bottom: 30px; /* Ajustar el margen inferior */
+    }
+
+    .sidebar img {
+        width: 40px; /* Reducir el tamaño de las imágenes en el sidebar */
+        height: 40px;
+    }
+
+    main .Container {
+        margin-top: 70px; /* Ajustar el margen superior del contenedor principal */
+    }
+}
+
+/* Estilos generales para pantallas más pequeñas que 768px */
+@media (max-width: 768px) {
+    .header {
+        padding: 5px; /* Reducir aún más el padding del header */
+    }
+
+    .search-bar {
+        max-width: 150px; /* Reducir aún más el ancho de la barra de búsqueda */
+        margin-left: 20px; /* Ajustar el margen izquierdo */
+    }
+
+    .search-bar input[type="text"] {
+        font-size: 14px; 
+        padding: 8px 12px 8px 30px; 
+    }
+
+    .sidebar {
+        width: 40px; 
+        padding: 10px 5px; 
+    }
+
+    .sidebar button {
+        width: 30px; 
+        height: 30px;
+        margin-bottom: 20px;
+    }
+
+    .sidebar img {
+        width: 30px; 
+        height: 30px;
+    }
+
+    main .Container {
+        margin-right: 20px;
+        margin-left: 20px;
+        margin-top: 40px; 
+    }
+
+    .site-footer {
+        padding: 15px 10px; 
+    }
+}
+
+
