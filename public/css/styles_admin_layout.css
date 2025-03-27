@@ -1,4 +1,4 @@
-  /* Estilo general para el body */
+/* Estilo general para el body */
   body {
     font-family: sans-serif;
     background-color: #f9f9f9;
@@ -85,10 +85,31 @@ header button {
 
 /* Cuando el sidebar está abierto, se expande */
 .sidebar.open {
-    width: 200px; /* Ampliar el sidebar */
+    width: 200px;
 }
 
-/* Estilo para los elementos del sidebar */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .sidebar-item {
     position: relative;
     padding: 5px;

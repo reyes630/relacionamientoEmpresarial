@@ -61,4 +61,15 @@ class BaseController {
             die("Error de conexión a la base de datos: " . $e->getMessage());
         }
     }
+
+    protected function verificarSesion() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        if (!isset($_SESSION['usuario_id'])) {
+            header('Location: /login');
+            exit();
+        }
+    }
 }

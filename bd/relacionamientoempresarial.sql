@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-03-2025 a las 15:22:11
+-- Tiempo de generación: 26-03-2025 a las 21:18:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -130,6 +130,13 @@ CREATE TABLE `solicitud` (
   `FKtipoServicio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `solicitud`
+--
+
+INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`) VALUES
+(8, '2025-03-31', '2025-03-26', NULL, '', NULL, NULL, 'Web', 'Comercio', 1, 1, 6, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -223,92 +230,17 @@ ALTER TABLE `servicio`
 -- Indices de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  ADD PRIMARY KEY (`idSolicitud`),
-  ADD KEY `FKusuario` (`FKusuario`),
-  ADD KEY `FKtipoEvento` (`FKtipoEvento`),
-  ADD KEY `FKestado` (`FKestado`),
-  ADD KEY `FKcliente` (`FKcliente`),
-  ADD KEY `FKtipoServicio` (`FKtipoServicio`);
-
---
--- Indices de la tabla `tipoevento`
---
-ALTER TABLE `tipoevento`
-  ADD PRIMARY KEY (`idTipoEvento`);
-
---
--- Indices de la tabla `tiposervicio`
---
-ALTER TABLE `tiposervicio`
-  ADD PRIMARY KEY (`idTipoServicio`),
-  ADD KEY `FKidServicio` (`FKidServicio`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idUsuario`),
-  ADD KEY `FKidRol` (`FKidRol`);
+  ADD PRIMARY KEY (`idSolicitud`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `cliente`
---
-ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `estado`
---
-ALTER TABLE `estado`
-  MODIFY `idEstado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de la tabla `rol`
---
-ALTER TABLE `rol`
-  MODIFY `idRol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `servicio`
---
-ALTER TABLE `servicio`
-  MODIFY `idServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `tipoevento`
---
-ALTER TABLE `tipoevento`
-  MODIFY `idTipoEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `tiposervicio`
---
-ALTER TABLE `tiposervicio`
-  MODIFY `idTipoServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `solicitud`
+-- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  ADD CONSTRAINT `solicitud_ibfk_1` FOREIGN KEY (`FKusuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `solicitud_ibfk_2` FOREIGN KEY (`FKtipoEvento`) REFERENCES `tipoevento` (`idTipoEvento`),
-  ADD CONSTRAINT `solicitud_ibfk_3` FOREIGN KEY (`FKestado`) REFERENCES `estado` (`idEstado`),
-  ADD CONSTRAINT `solicitud_ibfk_4` FOREIGN KEY (`FKcliente`) REFERENCES `cliente` (`idCliente`),
-  ADD CONSTRAINT `solicitud_ibfk_5` FOREIGN KEY (`FKtipoServicio`) REFERENCES `tiposervicio` (`idTipoServicio`);
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

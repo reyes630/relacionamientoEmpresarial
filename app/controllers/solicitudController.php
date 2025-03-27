@@ -27,10 +27,23 @@ class SolicitudController extends BaseController{
     public function view(){
         $solicitudObj = new SolicitudModel();
         $solicitudes = $solicitudObj->getAll();
+        
+        $clienteObj = new ClienteModel();
+        $clientes = $clienteObj->getAll();
+        
+        $servicioObj = new ServicioModel();
+        $servicios = $servicioObj->getAll();
+        
+        $estadoObj = new EstadoModel();
+        $estados = $estadoObj->getAll();
+        
         $data = [
             "solicitudes" => $solicitudes,
-            "titulo" => "Lista de solicitudes"
+            "clientes" => $clientes,
+            "servicios" => $servicios,
+            "estados" => $estados
         ];
+        
         $this->render('solicitud/view.php', $data);
     }
 
@@ -53,17 +66,42 @@ class SolicitudController extends BaseController{
         $this->render('solicitud/new.php', $data);
     }
 
-    public function createSolicitud(){
-        if (isset($_POST["Descripcion"])) {
-            $descripcion = $_POST["Descripcion"] ?? null;
-            $fechaSolicitud = $_POST["FechaSolicitud"] ?? null;
-            $idCliente = $_POST["IdCliente"] ?? null;
-            $idServicio = $_POST["IdServicio"] ?? null;
-            $idEstado = $_POST["IdEstado"] ?? null;
+    public function createSolicitud() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Primero creamos el cliente si no existe
+            $clienteObj = new ClienteModel();
+            $documento = $_POST['documento'];
+            $nombre = $_POST['nombre'];
+            $correo = $_POST['correo'];
+            $telefono = $_POST['telefono'];
+
+            // Verificar si el cliente existe o crear uno nuevo
+            $cliente = $clienteObj->getClienteByDocumento($documento);
+            if (!$cliente) {
+                $idCliente = $clienteObj->saveCliente($documento, $nombre, $correo, $telefono);
+            } else {
+                $idCliente = $cliente->idCliente;
+            }
+
+            // Datos de la solicitud
+            $descripcion = $_POST['descripcion'];
+            $fechaEvento = $_POST['fecha_evento'];
+            $tipoServicio = $_POST['servicio'];
+            $estado = $_POST['estado']; // Viene como 3 (Pendiente) por defecto
             
             $solicitudObj = new SolicitudModel();
-            $solicitudObj->saveSolicitud($descripcion, $fechaSolicitud, $idCliente, $idServicio, $idEstado);
-            $this->redirectTo("solicitud/view");
+            try {
+                $solicitudObj->saveSolicitud(
+                    $descripcion,
+                    $fechaEvento,
+                    $idCliente,
+                    $tipoServicio,
+                    $estado
+                );
+                $this->redirectTo("solicitud/view");
+            } catch (\PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
         }
     }
 
@@ -72,7 +110,7 @@ class SolicitudController extends BaseController{
         $solicitudInfo = $solicitudObj->getSolicitud($id);
         $data = [
             "solicitud" => $solicitudInfo,
-            "titulo" => "Ver solicitud: ".$solicitudInfo->Descripcion
+            "titulo" => "Ver solicitud #" . $id
         ];
         $this->render("solicitud/viewOne.php", $data);
     }

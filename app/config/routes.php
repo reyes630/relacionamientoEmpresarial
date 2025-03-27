@@ -19,6 +19,19 @@ return [
         "action" => 'initLogin'
     ],
 
+    // Rutas de Login
+    '/login' => [
+        "controller" => 'App\Controllers\LoginController',
+        "action" => 'index'
+    ],
+    '/login/handleLogin' => [
+        "controller" => 'App\Controllers\LoginController',
+        "action" => 'handleLogin'
+    ],
+    '/login/logout' => [
+        "controller" => 'App\Controllers\LoginController',
+        "action" => 'logout'
+    ],
 
     // Rutas para Cliente
     '/cliente/index' => [
@@ -109,6 +122,10 @@ return [
     '/rol/update' => [
         "controller" => 'App\Controllers\RolController',
         "action" => 'updateRol'
+    ],
+    '/rol/form' => [
+        "controller" => 'App\Controllers\RolController',
+        "action" => 'saveDataFlutter'
     ],
     '/rol/delete/(\d+)' => [
         "controller" => 'App\Controllers\RolController',
@@ -261,6 +278,12 @@ return [
     '/solicitud/delete/(\d+)' => [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'deleteSolicitud'
-    ]
+    ],
+
+    // Formulario
+    '/formulario/new' => [
+        "controller" => 'App\Controllers\FormularioController',
+        "action" => 'new'
+    ],
 
 ];

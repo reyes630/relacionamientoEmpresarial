@@ -19,17 +19,19 @@ class ClienteModel extends BaseModel{
         parent::__construct();
     }
 
-    public function saveCliente($DocumentoCliente, $NombreCliente, $CorreoCliente, $TelefonoCliente){
+    public function saveCliente($documento, $nombre, $correo, $telefono) {
         try {
-            $sql = "INSERT INTO $this->table (DocumentoCliente, NombreCliente, CorreoCliente, TelefonoCliente) VALUES (:DocumentoCliente, :NombreCliente, :CorreoCliente, :TelefonoCliente)";
+            $sql = "INSERT INTO cliente (DocumentoCliente, NombreCliente, CorreoCliente, TelefonoCliente) 
+                    VALUES (:documento, :nombre, :correo, :telefono)";
             $statement = $this->dbConnection->prepare($sql);
-            $statement->bindParam(":DocumentoCliente", $DocumentoCliente, PDO::PARAM_STR);
-            $statement->bindParam(":NombreCliente", $NombreCliente, PDO::PARAM_STR);
-            $statement->bindParam(":CorreoCliente", $CorreoCliente, PDO::PARAM_STR);
-            $statement->bindParam(":TelefonoCliente", $TelefonoCliente, PDO::PARAM_STR);
+            $statement->bindParam(":documento", $documento, PDO::PARAM_STR);
+            $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $statement->bindParam(":correo", $correo, PDO::PARAM_STR);
+            $statement->bindParam(":telefono", $telefono, PDO::PARAM_STR);
             $statement->execute();
-        } catch (PDOException $ex) {
-            echo "Error al guardar el cliente: ".$ex->getMessage();
+            return $this->dbConnection->lastInsertId();
+        } catch (PDOException $e) {
+            throw new PDOException("Error al guardar cliente: " . $e->getMessage());
         }
     }
 
@@ -43,6 +45,18 @@ class ClienteModel extends BaseModel{
             return $result[0];
         } catch (PDOException $ex) {
             echo "Error al obtener cliente: ".$ex->getMessage();
+        }
+    }
+
+    public function getClienteByDocumento($documento) {
+        try {
+            $sql = "SELECT * FROM cliente WHERE DocumentoCliente = :documento LIMIT 1";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->bindParam(":documento", $documento, PDO::PARAM_STR);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            throw new PDOException("Error al buscar cliente: " . $e->getMessage());
         }
     }
 

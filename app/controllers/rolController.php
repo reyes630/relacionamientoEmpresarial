@@ -73,4 +73,17 @@ class RolController extends BaseController{
         $rolObj->deleteRol($id);
         $this->redirectTo("rol/view");
     }
+
+    public function saveDataFlutter(){
+        // Establecer la cabecera Content-Type
+        header('Content-Type: application/json');
+        $resp = [
+            "message" => "Datos registrados correctamente",
+            "status" => true
+        ];
+
+        $respJson = json_encode($resp);
+        echo $respJson;
+
+    }
 }

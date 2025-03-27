@@ -35,29 +35,31 @@
 
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <button class="sidebar-item">
+        <a href="/home" class="sidebar-item">
             <img src="/img/IconosSidebar/houseblack.svg" alt="Logo 1">
             <span class="sidebar-text">Home</span>
-        </button>
-        <button class="sidebar-item">
-            <a href="Solicitudes.html">
-                <img src="/img/IconosSidebar/SolicitudesLine.svg" alt="Logo 2">
-            </a>
+        </a>
+
+        <a href="/solicitud/view" class="sidebar-item">
+            <img src="/img/IconosSidebar/SolicitudesLine.svg" alt="Solicitudes">
             <span class="sidebar-text">Solicitudes</span>
-        </button>
-        <button class="sidebar-item">
+        </a>
+
+        <a href="#" class="sidebar-item">
             <img src="/img/IconosSidebar/AgendaLine.svg" alt="Logo 3">
             <span class="sidebar-text">Agenda</span>
-        </button>
-        <button class="sidebar-item">
-            <a href="./Usuario.html">
-                <img src="/img/IconosSidebar/perfilLine.svg" alt="Usuarios">
-            </a>
+        </a>
+
+        <a href="/solicitud/new" class="sidebar-item">
+            <img src="/img/IconosSidebar/formularioLine.png" alt="Formulario">
+            <span class="sidebar-text">Formulario</span>
+        </a>
+
+        <a href="/usuario/view" class="sidebar-item">
+            <img src="/img/IconosSidebar/perfilLine.svg" alt="Usuarios">
             <span class="sidebar-text">Usuarios</span>
-        </button>
+        </a>
     </div>
-
-
 
     <!-- Main Content -->
     <main>
@@ -74,19 +76,42 @@
 
     <!-- JavaScript for Sidebar -->
     <script>
-        const btnMenu = document.querySelector('.hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const body = document.querySelector('body');
-        const main = document.querySelector('main');
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnMenu = document.querySelector('.hamburger');
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('main');
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
 
-        btnMenu.addEventListener('click', function() {
-            sidebar.classList.toggle('open');
-            body.classList.toggle('sidebar-open');
-            if (sidebar.classList.contains('open')) {
-                main.style.marginLeft = '130px'; // Mueve el contenido principal cuando el sidebar está abierto
-            } else {
-                main.style.marginLeft = ''; // Restaura el contenido principal cuando el sidebar está cerrado
-            }
+            // Sidebar toggle functionality
+            btnMenu.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                main.classList.toggle('sidebar-open');
+            });
+
+            // Close sidebar in mobile view when clicking outside
+            document.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768 &&
+                    !sidebar.contains(e.target) &&
+                    !btnMenu.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                    main.classList.remove('sidebar-open');
+                }
+            });
+
+            // Add hover effects to sidebar items
+            sidebarItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    if (!sidebar.classList.contains('open')) {
+                        this.style.width = '100%';
+                    }
+                });
+
+                item.addEventListener('mouseleave', function() {
+                    if (!sidebar.classList.contains('open')) {
+                        this.style.width = '50px';
+                    }
+                });
+            });
         });
     </script>
 </body>
