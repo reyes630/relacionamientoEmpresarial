@@ -1,4 +1,4 @@
-
+/* Base styles remain the same */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 body {
@@ -7,118 +7,149 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #F4F4F4;
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0;
-}
-
-/* Section number one */
-.upperSide {
-    display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 10px;
-    height: 150px;
-    justify-content: space-between;
-    
-}
-.logoSena img {
-    height: 150px;
- 
+    height: 100vh;
 }
 
-.tituloSitio {
-    width: 200px;   
-    font-weight: 600;
-    text-align: center;
-}
-
-.LinkForm{
-    display:flex;
-    justify-content: end;
-    a {
-        color: #0b0b0c;
-    }
-}
-
-
-/*  Section number two  (FORM) */
-.FormularioInicio {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.login-container {
     width: 400px;
     background: #fff;
-    border: 2px solid black;
-    border-radius: 5px;
-    padding: 20px;
+    border: 2px solid #04324D;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.form {
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-.form h2 {
+.login-container h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #39A900; /* Color del texto del título */
+    color: #39A900;
 }
 
-.User, .Password {
-    position: relative;
+.input-group {
     margin-bottom: 20px;
-    border-bottom: 2px solid #000000;
 }
 
-.User input, .Password input {
-    width: 100%;
-    font-size: 16px;
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #04324D;
+}
+
+.input-group input {
     border: none;
-    background: none;
-    color: #000000; /* Color del texto del input */
-    outline: none;
-}
-
-.User label, .Password label {
-    position: absolute;
-    top: 30%;
-    left: 10px;
-    color: #000000; 
-    transform: translateY(-50%);
-    font-size: 16px;
-    pointer-events: none;
-}
-
-.Password input {
-    margin-top: 20px; 
-}
-
-input{
     width: 100%;
+    padding: 10px;
+    border-bottom: 2px solid #04324D;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #39A900;
+}
+
+.input-group button {
+    width: 100%;
+    padding: 12px;
+    background-color: #04324D;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.input-group button:hover {
+    background-color: #09669C;
+}
+
+.errors {
+    background-color: #ffdddd;
+    color: #f44336;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn-formulario {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-formulario button {
     padding: 10px;
     border: none;
     background-color: #04324D;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 50px;
     margin-top: 20px;
-        
-}
-.ingresar:hover {
-    background-color: #09669C; 
-}
-.OlividoPassword {
-    text-align: center;
-    margin-top: 20px;
-    color: #000000; /* Color del texto */
-        p {
-            margin: 0;
-        }
 }
 
+.btn-formulario button:hover {
+    background-color: #09669C;
+}
 
+/* Responsive Media Queries */
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (max-width: 576px) {
+    .login-container {
+        width: 90%;
+        max-width: 400px;
+        margin: 20px;
+        padding: 20px;
+    }
 
+    .login-container h2 {
+        font-size: 1.5rem;
+    }
 
+    .input-group input,
+    .input-group button,
+    .btn-formulario button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
 
+/* Extra small devices (portrait phones, less than 576px) */
+@media screen and (max-width: 375px) {
+    .login-container {
+        width: 95%;
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .login-container h2 {
+        font-size: 1.3rem;
+    }
+
+    .input-group input,
+    .input-group button,
+    .btn-formulario button {
+        font-size: 12px;
+        padding: 8px;
+    }
+}
+
+/* Tablets and medium devices */
+@media screen and (min-width: 577px) and (max-width: 992px) {
+    .login-container {
+        width: 70%;
+        max-width: 500px;
+    }
+}
+
+/* Large devices and desktops */
+@media screen and (min-width: 993px) {
+    .login-container {
+        width: 400px;
+    }
+}

@@ -1,6 +1,9 @@
 <div class="data-container">
     <h2>Gestión de Tipos de Servicio</h2>
-    <a class="btn-add" href="/tipoServicio/new">+</a>
+    <div class="buttons">
+            <a class="btn-add" href="/tipoServicio/new"><i class="fa fa-plus"></i></a>
+            <a href="/usuario/indexAdministrador" class="btn btn-secondary" title="Volver"><i class="fas fa-arrow-left"></i></a>
+        </div>
     <?php
     if (empty($tiposServicio)) {
         echo "<br>No se encuentran tipos de servicio en la base de datos";
@@ -9,9 +12,9 @@
             echo "<div class='record'>
                 <span>ID: {$tipo->idTipoServicio} - {$tipo->TipoServicio} - Servicio: {$tipo->NombreServicio}</span>
                 <div class='buttons'>
-                    <a href='/tipoServicio/view/{$tipo->idTipoServicio}'>Consultar</a>
-                    <a href='/tipoServicio/edit/{$tipo->idTipoServicio}'>Editar</a>
-                    <a href='/tipoServicio/delete/{$tipo->idTipoServicio}'>Eliminar</a>
+                    <a href='/tipoServicio/view/{$tipo->idTipoServicio}'><i class='fas fa-eye'></i></a>
+                    <a href='/tipoServicio/edit/{$tipo->idTipoServicio}'><i class='fas fa-pen'></i></a>
+                    <a href='/tipoServicio/delete/{$tipo->idTipoServicio}'><i class='fas fa-trash'></i></a>
                 </div>
             </div>";
         }

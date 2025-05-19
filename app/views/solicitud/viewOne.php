@@ -28,6 +28,10 @@
                     <span>{$solicitud->Servicio}</span>
                 </div>
                 <div class='detail-group'>
+                    <label>Tipo de Servicio</label>
+                    <span>" . htmlspecialchars($solicitud->TipoServicio) . "</span>
+                </div>
+                <div class='detail-group'>
                     <label>Estado</label>
                     <span>{$solicitud->Estado} - {$solicitud->EstadoDescripcion}</span>
                 </div>

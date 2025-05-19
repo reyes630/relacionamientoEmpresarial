@@ -53,6 +53,18 @@ class tipoServicioModel extends BaseModel {
         }
     }
 
+    public function getByServicio($idServicio): array {
+        try {
+            $sql = "SELECT * FROM tiposervicio WHERE FKidServicio = :idServicio";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->bindParam(":idServicio", $idServicio, PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            throw new PDOException("Error al obtener tipos de servicio: " . $e->getMessage());
+        }
+    }
+
     public function editTipoServicio($id, $TipoServicio, $FKidServicio) {
         try {
             $sql = "UPDATE $this->table 

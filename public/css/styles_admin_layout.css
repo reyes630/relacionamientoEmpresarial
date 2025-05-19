@@ -45,7 +45,7 @@ header button {
 .search-bar {
     position: relative;
     flex-grow: 1;
-    max-width: 250px;
+    max-width: 300px;
     margin-left: 50px;
 }
 
@@ -72,7 +72,7 @@ header button {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100vh;
     width: 60px; 
     background-color: #f9f9f9;
     border-right: 2px solid #d1d5db;
@@ -86,31 +86,13 @@ header button {
 /* Cuando el sidebar está abierto, se expande */
 .sidebar.open {
     width: 200px;
+    margin: 0;
 }
+
 
 .sidebar-item {
-    display: flex;
-    align-items: center;
+    text-align: center;
     text-decoration: none;
-    color: inherit;
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.sidebar-item:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.sidebar a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.sidebar-item {
     position: relative;
     padding: 5px;
     background: none;
@@ -122,12 +104,13 @@ header button {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease; /* Cambiado a all para una transición más suave */
 }
 
 /* Estilo para los textos de los botones (siempre visibles) */
 .sidebar-text {
     display: none; 
+    text-decoration: none;
     margin-left: 10px;
     font-size: 14px;
     color: #333;
@@ -135,7 +118,7 @@ header button {
     transition: transform 0.7s ease;
 }
 
-/* Mostrar el texto cuando el sidebar está abierto */
+
 .sidebar.open .sidebar-text {
     display: inline-block; 
 }
@@ -147,13 +130,14 @@ header button {
 }
 
 
-.sidebar-item:hover {
-    height: 40px;
-    width: 100%;
-    background-color: #d1d5db;
-    border-bottom: 1px solid #39a900; 
-}
 
+/* Nuevo estilo para cuando el sidebar está abierto */
+.sidebar.open .sidebar-item:hover {
+    width: 190px; /* Un poco menos que el ancho total del sidebar */
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 4px; /* Añadido para hacer las esquinas redondeadas */
+}
 
 /* Estilo para el contenedor principal */
 main {
@@ -169,11 +153,11 @@ main .Container {
     width: 100%;
     height: 100vh;
     margin-top: 69px;
-    box-shadow: 0 0px 5px #515151;
     border-radius: 2px;
     position: relative;
-    margin-left: 73px;
-    margin-right: 2px;
+    margin-left: 65px;
+    margin-right: 5px;
+    margin-bottom: 5px;
     padding: 2rem;
 }
 
@@ -184,6 +168,7 @@ main .Container {
     padding: 20px 10px;
     width: auto;
 }
+
 /* Estilos generales para pantallas más pequeñas que 1200px */
 @media (max-width: 1200px) {
     .header {
@@ -196,35 +181,36 @@ main .Container {
     }
 
     .sidebar {
-        width: 70px; /* Reducir el ancho del sidebar */
-        padding: 15px 5px; /* Ajustar el padding */
+        width: 70px; 
+        padding: 15px 5px;
     }
 
     .sidebar button {
-         width: 40px; /* Reducir el tamaño de los botones del sidebar */
-        height: 40px;
-        margin-bottom: 30px; /* Ajustar el margen inferior */
+        width: 40px; 
+        height: 20px;
+        margin-bottom: 10px; 
     }
 
     .sidebar img {
-        width: 40px; /* Reducir el tamaño de las imágenes en el sidebar */
+        width: 40px; 
         height: 40px;
     }
 
     main .Container {
-        margin-top: 70px; /* Ajustar el margen superior del contenedor principal */
+        margin-top: 70px; 
+        margin-left: 88px;
     }
 }
 
-/* Estilos generales para pantallas más pequeñas que 768px */
+
 @media (max-width: 768px) {
     .header {
-        padding: 5px; /* Reducir aún más el padding del header */
+        padding: 5px;
     }
 
     .search-bar {
-        max-width: 150px; /* Reducir aún más el ancho de la barra de búsqueda */
-        margin-left: 20px; /* Ajustar el margen izquierdo */
+        max-width: 150px; 
+        margin-left: 20px;
     }
 
     .search-bar input[type="text"] {
@@ -244,13 +230,13 @@ main .Container {
     }
 
     .sidebar img {
-        width: 30px; 
-        height: 30px;
+        width: 40px; 
+        height: 40px;
     }
 
     main .Container {
         margin-right: 20px;
-        margin-left: 20px;
+        margin-left: 55px;
         margin-top: 40px; 
     }
 
@@ -259,4 +245,88 @@ main .Container {
     }
 }
 
+/* ESTILOS PARA CRUDS */
+
+
+.btn-add {
+  background-color: #04324D;
+  color: white;
+  text-decoration: none;
+  font-size: 22px;
+  padding: 8px 14px;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+  background-color: #09669C;
+}
+
+.record {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background-color: #fafafa;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    transition: box-shadow 0.2s ease;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .field {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 250px;
+  }
+  
+  .field strong {
+    color: #222;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  .field span {
+    color: #555;
+    font-size: 16px;
+  }
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.buttons a {
+  background-color: #04324D;
+  color: white;
+  text-decoration: none;
+  padding: 0 10px;
+  border-radius: 20px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  width: 36px;
+  height: 36px;
+}
+
+.buttons a:hover {
+  background-color: #09669C;
+}
+
+@media (max-width: 600px) {
+  .record {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .buttons {
+    align-self: flex-end;
+  }
+}
 

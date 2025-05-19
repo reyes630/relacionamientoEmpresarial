@@ -24,18 +24,16 @@ class UsuarioModel extends BaseModel {
     public function saveUsuario($DocumentoUsuario, $NombreUsuario, $CorreoUsuario, $TelefonoUsuario, $ContraseñaUsuario, $FKidRol) {
         try {
             $sql = "INSERT INTO usuario (DocumentoUsuario, NombreUsuario, CorreoUsuario, TelefonoUsuario, ContraseñaUsuario, FKidRol) 
-                    VALUES (:doc, :nombre, :correo, :telefono, :password, :rol)";
-            
-            $hashedPassword = password_hash($ContraseñaUsuario, PASSWORD_DEFAULT);
+                    VALUES (:doc, :nombre, :correo, :telefono, :pass, :rol)";
             
             $statement = $this->dbConnection->prepare($sql);
             
-            $statement->bindValue(':doc', $DocumentoUsuario);
-            $statement->bindValue(':nombre', $NombreUsuario);
-            $statement->bindValue(':correo', $CorreoUsuario);
-            $statement->bindValue(':telefono', $TelefonoUsuario);
-            $statement->bindValue(':password', $hashedPassword);
-            $statement->bindValue(':rol', $FKidRol);
+            $statement->bindParam(':doc', $DocumentoUsuario);
+            $statement->bindParam(':nombre', $NombreUsuario);
+            $statement->bindParam(':correo', $CorreoUsuario);
+            $statement->bindParam(':telefono', $TelefonoUsuario);
+            $statement->bindParam(':pass', $ContraseñaUsuario);
+            $statement->bindParam(':rol', $FKidRol);
             
             return $statement->execute();
         } catch (PDOException $ex) {
@@ -99,17 +97,6 @@ class UsuarioModel extends BaseModel {
         }
     }
 
-    public function getAll(): array {
-        try {
-            $sql = "SELECT u.*, r.Rol as NombreRol 
-                    FROM $this->table u 
-                    LEFT JOIN rol r ON u.FKidRol = r.idRol";
-            return $this->dbConnection->query($sql)->fetchAll(PDO::FETCH_OBJ);
-        } catch (PDOException $e) {
-            // throw lanza una excepcion cuando ocurre un error, osea si falla genera PDOException
-            throw new PDOException("Error al obtener usuarios: " . $e->getMessage());
-        }
-    }
 
     public function deleteUsuario($id) {
         try {
@@ -121,26 +108,31 @@ class UsuarioModel extends BaseModel {
             echo "Error al eliminar usuario: " . $ex->getMessage();
         }
     }
-
-    public function validateLogin($documento, $contraseña) {
-        try {
-            // Consulta SQL para obtener el usuario por documento
-            $stmt = $this->dbConnection->prepare("SELECT * FROM usuario WHERE DocumentoUsuario = :documento");
-            $stmt->bindParam(":documento", $documento);
-            $stmt->execute();
-    
-            // Obtener el usuario
-            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            // Si el usuario existe y la contraseña es correcta
-            if ($usuario && password_verify($contraseña, $usuario['ContraseñaUsuario'])) {
-                return true; // Login exitoso
-            }
-    
-            return false; // Login fallido
-        } catch (PDOException $ex) {
-            echo "Error al validar el login: " . $ex->getMessage();
-            return false; // En caso de error, se retorna false
+    public function validarLogin($CorreoUsuario, $ContraseñaUsuario){ //Contraseña que llega del formulario
+        $sql = "SELECT * FROM $this->table WHERE CorreoUsuario=:CorreoUsuario";
+        $statement = $this->dbConnection->prepare($sql);
+        $statement->bindParam(":CorreoUsuario", $CorreoUsuario);
+        $statement->execute();
+        $resultSet = [];
+        while($row = $statement->fetch(PDO::FETCH_OBJ)){
+            $resultSet[] = $row;
         }
+        if (count($resultSet) > 0) {
+            $hash = $resultSet[0]->ContraseñaUsuario; // hash guardado en la base de datos
+            if (password_verify($ContraseñaUsuario, $hash)) {
+                // La contraseña ingresada es correcta
+                $_SESSION["idUsuario"] = $resultSet[0]->idUsuario;
+                $_SESSION["nombre"] = $resultSet[0]->NombreUsuario;
+                $_SESSION["documento"] = $resultSet[0]->DocumentoUsuario;
+                $_SESSION["telefono"] = $resultSet[0]->TelefonoUsuario;
+                $_SESSION["correo"] = $resultSet[0]->CorreoUsuario;
+                $_SESSION["rol"] = $resultSet[0]->FKidRol;
+                $_SESSION["timeOut"] = time();
+                session_regenerate_id();
+                return $resultSet[0];
+            }
+        }
+        return false;
     }
+   
 }

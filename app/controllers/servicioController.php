@@ -29,10 +29,11 @@ class ServicioController extends BaseController {
     }
 
     public function createServicio(){
-        if (isset($_POST["Servicio"])) {
+        if (isset($_POST["Servicio"]) && isset($_POST["Color"])) {
             $servicio = $_POST["Servicio"];
+            $color = $_POST["Color"];
             $servicioObj = new ServicioModel();
-            $servicioObj->saveServicio($servicio);
+            $servicioObj->saveServicio($servicio, $color);
             $this->redirectTo("servicio/view");
         }
     }
@@ -58,12 +59,13 @@ class ServicioController extends BaseController {
     }
 
     public function updateServicio(){
-        if (isset($_POST["Servicio"])) {
+        if (isset($_POST["Servicio"]) && isset($_POST["Color"])) {
             $id = $_POST["idServicio"];
             $servicio = $_POST["Servicio"];
+            $color = $_POST["Color"];
             
             $servicioObj = new ServicioModel();
-            $servicioObj->editServicio($id, $servicio);
+            $servicioObj->editServicio($id, $servicio, $color);
             $this->redirectTo("servicio/view");
         }
     }

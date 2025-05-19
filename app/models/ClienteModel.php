@@ -35,6 +35,18 @@ class ClienteModel extends BaseModel{
         }
     }
 
+    public function saveClienteByName($nombre) {
+        try {
+            $sql = "INSERT INTO cliente (NombreCliente) VALUES (:nombre)";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $statement->execute();
+            return $this->dbConnection->lastInsertId();
+        } catch (PDOException $e) {
+            throw new PDOException("Error al guardar cliente: " . $e->getMessage());
+        }
+    }
+
     public function getCliente($id){
         try {
             $sql = "SELECT * FROM $this->table WHERE idCliente = :id";
@@ -57,6 +69,18 @@ class ClienteModel extends BaseModel{
             return $statement->fetch(PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             throw new PDOException("Error al buscar cliente: " . $e->getMessage());
+        }
+    }
+
+    public function getClienteByName($nombre) {
+        try {
+            $sql = "SELECT * FROM cliente WHERE NombreCliente = :nombre LIMIT 1";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_OBJ);
+        } catch (PDOException $e) {
+            throw new PDOException("Error al buscar cliente por nombre: " . $e->getMessage());
         }
     }
 

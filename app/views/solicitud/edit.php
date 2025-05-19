@@ -15,22 +15,28 @@
         </div>
         <div class="form-group">
             <label for="cliente">Cliente</label>
-            <select id="cliente" name="IdCliente" class="form-control">
-                <option value="">Seleccione un cliente</option>
-                <?php foreach ($clientes as $cliente): ?>
-                    <option value="<?php echo $cliente->idCliente; ?>" <?php echo ($solicitud->FKcliente == $cliente->idCliente) ? 'selected' : ''; ?>>
-                        <?php echo $cliente->NombreCliente; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+            <input type="text" value="<?php echo $solicitud->NombreCliente; ?>" id="cliente" name="NombreCliente" class="form-control" maxlength="255">
         </div>
         <div class="form-group">
             <label for="servicio">Servicio</label>
             <select id="servicio" name="IdServicio" class="form-control">
                 <option value="">Seleccione un servicio</option>
                 <?php foreach ($servicios as $servicio): ?>
-                    <option value="<?php echo $servicio->idServicio; ?>" <?php echo ($solicitud->FKtipoServicio == $servicio->idServicio) ? 'selected' : ''; ?>>
+                    <option value="<?php echo $servicio->idServicio; ?>" 
+                        <?php echo ($solicitud->FKtipoServicio == $servicio->idServicio) ? 'selected' : ''; ?>>
                         <?php echo $servicio->Servicio; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="tipoServicio">Tipo de Servicio</label>
+            <select id="tipoServicio" name="IdTipoServicio" class="form-control">
+                <option value="">Seleccione un tipo de servicio</option>
+                <?php foreach ($tiposServicio as $tipoServicio): ?>
+                    <option value="<?php echo $tipoServicio->idTipoServicio; ?>" 
+                        <?php echo ($solicitud->FKtipoServicio == $tipoServicio->idTipoServicio) ? 'selected' : ''; ?>>
+                        <?php echo $tipoServicio->TipoServicio; ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -47,10 +53,54 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="usuario">Usuario que realizó la solicitud</label>
+            <select id="usuario" name="FKusuario" class="form-control">
+                <option value="">Seleccione un usuario</option>
+                <?php foreach ($usuarios as $usuario): ?>
+                    <option value="<?php echo $usuario->idUsuario; ?>" 
+                        <?php echo ($solicitud->FKusuario == $usuario->idUsuario) ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($usuario->NombreUsuario); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn-submit">Guardar Cambios</button>
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const servicioSelect = document.getElementById('servicio');
+        const tipoServicioSelect = document.getElementById('tipoServicio');
+
+        servicioSelect.addEventListener('change', async () => {
+            const servicioId = servicioSelect.value;
+
+            // Limpiar el campo de Tipo de Servicio
+            tipoServicioSelect.innerHTML = '<option value="">Seleccione un tipo de servicio</option>';
+
+            if (servicioId) {
+                try {
+                    // Llamar al endpoint para obtener los tipos de servicio
+                    const response = await fetch(`/tipoServicio/getTiposServicioByServicio/${servicioId}`);
+                    const tiposServicio = await response.json();
+
+                    // Agregar las opciones al campo de Tipo de Servicio
+                    tiposServicio.forEach(tipo => {
+                        const option = document.createElement('option');
+                        option.value = tipo.idTipoServicio;
+                        option.textContent = tipo.TipoServicio;
+                        tipoServicioSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error('Error al cargar los tipos de servicio:', error);
+                }
+            }
+        });
+    });
+</script>
 
 <style>
     .data-container {

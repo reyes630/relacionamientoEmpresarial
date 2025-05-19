@@ -72,7 +72,12 @@ $estados = $estadoModel->getAll();
             margin-bottom: 10px;
         }
 
-        
+        p {
+            text-align: left;
+            font-size: 15px;
+            color: #0009;
+            margin-bottom: 5px;
+        }
 
 
         .form-group {
@@ -227,8 +232,8 @@ $estados = $estadoModel->getAll();
                 </div>
 
                 <div class="form-group">
-                    <label for="service-type">Tipo Servicio *</label>
-                    <select id="service-type" name="tipo_servicio" required>
+                    <label for="service-type">Tipo Servicio</label>
+                    <select id="service-type">
                         <option value="">Selecciona una opción</option>
                     </select>
                 </div>

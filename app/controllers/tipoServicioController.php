@@ -86,4 +86,13 @@ class TipoServicioController extends BaseController {
         $tipoServicioObj->deleteTipoServicio($id);
         $this->redirectTo("tipoServicio/view");
     }
+
+    public function getTiposServicioByServicio($idServicio) {
+        $tipoServicioObj = new TipoServicioModel();
+        $tiposServicio = $tipoServicioObj->getByServicio($idServicio);
+
+        // Devolver los datos como JSON
+        header('Content-Type: application/json');
+        echo json_encode($tiposServicio);
+    }
 }

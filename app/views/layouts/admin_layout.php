@@ -8,6 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/styles_admin_layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
 
     </style>
@@ -26,8 +28,9 @@
                 <input type="text" placeholder="Buscar...">
             </div>
         </div>
+        
         <div class="cerrar-sesion">
-            <a href="/login/logout">
+            <a href="/login/init">
                 <img src="/img/cerrarsesion.png" alt="cerrar-sesion">
             </a>
         </div>
@@ -35,31 +38,40 @@
 
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <a href="/home" class="sidebar-item">
-            <img src="/img/IconosSidebar/houseblack.svg" alt="Logo 1">
+            <a href="<?php 
+            switch ($_SESSION['rol']) {
+                case 1:
+                    echo '/usuario/indexAdministrador';
+                    break;
+                case 2:
+                    echo '/usuario/indexAdministrativo';
+                    break;
+                case 3:
+                    echo '/usuario/indexBienvenida';
+                    break;
+                default:
+                    echo '/usuario/indexBienvenida';
+            }
+        ?>" class="sidebar-item home">
+            <img class="icon <?php if($titulo == "Home" || $titulo == "Home Admin" || $titulo== "Estadisticas"){echo "selected";} ?>" src="/img/IconosSidebar/houseLine.svg" alt="Logo 1">
             <span class="sidebar-text">Home</span>
         </a>
-
-        <a href="/solicitud/view" class="sidebar-item">
-            <img src="/img/IconosSidebar/SolicitudesLine.svg" alt="Solicitudes">
+        <a href="/solicitud/view" class="sidebar-item solicitudes">
+            <img class="icon <?php if($titulo == "solicitudes"){echo "selected";} ?>" src="/img/IconosSidebar/SolicitudesLine.svg" alt="Logo 2">
             <span class="sidebar-text">Solicitudes</span>
         </a>
-
-        <a href="#" class="sidebar-item">
-            <img src="/img/IconosSidebar/AgendaLine.svg" alt="Logo 3">
-            <span class="sidebar-text">Agenda</span>
-        </a>
-
-        <a href="/solicitud/new" class="sidebar-item">
-            <img src="/img/IconosSidebar/formularioLine.png" alt="Formulario">
+        <a href="/solicitud/new" class="sidebar-item formulario">
+            <img class="icon <?php if($titulo == "Nueva solicitud"){echo "selected";} ?>" src="/img/IconosSidebar/formularioLine.svg" alt="Formulario">
             <span class="sidebar-text">Formulario</span>
         </a>
-
-        <a href="/usuario/view" class="sidebar-item">
-            <img src="/img/IconosSidebar/perfilLine.svg" alt="Usuarios">
+        <a href="/usuario/perfil" class="sidebar-item perfil">
+            <img class="icon <?php if($titulo == "Perfil Usuario"){echo "selected";} ?>" src="/img/IconosSidebar/perfilLine.svg" alt="Perfil">
             <span class="sidebar-text">Usuarios</span>
         </a>
     </div>
+
+
+
 
     <!-- Main Content -->
     <main>
@@ -76,43 +88,35 @@
 
     <!-- JavaScript for Sidebar -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const btnMenu = document.querySelector('.hamburger');
-            const sidebar = document.getElementById('sidebar');
-            const main = document.querySelector('main');
-            const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const btnMenu = document.querySelector('.hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const body = document.querySelector('body');
+        const main = document.querySelector('main');
 
-            // Sidebar toggle functionality
-            btnMenu.addEventListener('click', function() {
-                sidebar.classList.toggle('open');
-                main.classList.toggle('sidebar-open');
-            });
-
-            // Close sidebar in mobile view when clicking outside
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768 &&
-                    !sidebar.contains(e.target) &&
-                    !btnMenu.contains(e.target)) {
-                    sidebar.classList.remove('open');
-                    main.classList.remove('sidebar-open');
-                }
-            });
-
-            // Add hover effects to sidebar items
-            sidebarItems.forEach(item => {
-                item.addEventListener('mouseenter', function() {
-                    if (!sidebar.classList.contains('open')) {
-                        this.style.width = '100%';
-                    }
-                });
-
-                item.addEventListener('mouseleave', function() {
-                    if (!sidebar.classList.contains('open')) {
-                        this.style.width = '50px';
-                    }
-                });
-            });
+        btnMenu.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+            body.classList.toggle('sidebar-open');
+            if (sidebar.classList.contains('open')) {
+               
+                main.style.marginLeft = '140px'; // Mueve el contenido principal cuando el sidebar está abierto
+            } else {
+                main.style.marginLeft = ''; // Restaura el contenido principal cuando el sidebar está cerrado
+            }
         });
+
+        let icons = document.querySelectorAll('.icon')
+        let arrayImges = [
+            "houseblack.svg",
+            "solicitudesBlack.svg",
+            "formularioBlack.svg", 
+            "perfilBlack.svg"
+        ]
+
+        for (let i = 0; i < icons.length; i++) {
+            if (icons[i].classList.contains("selected")) {
+                icons[i].src = "/img/IconosSidebar/" + arrayImges[i]
+            }
+        }
     </script>
 </body>
 

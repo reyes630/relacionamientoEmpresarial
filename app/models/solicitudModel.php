@@ -20,7 +20,7 @@ class SolicitudModel extends BaseModel {
 
     public function getAll(): array {
         try {
-            $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, e.Estado 
+            $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado 
                     FROM {$this->table} s
                     JOIN cliente c ON s.FKcliente = c.idCliente
                     JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
@@ -53,7 +53,7 @@ class SolicitudModel extends BaseModel {
 
     public function getSolicitud($id) {
         try {
-            $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, e.Estado, e.Descripcion as EstadoDescripcion 
+            $sql = "SELECT s.*, c.NombreCliente, ts.TipoServicio, sv.Servicio, e.Estado, e.Descripcion as EstadoDescripcion 
                     FROM {$this->table} s
                     JOIN cliente c ON s.FKcliente = c.idCliente
                     JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
@@ -69,13 +69,13 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function editSolicitud($id, $Descripcion, $FechaSolicitud, $IdCliente, $IdServicio, $IdEstado) {
+    public function editSolicitud($id, $Descripcion, $FechaSolicitud, $IdCliente, $IdTipoServicio, $IdEstado) {
         try {
             $sql = "UPDATE {$this->table} 
                     SET DescripcionNecesidad = :Descripcion, 
                         FechaEvento = :FechaSolicitud, 
                         FKcliente = :IdCliente, 
-                        FKtipoServicio = :IdServicio, 
+                        FKtipoServicio = :IdTipoServicio, 
                         FKestado = :IdEstado 
                     WHERE idSolicitud = :id";
             $statement = $this->dbConnection->prepare($sql);
@@ -83,7 +83,7 @@ class SolicitudModel extends BaseModel {
             $statement->bindParam(":Descripcion", $Descripcion, PDO::PARAM_STR);
             $statement->bindParam(":FechaSolicitud", $FechaSolicitud, PDO::PARAM_STR);
             $statement->bindParam(":IdCliente", $IdCliente, PDO::PARAM_INT);
-            $statement->bindParam(":IdServicio", $IdServicio, PDO::PARAM_INT);
+            $statement->bindParam(":IdTipoServicio", $IdTipoServicio, PDO::PARAM_INT);
             $statement->bindParam(":IdEstado", $IdEstado, PDO::PARAM_INT);
             return $statement->execute();
         } catch (PDOException $ex) {

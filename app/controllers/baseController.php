@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 session_start();
+//var_dump(session_status()); //Comprobar si la sesion esta activo 2 => activa 1=> no activa
 
 use ValueError;
 

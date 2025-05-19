@@ -13,17 +13,16 @@ return [
         "action" => 'saludar'
     ],
 
-    //Login
+    
+    
     '/login/init' => [
         "controller" => 'App\Controllers\LoginController',
         "action" => 'initLogin'
     ],
-
-    // Rutas de Login
-    '/login' => [
+   /*  '/login' => [
         "controller" => 'App\Controllers\LoginController',
         "action" => 'index'
-    ],
+    ], */
     '/login/handleLogin' => [
         "controller" => 'App\Controllers\LoginController',
         "action" => 'handleLogin'
@@ -161,6 +160,10 @@ return [
         "controller" => 'App\Controllers\TipoServicioController',
         "action" => 'deleteTipoServicio'
     ],
+    '/tipoServicio/getTiposServicioByServicio/(\d+)' => [
+        "controller" => 'App\Controllers\TipoServicioController',
+        "action" => 'getTiposServicioByServicio'
+    ],
 
     // Rutas para Servicio
     '/servicio/view' => [
@@ -228,7 +231,7 @@ return [
     ],
     '/estado/new' => [
         "controller" => 'App\Controllers\EstadoController',
-        "action" => 'neweEstado'
+        "action" => 'newEstado'
     ],
     '/estado/create' => [
         "controller" => 'App\Controllers\EstadoController',
@@ -281,9 +284,39 @@ return [
     ],
 
     // Formulario
-    '/formulario/new' => [
-        "controller" => 'App\Controllers\FormularioController',
-        "action" => 'new'
+   /*  '/formulario/new' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'newSolicitud'
+    ], */
+
+    // Direcciones de sidebar
+    '/usuario/indexBienvenida' => [
+        "controller" => 'App\Controllers\UsuarioController',
+        "action" => 'bienvenida'
+    ],
+    '/usuario/indexAdministrador' => [
+        "controller" => 'App\Controllers\UsuarioController',
+        "action" => 'HomeAdmin'
+    ],
+    '/usuario/indexAdministrativo' => [
+        "controller" => 'App\Controllers\UsuarioController',
+        "action" => 'Estadisticas'
+    ],
+    
+    '/usuario/indexSolicitudes' => [
+        "controller" => 'App\Controllers\UsuarioController',
+        "action" => 'solicitudes'
+    ],
+    '/usuario/perfil' => [
+        "controller" => 'App\Controllers\UsuarioController',
+        "action" => 'perfil'
+    ],
+    '/agenda/index' => [
+        "controller" => 'App\Controllers\UsuarioController',
+        "action" => 'agenda'
     ],
 
+/* -------------------- */
+
+   
 ];

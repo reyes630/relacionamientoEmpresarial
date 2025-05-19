@@ -14,9 +14,19 @@ class UsuarioController extends BaseController {
         parent::__construct();
     }
 
-    public function index() {
-        $this->view();
+
+    public function bienvenida() {
+        $this->render('usuario/indexBienvenida.php', ["titulo" => "Home"]);
     }
+    public function HomeAdmin() {
+        $this->render('usuario/indexAdministrador.php', ["titulo" => "Home Admin"]);
+    }
+    public function Estadisticas() {
+        $this->render('usuario/indexAdministrativo.php', ["titulo" => "Estadisticas"]);
+    }
+    
+    
+
     public function view() {
         $usuarioObj = new UsuarioModel();
         $usuarios = $usuarioObj->getAll();
@@ -45,7 +55,7 @@ class UsuarioController extends BaseController {
                 $_POST['NombreUsuario'],
                 $_POST['CorreoUsuario'],
                 $_POST['TelefonoUsuario'],
-                $_POST['ContraseñaUsuario'],
+                password_hash($_POST['ContraseñaUsuario'], PASSWORD_DEFAULT),
                 $_POST['FKidRol']
             );
             $this->redirectTo("usuario/view");
@@ -65,37 +75,58 @@ class UsuarioController extends BaseController {
     public function editUsuario($id) {
         $usuarioObj = new UsuarioModel();
         $rolObj = new RolModel();
+       
         $usuario = $usuarioObj->getUsuario($id);
         $roles = $rolObj->getAll();
+        
         $data = [
             "titulo" => "Editar Usuario",
             "usuario" => $usuario,
             "roles" => $roles
         ];
+        
         $this->render("usuario/edit.php", $data);
     }
 
     public function updateUsuario() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuarioObj = new UsuarioModel();
+            
+            // Verificar si la contraseña fue proporcionada y hacer el hash si es necesario
+            $contraseña = isset($_POST['ContraseñaUsuario']) ? $_POST['ContraseñaUsuario'] : null;
+            
             $usuarioObj->editUsuario(
                 $_POST['idUsuario'],
                 $_POST['DocumentoUsuario'],
                 $_POST['NombreUsuario'],
                 $_POST['CorreoUsuario'],
                 $_POST['TelefonoUsuario'],
-                $_POST['ContraseñaUsuario'] ?? null,
+                $contraseña,
                 $_POST['FKidRol']
             );
-            $this->redirectTo("usuario/view");
+            $this->redirectTo("usuario/perfil");
         }
     }
+    
 
     public function deleteUsuario($id) {
         $usuarioObj = new UsuarioModel();
         $usuarioObj->deleteUsuario($id);
         $this->redirectTo("usuario/view");
-    }
+    } 
 
-    
+    public function perfil() {
+        $idUsuario = $_SESSION["idUsuario"];
+        
+        $usuarioObj = new UsuarioModel();
+        
+        $usuario = $usuarioObj->getUsuario($idUsuario);
+        
+        $data = [
+            "titulo" => "Perfil Usuario",
+            "usuario" => $usuario
+        ];
+        
+        $this->render('usuario/usuarioPerfil.php', $data);
+    }
 }
