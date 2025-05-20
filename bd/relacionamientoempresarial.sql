@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-05-2025 a las 15:21:20
+-- Tiempo de generación: 20-05-2025 a las 15:36:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -155,21 +155,11 @@ CREATE TABLE `solicitud` (
 
 INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`) VALUES
 (17, '2025-04-29', '2024-04-29', NULL, '', NULL, NULL, 'Web', 'gfgf', 1, 1, 3, 3, 0),
-(18, '2025-04-29', '2025-04-29', NULL, '', NULL, NULL, 'Web', 'hvhgy', 1, 1, 3, 3, 11),
 (19, '2025-04-29', '2025-04-29', NULL, '', NULL, NULL, 'Web', 'cdfd', 1, 1, 3, 7, 7),
 (21, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '30 pelados', 1, 1, 3, 9, 6),
 (27, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '2', 1, 1, 3, 9, 7),
 (28, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '2', 1, 1, 3, 8, 7),
-(29, '2025-04-29', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'gvhb', 1, 1, 3, 8, 8),
-(30, '2025-04-30', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'fdfvde', 1, 1, 3, 11, 6),
-(31, '2025-04-30', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'drer', 1, 1, 3, 9, 14),
-(32, '2025-05-06', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'monitores', 1, 1, 3, 8, 11),
-(33, '2025-05-06', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'monitores', 1, 1, 3, 10, 13),
-(34, '2025-04-30', '2024-05-06', NULL, '', NULL, NULL, 'Web', 'empanadas', 1, 1, 2, 11, 8),
-(35, '2025-05-06', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'en arauca ', 1, 1, 5, 14, 14),
-(36, '2025-05-07', '2025-05-07', NULL, '', NULL, NULL, 'Web', 'En chinchina necesitamos un curso para 30 personas ', 1, 1, 3, 15, 14),
-(37, '2025-05-07', '2025-05-07', NULL, '', NULL, NULL, 'Web', 'proyecto software ', 1, 1, 3, 8, 10),
-(38, '2025-05-07', '2025-05-07', NULL, '', NULL, NULL, 'Web', 'dgdb', 1, 1, 3, 16, 8);
+(30, '2025-04-30', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'fdfvde', 1, 1, 3, 11, 6);
 
 -- --------------------------------------------------------
 

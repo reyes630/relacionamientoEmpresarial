@@ -1,4 +1,4 @@
-<div class="data-container">
+<div class="data-container ">
     <h2 class="form-title">Editar Solicitud</h2>
     <form action="/solicitud/update" method="post">
         <div class="form-group">
@@ -63,6 +63,22 @@
                     </option>
                 <?php endforeach; ?>
             </select>
+        </div>
+        <div class="form-group">
+            <label for="lugar">Lugar</label>
+            <input type="text" value="<?php echo htmlspecialchars($solicitud->Lugar ?? ''); ?>" id="lugar" name="Lugar" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="municipio">Municipio</label>
+            <input type="text" value="<?php echo htmlspecialchars($solicitud->Municipio ?? ''); ?>" id="municipio" name="Municipio" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="comentarios">Comentarios</label>
+            <textarea id="comentarios" name="Comentarios" class="form-control"><?php echo htmlspecialchars($solicitud->Comentarios ?? ''); ?></textarea>
+        </div>
+        <div class="form-group">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" name="Observaciones" class="form-control"><?php echo htmlspecialchars($solicitud->Observaciones ?? ''); ?></textarea>
         </div>
         <div class="form-group">
             <button type="submit" class="btn-submit">Guardar Cambios</button>

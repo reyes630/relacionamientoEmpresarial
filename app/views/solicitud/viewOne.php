@@ -35,6 +35,26 @@
                     <label>Estado</label>
                     <span>{$solicitud->Estado} - {$solicitud->EstadoDescripcion}</span>
                 </div>
+                <div class='detail-group'>
+                    <label>Usuario que realizó la solicitud</label>
+                    <span>" . htmlspecialchars($solicitud->NombreUsuario) . "</span>
+                </div>
+                <div class='detail-group'>
+                    <label>Lugar</label>
+                    <span>" . htmlspecialchars($solicitud->Lugar ?? '') . "</span>
+                </div>
+                <div class='detail-group'>
+                    <label>Municipio</label>
+                    <span>" . htmlspecialchars($solicitud->Municipio ?? '') . "</span>
+                </div>
+                <div class='detail-group'>
+                    <label>Comentarios</label>
+                    <span>" . htmlspecialchars($solicitud->Comentarios ?? '') . "</span>
+                </div>
+                <div class='detail-group'>
+                    <label>Observaciones</label>
+                    <span>" . htmlspecialchars($solicitud->Observaciones ?? '') . "</span>
+                </div>
               </div>";
     }
     ?>

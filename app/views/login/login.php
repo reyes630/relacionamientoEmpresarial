@@ -1,5 +1,8 @@
 <div class="login-container">
         <?php 
+        if (isset($_GET['timeout'])) {
+            echo "<div class='errors'>La sesión ha expirado por inactividad. Por favor, inicia sesión de nuevo.</div>";
+        }
         if(isset($errors)){
             echo "<div class='errors'>";
             echo $errors;
@@ -21,10 +24,10 @@
         </div>
     </form>
 
-    <div class="btn-formulario">
+    <!-- <div class="btn-formulario">
         <a href="/formulario/new">
         <button>Formulario Registro Solicitud</button>
         </a>
         
-    </div>
+    </div> -->
 </div>

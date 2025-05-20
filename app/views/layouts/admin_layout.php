@@ -22,12 +22,12 @@
         <button class="hamburger">
             <img src="/img/menu.png" alt="menu">
         </button>
-        <div class="search-container">
+        <!-- <div class="search-container">
             <div class="search-bar">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" placeholder="Buscar...">
             </div>
-        </div>
+        </div> -->
         
         <div class="cerrar-sesion">
             <a href="/login/init">

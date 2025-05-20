@@ -7,21 +7,24 @@ session_start();
 use ValueError;
 
 class BaseController {
-    protected string $layout = "main_layout";
+    public $layout = "default";
 
     public function __construct() {
-        // Validar el tiempo de inactividad de un usuario
-        if (isset($_SESSION["timeOut"])) {
-            // Se calcula el tiempo de sesión transcurrido
-            $tiempoSesion = time() - $_SESSION["timeOut"];
-            if ($tiempoSesion > INACTIVE_TIME * 60) {
-                // Se destruye la sesión por inactividad
+        if (session_status() === PHP_SESSION_NONE) session_start();
+
+        // Tiempo máximo de inactividad (en segundos)
+        $max_inactive = 15 * 60; // 15 minutos
+
+        if (isset($_SESSION['timeOut'])) {
+            if (time() - $_SESSION['timeOut'] > $max_inactive) {
+                // Sesión expirada por inactividad
+                session_unset();
                 session_destroy();
-                header("Location: /login/login");
+                header("Location: /login/init?timeout=1");
                 exit();
             } else {
-                // Se actualiza el tiempo de sesión
-                $_SESSION["timeOut"] = time();
+                // Actualiza el tiempo de actividad
+                $_SESSION['timeOut'] = time();
             }
         }
     }

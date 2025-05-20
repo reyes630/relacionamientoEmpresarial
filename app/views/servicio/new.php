@@ -1,79 +1,77 @@
 <style>
     .data-container {
-        max-width: 500px;
-        margin: 30px auto;
-        padding: 25px;
-        background-color: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    }
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .form-header {
-        text-align: center;
-        margin-bottom: 25px;
-        color: #444;
-        font-size: 1.5rem;
-        font-weight: 500;
-    }
+/* Grupo de campos */
+.form-group {
+  margin-bottom: 1.5rem;
+}
 
-    .form-group {
-        margin-bottom: 20px;
-    }
+.form-title {
+  text-align: center;
+  color: #0b5fa4; /* azul moderno */
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .form-group label {
-        display: block;
-        color: #555;
-        font-size: 0.9rem;
-        margin-bottom: 8px;
-        font-weight: 500;
-    }
+/* Etiquetas */
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
 
-    .form-control {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-    }
+/* Campos de entrada y select */
+.form-control {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #0b6e99;
+}
+
+/* Botón guardar */
+.button-group {
+  display: flex;
+  justify-content: center;
+}
+.btn {
+  width: 50%;
+  background-color: #003b5c;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #00547d;
+}
 
     .form-control:focus {
         border-color: #4361ee;
         box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.1);
         outline: none;
-    }
-
-    .button-group {
-        display: flex;
-        gap: 10px;
-        margin-top: 25px;
-    }
-
-    .btn {
-        flex: 1;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: center;
-        text-decoration: none;
-    }
-
-    .btn-primary {
-        background-color: #4361ee;
-        color: white;
-    }
-
-    .btn-secondary {
-        background-color: #e9ecef;
-        color: #444;
-    }
-
-    .btn:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     
     .color-picker {
@@ -93,8 +91,9 @@
 </style>
 
 <div class="data-container">
-    <h2 class="form-header">Nuevo Servicio</h2>
+   
     <form action="/servicio/create" method="post">
+        <h2 class="form-title">Crear Servicio</h2>
         <div class="form-group">
             <label for="Servicio">Nombre del Servicio</label>
             <input type="text" name="Servicio" id="Servicio" required maxlength="100" 
@@ -111,7 +110,7 @@
         
         <div class="button-group">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="/servicio/view" class="btn btn-secondary">Volver</a>
+            <!-- <a href="/servicio/view" class="btn btn-secondary">Volver</a> -->
         </div>
     </form>
 </div>

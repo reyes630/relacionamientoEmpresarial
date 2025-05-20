@@ -85,12 +85,18 @@ class SolicitudController extends BaseController{
                 $idCliente = $cliente->idCliente;
             }
 
+            // Obtener el idUsuario de la sesión
+            if (session_status() === PHP_SESSION_NONE) session_start();
+            $idUsuario = $_SESSION['idUsuario'] ?? null;
+
             // Datos de la solicitud
             $descripcion = $_POST['descripcion'];
             $fechaEvento = $_POST['fecha_evento'];
             $idServicio = $_POST['servicio'];
             $idTipoServicio = $_POST['tipo_servicio']; // Nuevo campo
             $estado = $_POST['estado']; // Viene como 3 (Pendiente) por defecto
+            $lugar = $_POST['lugar'] ?? null;
+            $municipio = $_POST['municipio'] ?? null;
 
             $solicitudObj = new SolicitudModel();
             try {
@@ -99,7 +105,10 @@ class SolicitudController extends BaseController{
                     $fechaEvento,
                     $idCliente,
                     $idTipoServicio, // Guardar el tipo de servicio
-                    $estado
+                    $estado,
+                    $idUsuario, // Pasar el usuario de la sesión
+                    $lugar,
+                    $municipio
                 );
                 $this->redirectTo("solicitud/view");
             } catch (\PDOException $e) {
@@ -131,11 +140,17 @@ class SolicitudController extends BaseController{
         $estadoObj = new EstadoModel();
         $estados = $estadoObj->getAll();
 
+        // Obtener usuarios
+        require_once MAIN_APP_ROUTE."../models/UsuarioModel.php";
+        $usuarioObj = new \App\Models\UsuarioModel();
+        $usuarios = $usuarioObj->getAll();
+
         $data = [
             "solicitud" => $solicitudInfo,
             "servicios" => $servicios, // Pasar los servicios a la vista
             "tiposServicio" => $tiposServicio, // Pasar los tipos de servicio a la vista
             "estados" => $estados,
+            "usuarios" => $usuarios, // Pasa la lista de usuarios
             "titulo" => "Editar solicitud"
         ];
         $this->render("solicitud/edit.php", $data);
@@ -147,12 +162,15 @@ class SolicitudController extends BaseController{
             $descripcion = $_POST["Descripcion"] ?? null;
             $fechaSolicitud = $_POST["FechaSolicitud"] ?? null;
             $nombreCliente = $_POST["NombreCliente"] ?? null;
-            $idTipoServicio = $_POST["IdTipoServicio"] ?? null; // Nuevo campo
+            $idTipoServicio = $_POST["IdTipoServicio"] ?? null;
             $idEstado = $_POST["IdEstado"] ?? null;
+            $lugar = $_POST["Lugar"] ?? null;
+            $municipio = $_POST["Municipio"] ?? null;
+            $comentarios = $_POST["Comentarios"] ?? null;
+            $observaciones = $_POST["Observaciones"] ?? null;
 
             $solicitudObj = new SolicitudModel();
 
-            // Actualizar el cliente en la base de datos
             $clienteObj = new ClienteModel();
             $cliente = $clienteObj->getClienteByName($nombreCliente);
 
@@ -162,8 +180,7 @@ class SolicitudController extends BaseController{
                 $idCliente = $cliente->idCliente;
             }
 
-            // Actualizar la solicitud
-            $solicitudObj->editSolicitud($id, $descripcion, $fechaSolicitud, $idCliente, $idTipoServicio, $idEstado);
+            $solicitudObj->editSolicitud($id, $descripcion, $fechaSolicitud, $idCliente, $idTipoServicio, $idEstado, $lugar, $municipio, $comentarios, $observaciones);
         }
         $this->redirectTo("solicitud/view");
     }

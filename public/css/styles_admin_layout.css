@@ -42,7 +42,7 @@ header button {
 }
 
 /* Estilo para la barra de búsqueda */
-.search-bar {
+/* .search-bar {
     position: relative;
     flex-grow: 1;
     max-width: 300px;
@@ -65,7 +65,7 @@ header button {
     left: 10px;
     transform: translateY(-50%);
     color: gray;
-}
+} */
 
 /* Estilo para el sidebar */
 .sidebar {
@@ -133,10 +133,10 @@ header button {
 
 /* Nuevo estilo para cuando el sidebar está abierto */
 .sidebar.open .sidebar-item:hover {
-    width: 190px; /* Un poco menos que el ancho total del sidebar */
+    width: 190px; 
     margin-left: 5px;
     margin-right: 5px;
-    border-radius: 4px; /* Añadido para hacer las esquinas redondeadas */
+    border-radius: 4px; 
 }
 
 /* Estilo para el contenedor principal */
@@ -246,6 +246,8 @@ main .Container {
 }
 
 /* ESTILOS PARA CRUDS */
+
+
 
 
 .btn-add {

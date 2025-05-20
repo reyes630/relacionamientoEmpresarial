@@ -33,18 +33,21 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function saveSolicitud($Descripcion, $FechaSolicitud, $IdCliente, $IdServicio, $IdEstado) {
+    public function saveSolicitud($Descripcion, $FechaSolicitud, $IdCliente, $IdServicio, $IdEstado, $IdUsuario, $Lugar, $Municipio) {
         try {
             $sql = "INSERT INTO {$this->table} 
-                    (DescripcionNecesidad, FechaEvento, FechaCreacion, FKcliente, FKtipoServicio, FKestado, FKtipoEvento, FKusuario, MedioSolicitud) 
+                    (DescripcionNecesidad, FechaEvento, FechaCreacion, FKcliente, FKtipoServicio, FKestado, FKtipoEvento, FKusuario, MedioSolicitud, Lugar, Municipio) 
                     VALUES 
-                    (:Descripcion, :FechaSolicitud, CURDATE(), :IdCliente, :IdServicio, :IdEstado, 1, 1, 'Web')";
+                    (:Descripcion, :FechaSolicitud, CURDATE(), :IdCliente, :IdServicio, :IdEstado, 1, :IdUsuario, 'Web', :Lugar, :Municipio)";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":Descripcion", $Descripcion, PDO::PARAM_STR);
             $statement->bindParam(":FechaSolicitud", $FechaSolicitud, PDO::PARAM_STR);
             $statement->bindParam(":IdCliente", $IdCliente, PDO::PARAM_INT);
             $statement->bindParam(":IdServicio", $IdServicio, PDO::PARAM_INT);
             $statement->bindParam(":IdEstado", $IdEstado, PDO::PARAM_INT);
+            $statement->bindParam(":IdUsuario", $IdUsuario, PDO::PARAM_INT);
+            $statement->bindParam(":Lugar", $Lugar, PDO::PARAM_STR);
+            $statement->bindParam(":Municipio", $Municipio, PDO::PARAM_STR);
             return $statement->execute();
         } catch (PDOException $ex) {
             throw new PDOException("Error al guardar la solicitud: " . $ex->getMessage());
@@ -53,12 +56,13 @@ class SolicitudModel extends BaseModel {
 
     public function getSolicitud($id) {
         try {
-            $sql = "SELECT s.*, c.NombreCliente, ts.TipoServicio, sv.Servicio, e.Estado, e.Descripcion as EstadoDescripcion 
+            $sql = "SELECT s.*, c.NombreCliente, ts.TipoServicio, sv.Servicio, e.Estado, e.Descripcion as EstadoDescripcion, u.NombreUsuario 
                     FROM {$this->table} s
                     JOIN cliente c ON s.FKcliente = c.idCliente
                     JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
                     JOIN servicio sv ON ts.FKidServicio = sv.idServicio
                     JOIN estado e ON s.FKestado = e.idEstado
+                    JOIN usuario u ON s.FKusuario = u.idUsuario
                     WHERE s.idSolicitud = :id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
@@ -69,14 +73,18 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function editSolicitud($id, $Descripcion, $FechaSolicitud, $IdCliente, $IdTipoServicio, $IdEstado) {
+    public function editSolicitud($id, $Descripcion, $FechaSolicitud, $IdCliente, $IdTipoServicio, $IdEstado, $Lugar, $Municipio, $Comentarios, $Observaciones) {
         try {
             $sql = "UPDATE {$this->table} 
                     SET DescripcionNecesidad = :Descripcion, 
                         FechaEvento = :FechaSolicitud, 
                         FKcliente = :IdCliente, 
                         FKtipoServicio = :IdTipoServicio, 
-                        FKestado = :IdEstado 
+                        FKestado = :IdEstado,
+                        Lugar = :Lugar,
+                        Municipio = :Municipio,
+                        Comentarios = :Comentarios,
+                        Observaciones = :Observaciones
                     WHERE idSolicitud = :id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
@@ -85,6 +93,10 @@ class SolicitudModel extends BaseModel {
             $statement->bindParam(":IdCliente", $IdCliente, PDO::PARAM_INT);
             $statement->bindParam(":IdTipoServicio", $IdTipoServicio, PDO::PARAM_INT);
             $statement->bindParam(":IdEstado", $IdEstado, PDO::PARAM_INT);
+            $statement->bindParam(":Lugar", $Lugar, PDO::PARAM_STR);
+            $statement->bindParam(":Municipio", $Municipio, PDO::PARAM_STR);
+            $statement->bindParam(":Comentarios", $Comentarios, PDO::PARAM_STR);
+            $statement->bindParam(":Observaciones", $Observaciones, PDO::PARAM_STR);
             return $statement->execute();
         } catch (PDOException $ex) {
             throw new PDOException("Error al editar la solicitud: " . $ex->getMessage());

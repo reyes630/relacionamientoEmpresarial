@@ -1,82 +1,81 @@
 <style>
-    body {
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        background-color: #f8f9fa;
-        margin: 0;
-        padding: 20px;
-    }
+   /* Contenedor principal */
+.data-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .data-container {
-        max-width: 600px;
-        margin: 30px auto;
-        padding: 30px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    }
+/* Grupo de campos */
+.form-group {
+  margin-bottom: 1.5rem;
+}
 
-    .form-group {
-        margin-bottom: 25px;
-    }
+.form-title {
+  text-align: center;
+  color: #0b5fa4; /* azul moderno */
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    .form-group label {
-        display: block;
-        color: #444;
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        margin-bottom: 8px;
-    }
 
-    .form-control {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #e0e0e0;
-        border-radius: 6px;
-        font-size: 0.95rem;
-        color: #555;
-        transition: all 0.3s ease;
-        background-color: #ffffff;
-    }
+/* Etiquetas */
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
 
-    .form-control:focus {
-        border-color: #4361ee;
-        box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.1);
-        outline: none;
-    }
+/* Campos de entrada y select */
+.form-control {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
 
-    select.form-control {
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        padding-right: 35px;
-    }
+.form-control:focus {
+  outline: none;
+  border-color: #0b6e99;
+}
 
-    .btn {
-        background-color: #04324D;
-        color: white;
-        font-size: 0.95rem;
-        padding: 12px 25px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        width: 100%;
-        transition: transform 0.2s ease, background-color 0.2s ease;
-    }
+/* Botón guardar */
+.btn {
+  width: 50%;
+  background-color: #003b5c;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  margin: auto;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-    .btn:hover {
-        background-color: #09669C;
-        transform: translateY(-1px);
-    }
+.btn:hover {
+  background-color: #00547d;
+}
+.button-group {
+  display: flex;
+  justify-content: center;
+}
 
-    input[type="password"] {
-        letter-spacing: 0.1em;
-    }
 </style>
 
 <div class="data-container">
     <form action="/usuario/create" method="post">
+        <h2 class="form-title">Crear Usuario</h2>
         <div class="form-group">
             <label for="DocumentoUsuario">Documento</label>
             <input type="text" name="DocumentoUsuario" required maxlength="20" class="form-control">
@@ -105,7 +104,7 @@
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group button-group">
             <button type="submit" class="btn">Guardar</button>
         </div>
     </form>
