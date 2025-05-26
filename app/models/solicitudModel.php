@@ -56,14 +56,22 @@ class SolicitudModel extends BaseModel {
 
     public function getSolicitud($id) {
         try {
-            $sql = "SELECT s.*, c.NombreCliente, ts.TipoServicio, sv.Servicio, e.Estado, e.Descripcion as EstadoDescripcion, u.NombreUsuario 
-                    FROM {$this->table} s
-                    JOIN cliente c ON s.FKcliente = c.idCliente
-                    JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
-                    JOIN servicio sv ON ts.FKidServicio = sv.idServicio
-                    JOIN estado e ON s.FKestado = e.idEstado
-                    JOIN usuario u ON s.FKusuario = u.idUsuario
-                    WHERE s.idSolicitud = :id";
+            $sql = "SELECT s.*, 
+                       c.NombreCliente, 
+                       c.CorreoCliente, 
+                       c.TelefonoCliente, 
+                       ts.TipoServicio, 
+                       sv.Servicio, 
+                       e.Estado, 
+                       e.Descripcion as EstadoDescripcion, 
+                       u.NombreUsuario 
+                FROM {$this->table} s
+                JOIN cliente c ON s.FKcliente = c.idCliente
+                JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
+                JOIN servicio sv ON ts.FKidServicio = sv.idServicio
+                JOIN estado e ON s.FKestado = e.idEstado
+                JOIN usuario u ON s.FKusuario = u.idUsuario
+                WHERE s.idSolicitud = :id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             $statement->execute();

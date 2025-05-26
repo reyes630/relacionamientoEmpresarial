@@ -1,3 +1,60 @@
+<style>
+    .data-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-title {
+        color: #2c3e50;
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .record-details {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Cambia el número 2 para modificar columnas */
+        gap: 1.5rem;
+    }
+
+    .detail-group {
+        background-color: #f4f6f8;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-group label {
+        display: block;
+        font-weight: bold;
+        font-size: 0.95rem;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .detail-group span {
+        font-weight: normal;
+        font-size: 0.95rem;
+        color: #333;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .record-details {
+            grid-template-columns: 1fr; /* Una sola columna en móviles */
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
 <div class="data-container">
     <h2 class="form-title">Detalles de la Solicitud</h2>
     <?php
@@ -21,8 +78,9 @@
                 </div>
                 <div class='detail-group'>
                     <label>Cliente</label>
-                    <span>{$solicitud->NombreCliente}</span>
+                    <span><a href='/cliente/view/{$solicitud->FKcliente}' style='color:#000;text-decoration:none;cursor:pointer'>{$solicitud->NombreCliente}</a></span>
                 </div>
+                
                 <div class='detail-group'>
                     <label>Servicio</label>
                     <span>{$solicitud->Servicio}</span>
@@ -60,66 +118,4 @@
     ?>
 </div>
 
-<style>
-    .data-container {
-        max-width: 600px;
-        margin: 2rem auto;
-        margin-bottom: 4rem;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
-        padding: 2rem;
-        position: relative;
-    }
 
-    .form-title {
-        color: #2c3e50;
-        margin-bottom: 1.5rem;
-        font-size: 1.8rem;
-        text-align: center;
-        font-weight: 600;
-    }
-
-    .record-details {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
-    }
-
-    .detail-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .detail-group label {
-        color: #2c3e50;
-        font-weight: 500;
-        font-size: 0.95rem;
-    }
-
-    .detail-group span {
-        padding: 0.75rem;
-        background-color: #f8f9fa;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-
-    @media (max-width: 768px) {
-        .data-container {
-            margin: 1rem auto 3rem auto;
-            padding: 1.5rem;
-            width: 90%;
-        }
-
-        .form-title {
-            font-size: 1.5rem;
-        }
-
-        .detail-group span {
-            padding: 0.6rem;
-        }
-    }
-</style>

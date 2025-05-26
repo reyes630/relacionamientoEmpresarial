@@ -1,3 +1,105 @@
+<style>
+    .data-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-title {
+        text-align: center;
+        color: #0b5fa4;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        background-color: #f1f1f1; /* Tarjetas grises claras */
+        padding: 1rem;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: border-color 0.2s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #0b6e99;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .btn-submit {
+        background-color: #003b5c;
+        color: white;
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 2rem;
+       
+    }
+        /* Botón guardar */
+    .button-group {
+    display: flex;
+    justify-content: center;
+    justify-self: center; 
+    grid-column: span 2;  
+    }
+   
+
+    .btn-submit:hover {
+    background-color: #00547d;
+    }
+
+   
+
+    @media (max-width: 768px) {
+        form {
+            grid-template-columns: 1fr;
+        }
+
+        .btn-submit {
+            grid-column: span 1;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
 <div class="data-container ">
     <h2 class="form-title">Editar Solicitud</h2>
     <form action="/solicitud/update" method="post">
@@ -80,7 +182,7 @@
             <label for="observaciones">Observaciones</label>
             <textarea id="observaciones" name="Observaciones" class="form-control"><?php echo htmlspecialchars($solicitud->Observaciones ?? ''); ?></textarea>
         </div>
-        <div class="form-group">
+        <div class="button-group">
             <button type="submit" class="btn-submit">Guardar Cambios</button>
         </div>
     </form>
@@ -118,95 +220,3 @@
     });
 </script>
 
-<style>
-    .data-container {
-        max-width: 600px;
-        margin: 2rem auto 4rem auto;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
-        padding: 2rem;
-        position: relative; /* Add this */
-        z-index: 1; /* Add this to ensure it's above other elements */
-        margin-bottom: 6rem; /* Increased bottom margin */
-    }
-
-    .form-title {
-        color: #2c3e50;
-        margin-bottom: 1.5rem;
-        font-size: 1.8rem;
-        text-align: center;
-        font-weight: 600;
-    }
-
-    .form-group {
-        margin-bottom: 1.2rem;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: #2c3e50;
-        font-weight: 500;
-        font-size: 0.95rem;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-        background-color: #f8f9fa;
-    }
-
-    .form-control:focus {
-        outline: none;
-        border-color: #3498db;
-        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-        background-color: #fff;
-    }
-
-    .form-control[readonly] {
-        background-color: #e9ecef;
-        cursor: not-allowed;
-    }
-
-    select.form-control {
-        appearance: none;
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        background-size: 1em;
-        padding-right: 2.5rem;
-    }
-
-    .btn-submit {
-        width: 100%;
-        padding: 0.9rem;
-        background-color: #3498db;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-top: 1rem;
-    }
-
-    .btn-submit:hover {
-        background-color: #2980b9;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
-    }
-
-    @media (max-width: 768px) {
-        .data-container {
-            margin: 1rem auto 6rem auto; /* Increased bottom margin for mobile */
-            padding: 1.5rem;
-            width: 90%;
-        }
-    }
-</style>

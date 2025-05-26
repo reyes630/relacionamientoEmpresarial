@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2025 a las 15:36:57
+-- Tiempo de generación: 22-05-2025 a las 17:17:27
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -40,22 +40,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`idCliente`, `DocumentoCliente`, `NombreCliente`, `CorreoCliente`, `TelefonoCliente`) VALUES
-(1, '0987', 'esteban', 'esteban@gmail.com', '3215467890'),
-(2, '3698546', 'cristian', 'cris@gmail.com', '312546797'),
-(3, '1056', 'Miguel', 'miguel1@gmail.com', '311632'),
-(4, '1054789546', 'Kevin Valencia ', 'kevin@gmail.com', '3154273894'),
-(5, '1054782541', 'Kevin ', 'aga@gmail.com', '3154273845'),
-(6, '105478478', 'julian', 'julian@gmail.com', '3154273845'),
-(7, '23112', 'Peñaa', 'pena@gmail.com', '311631'),
-(8, '12345678', 'Juan Daniel', 'daniel@gmail.com', '1234567'),
-(9, '9876543', 'sebitas', 'sebastian@gmail.com', '741852963.'),
-(10, '123456780', 'esres', 'esteban@gmail.com', '123456725'),
-(11, '5784357847', 'andres', 'andres@gmail.com', '4612121'),
-(12, '1058138879', 'esres', 'angied@gmail.com', '741852963.'),
-(13, '10258756', 'andres', 'alex@gmail.com', '1234567'),
-(14, '1054479476', 'Yerson Herrera', 'yerson@gmail.com', '300433841'),
-(15, '', 'esteban reyes', '', ''),
-(16, '1058138878', 'yeison', 'angied@gmail.com', '3127591649');
+(21, '1058138879', 'Esteban Reyes A', 'reyesagudeloesteban9@gmail.com', '3127591649');
 
 -- --------------------------------------------------------
 
@@ -159,7 +144,14 @@ INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`,
 (21, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '30 pelados', 1, 1, 3, 9, 6),
 (27, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '2', 1, 1, 3, 9, 7),
 (28, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '2', 1, 1, 3, 8, 7),
-(30, '2025-04-30', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'fdfvde', 1, 1, 3, 11, 6);
+(30, '2025-04-30', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'fdfvde', 1, 1, 3, 11, 6),
+(39, '2025-05-23', '2025-05-20', '', '', '', '', 'Web', 'En el colegio San Jorge ', 7, 1, 3, 4, 13),
+(40, '2025-04-28', '2025-05-20', '', '', '', '', 'Web', 'Presentación Proyecto', 9, 1, 3, 6, 10),
+(41, '2025-04-27', '2025-05-20', '', 'Manizales', '', '2025-02-03 Se llevo a cabo el proceso de contacto', 'Web', 'Quiero poner ventas en el salón', 7, 1, 3, 18, 8),
+(42, '2025-04-30', '2025-05-20', 'Ambiente de formación', 'Manizales', 'Se tendra reunión el dia 22 de mayo de 2025 ', '2025-05-20 Se hizo comunicación con el señor yerson ', 'Web', 'para 30 compañeros ', 7, 1, 3, 19, 13),
+(43, '2025-04-30', '2025-05-22', '', 'Manizales', '', '', 'Web', 'Necesita el apoyo para vender bombones de chocolate, creación de empresa y marketing en los medios d', 7, 1, 3, 10, 8),
+(44, '2025-05-03', '2025-05-22', 'Ambiente de formación', 'Manizales', NULL, NULL, 'Web', 'curso corto para ADSO', 7, 1, 3, 20, 14),
+(45, '2025-04-29', '2025-05-22', 'Ambiente de formación', 'Manizales', NULL, NULL, 'Web', 'para ADSO', 7, 1, 3, 21, 14);
 
 -- --------------------------------------------------------
 
@@ -294,7 +286,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
@@ -306,7 +298,7 @@ ALTER TABLE `servicio`
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `tipoevento`
