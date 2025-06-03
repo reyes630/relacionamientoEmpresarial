@@ -97,6 +97,17 @@ body {
     background-color: #09669C;
 }
 
+.logosenaInicio img{
+    width: 120px;
+    height: 120px;
+    bottom: 0;
+}
+.imageLogin img {
+    width: 500px;
+    height: 600px;
+    display: block;
+
+}
 /* Responsive Media Queries */
 /* Small devices (landscape phones, 576px and up) */
 @media screen and (max-width: 576px) {

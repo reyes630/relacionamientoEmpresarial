@@ -8,11 +8,11 @@
 </head>
 <body>
     <div class="imageLogin">
-        <img src="" alt="logo Diseño">
+        <img src="../img/LogoSisrel.png" alt="logo Diseño">
     </div>
     <?php include_once $content ?>
-    <div class="logosenaInicio">
+    <!-- <div class="logosenaInicio">
         <img src="../img/logoSenaNegro.png" alt="logo sena">
-    </div>
+    </div> -->
 </body>
 </html>
