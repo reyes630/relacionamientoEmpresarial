@@ -66,7 +66,7 @@
         </a>
         <a href="/usuario/perfil" class="sidebar-item perfil">
             <img class="icon <?php if($titulo == "Perfil Usuario"){echo "selected";} ?>" src="/img/IconosSidebar/perfilLine.svg" alt="Perfil">
-            <span class="sidebar-text">Usuarios</span>
+            <span class="sidebar-text">Usuario</span>
         </a>
     </div>
 

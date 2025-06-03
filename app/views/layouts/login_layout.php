@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="/css/style_login.css">
 </head>
 <body>
+    <div class="imageLogin">
+        <img src="" alt="logo Diseño">
+    </div>
     <?php include_once $content ?>
+    <div class="logosenaInicio">
+        <img src="../img/logoSenaNegro.png" alt="logo sena">
+    </div>
 </body>
 </html>

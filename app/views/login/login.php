@@ -10,6 +10,7 @@
         }
         ?>
     <h2>Iniciar sesión</h2>
+    
     <form action="/login/init" method="post">
         <div class="input-group">
             <label for="">Usuario</label>
@@ -24,10 +25,5 @@
         </div>
     </form>
 
-    <!-- <div class="btn-formulario">
-        <a href="/formulario/new">
-        <button>Formulario Registro Solicitud</button>
-        </a>
-        
-    </div> -->
+    
 </div>
