@@ -158,31 +158,55 @@ class SolicitudController extends BaseController{
 
     public function updateSolicitud() {
         if (isset($_POST["Descripcion"])) {
-            $id = $_POST["idSolicitud"] ?? null;
-            $descripcion = $_POST["Descripcion"] ?? null;
-            $fechaSolicitud = $_POST["FechaSolicitud"] ?? null;
-            $nombreCliente = $_POST["NombreCliente"] ?? null;
-            $idTipoServicio = $_POST["IdTipoServicio"] ?? null;
-            $idEstado = $_POST["IdEstado"] ?? null;
-            $lugar = $_POST["Lugar"] ?? null;
-            $municipio = $_POST["Municipio"] ?? null;
-            $comentarios = $_POST["Comentarios"] ?? null;
-            $observaciones = $_POST["Observaciones"] ?? null;
+            try {
+                $id = $_POST["idSolicitud"] ?? null;
+                $descripcion = $_POST["Descripcion"] ?? null;
+                $fechaSolicitud = $_POST["FechaSolicitud"] ?? null;
+                $nombreCliente = $_POST["NombreCliente"] ?? null;
+                $idTipoServicio = $_POST["IdTipoServicio"] ?? null;
+                $idEstado = $_POST["IdEstado"] ?? null;
+                $lugar = $_POST["Lugar"] ?? null;
+                $municipio = $_POST["Municipio"] ?? null;
+                $comentarios = $_POST["Comentarios"] ?? null;
+                $observaciones = $_POST["Observaciones"] ?? null;
 
-            $solicitudObj = new SolicitudModel();
+                // Primero obtenemos la solicitud actual para saber el ID del cliente
+                $solicitudObj = new SolicitudModel();
+                $solicitudActual = $solicitudObj->getSolicitud($id);
 
-            $clienteObj = new ClienteModel();
-            $cliente = $clienteObj->getClienteByName($nombreCliente);
+                if (!$solicitudActual) {
+                    throw new \Exception("No se encontró la solicitud");
+                }
 
-            if (!$cliente) {
-                $idCliente = $clienteObj->saveClienteByName($nombreCliente);
-            } else {
-                $idCliente = $cliente->idCliente;
+                // Actualizamos el nombre del cliente usando el ID del cliente de la solicitud actual
+                $clienteObj = new ClienteModel();
+                $clienteObj->editCliente(
+                    $solicitudActual->FKcliente, // ID del cliente actual
+                    $solicitudActual->DocumentoCliente, // Mantener el documento actual
+                    $nombreCliente, // Nuevo nombre
+                    $solicitudActual->CorreoCliente, // Mantener el correo actual
+                    $solicitudActual->TelefonoCliente // Mantener el teléfono actual
+                );
+
+                // Actualizamos la solicitud manteniendo el mismo ID de cliente
+                $solicitudObj->editSolicitud(
+                    $id,
+                    $descripcion,
+                    $fechaSolicitud,
+                    $solicitudActual->FKcliente, // Mantener el mismo ID del cliente
+                    $idTipoServicio,
+                    $idEstado,
+                    $lugar,
+                    $municipio,
+                    $comentarios,
+                    $observaciones
+                );
+
+                $this->redirectTo("solicitud/view");
+            } catch (\Exception $e) {
+                echo "Error: " . $e->getMessage();
             }
-
-            $solicitudObj->editSolicitud($id, $descripcion, $fechaSolicitud, $idCliente, $idTipoServicio, $idEstado, $lugar, $municipio, $comentarios, $observaciones);
         }
-        $this->redirectTo("solicitud/view");
     }
 
     public function deleteSolicitud($id){
