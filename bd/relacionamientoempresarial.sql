@@ -4,14 +4,20 @@
 --
 -- Servidor: 127.0.0.1
 <<<<<<< HEAD
+<<<<<<< HEAD
 -- Tiempo de generación: 05-06-2025 a las 15:24:47
 =======
+=======
+>>>>>>> 9fb30ae1290f84e31a4543b9259840bce4116f4b
 <<<<<<< Updated upstream
 -- Tiempo de generación: 22-05-2025 a las 17:17:27
 =======
 -- Tiempo de generación: 05-06-2025 a las 15:35:20
 >>>>>>> Stashed changes
+<<<<<<< HEAD
 >>>>>>> 04cfc4a399553a3978c57a02d0a662ecec5a8fbc
+=======
+>>>>>>> 9fb30ae1290f84e31a4543b9259840bce4116f4b
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 

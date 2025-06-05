@@ -154,7 +154,7 @@
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="usuario">Usuario que realizó la solicitud</label>
             <select id="usuario" name="FKusuario" class="form-control">
                 <option value="">Seleccione un usuario</option>
@@ -165,7 +165,8 @@
                     </option>
                 <?php endforeach; ?>
             </select>
-        </div>
+        </div> -->
+         
         <div class="form-group">
             <label for="lugar">Lugar</label>
             <input type="text" value="<?php echo htmlspecialchars($solicitud->Lugar ?? ''); ?>" id="lugar" name="Lugar" class="form-control">

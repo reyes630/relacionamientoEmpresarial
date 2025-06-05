@@ -95,7 +95,7 @@
                 </div>
                 <div class='detail-group'>
                     <label>Usuario que realizó la solicitud</label>
-                    <span>" . htmlspecialchars($solicitud->NombreUsuario) . "</span>
+                    <span><a href='/usuario/view/{$solicitud->FKusuario}' style='color:#000;text-decoration:none;cursor:pointer'>" . htmlspecialchars($solicitud->NombreUsuario) . "</a></span>
                 </div>
                 <div class='detail-group'>
                     <label>Lugar</label>
