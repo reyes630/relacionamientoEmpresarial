@@ -57,9 +57,11 @@ class SolicitudModel extends BaseModel {
     public function getSolicitud($id) {
         try {
             $sql = "SELECT s.*, 
+                       c.idCliente,
                        c.NombreCliente, 
                        c.CorreoCliente, 
-                       c.TelefonoCliente, 
+                       c.TelefonoCliente,
+                       c.DocumentoCliente,
                        ts.TipoServicio, 
                        sv.Servicio, 
                        e.Estado, 

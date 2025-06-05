@@ -10,7 +10,8 @@
         overflow: hidden;
     }
 
-    .titulos, .solicitud-row {
+    .titulos,
+    .solicitud-row {
         border-bottom: 3px solid #f0f0f0;
         display: grid;
         grid-template-columns: 60px 1fr 1fr 1fr 1fr 1.5fr;
@@ -41,7 +42,7 @@
         border-bottom: 1px solid #f0f0f0;
     }
 
-    .solicitud-row:hover  {
+    .solicitud-row:hover {
         background: #f1f7fa;
     }
 
@@ -94,6 +95,7 @@
         font-size: 1.1rem;
         transition: color 0.2s;
     }
+
     .buttons a:hover {
         color: #09669C;
     }
@@ -132,7 +134,8 @@
         background: white;
         border-radius: 10px;
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-        margin: 20px auto; /* Esto centra el elemento */
+        margin: 20px auto;
+        /* Esto centra el elemento */
     }
 
     .search-container {
@@ -165,37 +168,81 @@
         transition: all 0.3s ease;
     }
 
+    .no-results {
+        font-size: 20px;
+        color: red;
+        text-align: center;
+        display: none;
+    }
+
     .form-control:focus {
         border-color: #09669C;
         box-shadow: 0 0 0 2px rgba(9, 102, 156, 0.1);
     }
 
+    .modal {
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        width: 90%;
+        height: 700px;
+        max-width: 700px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        color: #888;
+        cursor: pointer;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
-        .titulos, .solicitud-row {
+
+        .titulos,
+        .solicitud-row {
             grid-template-columns: 30px 1fr 1fr 1fr 1fr 1fr;
             font-size: 0.95rem;
         }
-        .titulos > div, .solicitud-row > div {
+
+        .titulos>div,
+        .solicitud-row>div {
             padding: 8px 2px;
             font-size: 0.95rem;
         }
+
         .status-indicator {
             width: 12px;
             height: 12px;
         }
 
         .filters {
-        width: 95%;
-        flex-direction: column;
-        padding: 15px;
-    }
-    
-    .search-container {
-        width: 100%;
-    }
-    }
+            width: 95%;
+            flex-direction: column;
+            padding: 15px;
+        }
 
+        .search-container {
+            width: 100%;
+        }
+    }
 </style>
 
 
@@ -206,8 +253,9 @@
             <label>Buscar cliente</label>
             <div class="search-bar">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" placeholder="Nombre del cliente...">
+                <input id="searchInput" type="text" placeholder="Nombre del cliente...">
             </div>
+            <p id="noResults" class="no-results">No se encontraron resultados.</p>
         </div>
     </div>
     <div class="search-container">
@@ -257,15 +305,15 @@
         <?php else: ?>
             <?php foreach ($solicitudes as $solicitud): ?>
                 <?php
-                    // Semaforización: verde < 7 días, amarillo 7-15, rojo > 15
-                    $dias = (new DateTime())->diff(new DateTime($solicitud->FechaCreacion))->days;
-                    if ($dias < 7) {
-                        $statusClass = "status-recent"; // verde
-                    } elseif ($dias <= 15) {
-                        $statusClass = "status-medium"; // amarillo
-                    } else {
-                        $statusClass = "status-old"; // rojo
-                    }
+                // Semaforización: verde < 7 días, amarillo 7-15, rojo > 15
+                $dias = (new DateTime())->diff(new DateTime($solicitud->FechaCreacion))->days;
+                if ($dias < 7) {
+                    $statusClass = "status-recent"; // verde
+                } elseif ($dias <= 15) {
+                    $statusClass = "status-medium"; // amarillo
+                } else {
+                    $statusClass = "status-old"; // rojo
+                }
                 ?>
                 <div class="solicitud-row">
                     <div>
@@ -306,43 +354,8 @@
         </div>
     </div>
 
-    <style>
-        .modal {
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            width: 90%;
-            height: 700px;
-            max-width: 700px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            color: #888;
-            cursor: pointer;
-        }
-    </style>
-
     <script>
-       /*  document.addEventListener('DOMContentLoaded', () => {
+        /*  document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('modal');
             const modalBody = document.getElementById('modal-body');
             const closeModal = document.querySelector('.close');
@@ -371,9 +384,49 @@
             });
         }); */
 
-       
 
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const estadoSelect = document.getElementById('estado');
+            const servicioSelect = document.getElementById('servicio');
+            const solicitudRows = document.querySelectorAll('.solicitud-row');
+            const noResults = document.getElementById('noResults');
 
+            function filterSolicitudes() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const estadoSelected = estadoSelect.value;
+                const servicioSelected = servicioSelect.value;
+                let visibleRows = 0;
+
+                solicitudRows.forEach(row => {
+                    const nombreCliente = row.children[1].textContent.toLowerCase();
+                    const estado = row.children[3].textContent;
+                    const servicio = row.children[4].textContent.trim();
+
+                    const matchesSearch = nombreCliente.includes(searchTerm);
+                    const matchesEstado = estadoSelected === '' || estado === estadoSelect.options[estadoSelect.selectedIndex].text;
+                    const matchesServicio = servicioSelected === '' || servicio === servicioSelect.options[servicioSelect.selectedIndex].text;
+
+                    // Si todas las condiciones son verdaderas mostrara alguna opcion existente
+                    if (matchesSearch && matchesEstado && matchesServicio) {
+                        row.style.display = '';
+                        visibleRows++;
+                        // Si alguna es falsa entonces no mostrará ninguna
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                // Mostrar mensaje de "No se encontraron resultados" si no hay coincidencias
+                noResults.style.display = visibleRows === 0 ? 'block' : 'none';
+            }
+
+            // Eventos para los filtros, esto permite que funcionen en tiempo real
+            searchInput.addEventListener('input', filterSolicitudes);
+            estadoSelect.addEventListener('change', filterSolicitudes);
+            servicioSelect.addEventListener('change', filterSolicitudes);
+        });
     </script>
 
 </main>
