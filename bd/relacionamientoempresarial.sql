@@ -3,7 +3,15 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
+<<<<<<< HEAD
 -- Tiempo de generación: 05-06-2025 a las 15:24:47
+=======
+<<<<<<< Updated upstream
+-- Tiempo de generación: 22-05-2025 a las 17:17:27
+=======
+-- Tiempo de generación: 05-06-2025 a las 15:35:20
+>>>>>>> Stashed changes
+>>>>>>> 04cfc4a399553a3978c57a02d0a662ecec5a8fbc
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -245,7 +253,12 @@ ALTER TABLE `servicio`
 -- Indices de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  ADD PRIMARY KEY (`idSolicitud`);
+  ADD PRIMARY KEY (`idSolicitud`),
+  ADD KEY `fk_solicitud_usuario` (`FKusuario`),
+  ADD KEY `fk_solicitud_tipoevento` (`FKtipoEvento`),
+  ADD KEY `fk_solicitud_estado` (`FKestado`),
+  ADD KEY `fk_solicitud_cliente` (`FKcliente`),
+  ADD KEY `fk_solicitud_tiposervicio` (`FKtipoServicio`);
 
 --
 -- Indices de la tabla `tipoevento`
@@ -264,7 +277,8 @@ ALTER TABLE `tiposervicio`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idUsuario`);
+  ADD PRIMARY KEY (`idUsuario`),
+  ADD KEY `fk_usuario_rol` (`FKidRol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -311,10 +325,26 @@ ALTER TABLE `usuario`
 --
 
 --
+-- Filtros para la tabla `solicitud`
+--
+ALTER TABLE `solicitud`
+  ADD CONSTRAINT `fk_solicitud_cliente` FOREIGN KEY (`FKcliente`) REFERENCES `cliente` (`idCliente`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_solicitud_estado` FOREIGN KEY (`FKestado`) REFERENCES `estado` (`idEstado`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_solicitud_tipoevento` FOREIGN KEY (`FKtipoEvento`) REFERENCES `tipoevento` (`idTipoEvento`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_solicitud_tiposervicio` FOREIGN KEY (`FKtipoServicio`) REFERENCES `tiposervicio` (`idTipoServicio`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_solicitud_usuario` FOREIGN KEY (`FKusuario`) REFERENCES `usuario` (`idUsuario`) ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `tiposervicio`
 --
 ALTER TABLE `tiposervicio`
   ADD CONSTRAINT `tiposervicio_ibfk_1` FOREIGN KEY (`FKidServicio`) REFERENCES `servicio` (`idServicio`);
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `fk_usuario_rol` FOREIGN KEY (`FKidRol`) REFERENCES `rol` (`idRol`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
