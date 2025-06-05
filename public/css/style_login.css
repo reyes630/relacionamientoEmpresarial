@@ -208,7 +208,7 @@ body {
     }
     
     .imageLogin img {
-        max-width: 85px;
+        max-width: 185px;
         margin-bottom: 6px;
         width: 180px; 
     }
@@ -230,8 +230,9 @@ body {
     }
     
     .imageLogin img {
-        max-width: 70px;
+        max-width: 170px;
         margin-bottom: 5px;
+        width: 170px;
     }
     
     .sisrel-title {

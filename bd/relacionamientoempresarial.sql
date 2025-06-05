@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-05-2025 a las 17:17:27
+-- Tiempo de generación: 05-06-2025 a las 15:24:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -139,19 +139,7 @@ CREATE TABLE `solicitud` (
 --
 
 INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`) VALUES
-(17, '2025-04-29', '2024-04-29', NULL, '', NULL, NULL, 'Web', 'gfgf', 1, 1, 3, 3, 0),
-(19, '2025-04-29', '2025-04-29', NULL, '', NULL, NULL, 'Web', 'cdfd', 1, 1, 3, 7, 7),
-(21, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '30 pelados', 1, 1, 3, 9, 6),
-(27, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '2', 1, 1, 3, 9, 7),
-(28, '2025-04-27', '2025-05-06', NULL, '', NULL, NULL, 'Web', '2', 1, 1, 3, 8, 7),
-(30, '2025-04-30', '2025-05-06', NULL, '', NULL, NULL, 'Web', 'fdfvde', 1, 1, 3, 11, 6),
-(39, '2025-05-23', '2025-05-20', '', '', '', '', 'Web', 'En el colegio San Jorge ', 7, 1, 3, 4, 13),
-(40, '2025-04-28', '2025-05-20', '', '', '', '', 'Web', 'Presentación Proyecto', 9, 1, 3, 6, 10),
-(41, '2025-04-27', '2025-05-20', '', 'Manizales', '', '2025-02-03 Se llevo a cabo el proceso de contacto', 'Web', 'Quiero poner ventas en el salón', 7, 1, 3, 18, 8),
-(42, '2025-04-30', '2025-05-20', 'Ambiente de formación', 'Manizales', 'Se tendra reunión el dia 22 de mayo de 2025 ', '2025-05-20 Se hizo comunicación con el señor yerson ', 'Web', 'para 30 compañeros ', 7, 1, 3, 19, 13),
-(43, '2025-04-30', '2025-05-22', '', 'Manizales', '', '', 'Web', 'Necesita el apoyo para vender bombones de chocolate, creación de empresa y marketing en los medios d', 7, 1, 3, 10, 8),
-(44, '2025-05-03', '2025-05-22', 'Ambiente de formación', 'Manizales', NULL, NULL, 'Web', 'curso corto para ADSO', 7, 1, 3, 20, 14),
-(45, '2025-04-29', '2025-05-22', 'Ambiente de formación', 'Manizales', NULL, NULL, 'Web', 'para ADSO', 7, 1, 3, 21, 14);
+(46, '2025-06-05', '2025-06-05', 'SENA ', 'Manizales', NULL, NULL, 'Web', 'Tecnologo para 30 personas en manizales', 7, 1, 3, 21, 13);
 
 -- --------------------------------------------------------
 
@@ -298,7 +286,7 @@ ALTER TABLE `servicio`
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT de la tabla `tipoevento`
