@@ -24,20 +24,19 @@ $estados = $estadoModel->getAll();
             margin: 0;
             padding: 0;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
-        .content {
-            height: 90%;
-            width: 90%;
-            max-width: 500px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        main.content {
+            flex: 1 0 auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            min-height: calc(100vh - 129px);
+            /* altura del header fijo */
+            padding-bottom: 60px;
+            /* altura del footer fijo */
             box-sizing: border-box;
         }
 
@@ -49,6 +48,7 @@ $estados = $estadoModel->getAll();
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: #fff;
         }
 
         .logo {
@@ -71,9 +71,6 @@ $estados = $estadoModel->getAll();
             margin-top: 0;
             margin-bottom: 10px;
         }
-
-        
-
 
         .form-group {
             margin-bottom: 13px;

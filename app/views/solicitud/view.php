@@ -98,6 +98,7 @@
 
     .buttons a:hover {
         color: #09669C;
+        color: #fff;
     }
 
     /* Estilo para la barra de búsqueda */
