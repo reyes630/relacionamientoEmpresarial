@@ -131,11 +131,11 @@ class SolicitudController extends BaseController{
         $solicitudObj = new SolicitudModel();
         $solicitudInfo = $solicitudObj->getSolicitud($id);
 
-        $servicioObj = new ServicioModel(); // Modelo para los servicios
-        $servicios = $servicioObj->getAll(); // Obtener todos los servicios
+        $servicioObj = new ServicioModel();
+        $servicios = $servicioObj->getAll();
 
-        $tipoServicioObj = new TipoServicioModel(); // Modelo para los tipos de servicio
-        $tiposServicio = $tipoServicioObj->getAll(); // Obtener todos los tipos de servicio
+        $tipoServicioObj = new TipoServicioModel();
+        $tiposServicio = $tipoServicioObj->getAll();
 
         $estadoObj = new EstadoModel();
         $estados = $estadoObj->getAll();
@@ -145,12 +145,17 @@ class SolicitudController extends BaseController{
         $usuarioObj = new \App\Models\UsuarioModel();
         $usuarios = $usuarioObj->getAll();
 
+        // Filtrar solo usuarios con FKidRol 3 (Funcionario) o 4 (Instructor)
+        $usuariosAsignables = array_filter($usuarios, function($usuario) {
+            return in_array($usuario->FKidRol, [3, 4]);
+        });
+
         $data = [
             "solicitud" => $solicitudInfo,
-            "servicios" => $servicios, // Pasar los servicios a la vista
-            "tiposServicio" => $tiposServicio, // Pasar los tipos de servicio a la vista
+            "servicios" => $servicios,
+            "tiposServicio" => $tiposServicio,
             "estados" => $estados,
-            "usuarios" => $usuarios, // Pasa la lista de usuarios
+            "usuariosAsignables" => $usuariosAsignables, // Cambia aquí
             "titulo" => "Editar solicitud"
         ];
         $this->render("solicitud/edit.php", $data);
@@ -169,6 +174,7 @@ class SolicitudController extends BaseController{
                 $municipio = $_POST["Municipio"] ?? null;
                 $comentarios = $_POST["Comentarios"] ?? null;
                 $observaciones = $_POST["Observaciones"] ?? null;
+                $asignacion = $_POST["Asignacion"] ?? null; // Nueva línea para obtener la asignación
 
                 // Primero obtenemos la solicitud actual para saber el ID del cliente
                 $solicitudObj = new SolicitudModel();
@@ -199,7 +205,8 @@ class SolicitudController extends BaseController{
                     $lugar,
                     $municipio,
                     $comentarios,
-                    $observaciones
+                    $observaciones,
+                    $asignacion // Pasar la asignación
                 );
 
                 $this->redirectTo("solicitud/view");

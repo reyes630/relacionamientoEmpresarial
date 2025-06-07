@@ -83,7 +83,7 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function editSolicitud($id, $Descripcion, $FechaSolicitud, $IdCliente, $IdTipoServicio, $IdEstado, $Lugar, $Municipio, $Comentarios, $Observaciones) {
+    public function editSolicitud($id, $Descripcion, $FechaSolicitud, $IdCliente, $IdTipoServicio, $IdEstado, $Lugar, $Municipio, $Comentarios, $Observaciones, $Asignacion = null) {
         try {
             $sql = "UPDATE {$this->table} 
                     SET DescripcionNecesidad = :Descripcion, 
@@ -94,7 +94,8 @@ class SolicitudModel extends BaseModel {
                         Lugar = :Lugar,
                         Municipio = :Municipio,
                         Comentarios = :Comentarios,
-                        Observaciones = :Observaciones
+                        Observaciones = :Observaciones,
+                        Asignacion = :Asignacion
                     WHERE idSolicitud = :id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
@@ -107,6 +108,7 @@ class SolicitudModel extends BaseModel {
             $statement->bindParam(":Municipio", $Municipio, PDO::PARAM_STR);
             $statement->bindParam(":Comentarios", $Comentarios, PDO::PARAM_STR);
             $statement->bindParam(":Observaciones", $Observaciones, PDO::PARAM_STR);
+            $statement->bindParam(":Asignacion", $Asignacion, PDO::PARAM_STR);
             return $statement->execute();
         } catch (PDOException $ex) {
             throw new PDOException("Error al editar la solicitud: " . $ex->getMessage());

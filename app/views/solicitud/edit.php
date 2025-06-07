@@ -154,18 +154,24 @@
                 <?php endforeach; ?>
             </select>
         </div>
-        <!-- <div class="form-group">
-            <label for="usuario">Usuario que realizó la solicitud</label>
-            <select id="usuario" name="FKusuario" class="form-control">
+        <div class="form-group">
+            <label for="asignacion">Asignar solicitud</label>
+            <?php
+            $roles = [
+                3 => 'Funcionario',
+                4 => 'Instructor'
+            ];
+            ?>
+            <select id="asignacion" name="Asignacion" class="form-control">
                 <option value="">Seleccione un usuario</option>
-                <?php foreach ($usuarios as $usuario): ?>
-                    <option value="<?php echo $usuario->idUsuario; ?>" 
-                        <?php echo ($solicitud->FKusuario == $usuario->idUsuario) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($usuario->NombreUsuario); ?>
+                <?php foreach ($usuariosAsignables as $usuario): ?>
+                    <option value="<?php echo $usuario->idUsuario; ?>"
+                        <?php echo ($solicitud->Asignacion == $usuario->idUsuario) ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($usuario->NombreUsuario); ?> (<?php echo $roles[$usuario->FKidRol]; ?>)
                     </option>
                 <?php endforeach; ?>
             </select>
-        </div> -->
+        </div>
          
         <div class="form-group">
             <label for="lugar">Lugar</label>
@@ -183,6 +189,7 @@
             <label for="observaciones">Observaciones</label>
             <textarea id="observaciones" name="Observaciones" class="form-control"><?php echo htmlspecialchars($solicitud->Observaciones ?? ''); ?></textarea>
         </div>
+        
         <div class="button-group">
             <button type="submit" class="btn-submit">Guardar Cambios</button>
         </div>
@@ -220,4 +227,10 @@
         });
     });
 </script>
+
+<?php
+$usuariosAsignables = array_filter($usuarios, function($usuario) {
+    return in_array($usuario->FKidRol, [3, 4]);
+});
+?>
 

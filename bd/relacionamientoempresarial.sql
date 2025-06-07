@@ -1,4 +1,9 @@
-
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 07-06-2025 a las 04:40:33
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -35,7 +40,9 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`idCliente`, `DocumentoCliente`, `NombreCliente`, `CorreoCliente`, `TelefonoCliente`) VALUES
-(21, '1058138879', 'Esteban Reyes A', 'reyesagudeloesteban9@gmail.com', '3127591649');
+(21, '1058138879', 'Esteban Reyes A', 'reyesagudeloesteban9@gmail.com', '3127591649'),
+(22, '10687243', 'Maye Agudelo', 'maye@gmail.com', '209034904'),
+(23, '383758374', 'Sebastian', 'sebas@gmail.com', '2326264');
 
 -- --------------------------------------------------------
 
@@ -126,15 +133,18 @@ CREATE TABLE `solicitud` (
   `FKtipoEvento` int(11) NOT NULL,
   `FKestado` int(11) NOT NULL,
   `FKcliente` int(11) NOT NULL,
-  `FKtipoServicio` int(11) NOT NULL
+  `FKtipoServicio` int(11) NOT NULL,
+  `Asignacion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `solicitud`
 --
 
-INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`) VALUES
-(46, '2025-06-05', '2025-06-05', 'SENA ', 'Manizales', NULL, NULL, 'Web', 'Tecnologo para 30 personas en manizales', 7, 1, 3, 21, 13);
+INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`, `Asignacion`) VALUES
+(46, '2025-06-05', '2025-06-05', 'SENA ', 'Manizales', NULL, NULL, 'Web', 'Tecnologo para 30 personas en manizales', 7, 1, 3, 21, 13, NULL),
+(47, '2025-06-06', '2025-06-06', 'msjdks', 'Manizales', NULL, NULL, 'Web', 'sdksnckmsock', 7, 1, 3, 22, 8, NULL),
+(49, '2025-06-06', '2025-06-06', 'sena', 'Manizales', NULL, NULL, 'Web', 'dhdscsb', 7, 1, 3, 23, 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -275,7 +285,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
@@ -287,7 +297,7 @@ ALTER TABLE `servicio`
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de la tabla `tipoevento`
