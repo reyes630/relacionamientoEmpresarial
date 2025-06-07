@@ -228,9 +228,5 @@
     });
 </script>
 
-<?php
-$usuariosAsignables = array_filter($usuarios, function($usuario) {
-    return in_array($usuario->FKidRol, [3, 4]);
-});
-?>
+
 
