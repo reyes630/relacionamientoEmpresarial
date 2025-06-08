@@ -311,11 +311,10 @@ return [
         "controller" => 'App\Controllers\UsuarioController',
         "action" => 'perfil'
     ],
-    '/agenda/index' => [
-        "controller" => 'App\Controllers\UsuarioController',
-        "action" => 'agenda'
+    '/solicitud/solicitudEstadisticas' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'SolicitudEstadisticas'
     ],
-
 /* -------------------- */
 
    

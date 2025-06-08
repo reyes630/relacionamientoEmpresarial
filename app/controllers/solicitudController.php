@@ -25,7 +25,11 @@ class SolicitudController extends BaseController{
         echo "<br>CONTROLLER> SolicitudController";
         echo "<br>ACTION> index";
     }
+    public function SolicitudEstadisticas(){
+        $this->render('solicitud/solicitudEstadisticas.php', ["titulo" => "Solicitudes Estadisticas"]);
+    }
 
+    
     public function view(){
         $solicitudObj = new SolicitudModel();
         $solicitudes = $solicitudObj->getAll();

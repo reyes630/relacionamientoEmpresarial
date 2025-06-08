@@ -26,6 +26,7 @@ class UsuarioController extends BaseController {
     }
     
     
+    
 
     public function view() {
         $usuarioObj = new UsuarioModel();

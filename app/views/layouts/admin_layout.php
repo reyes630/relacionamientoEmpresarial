@@ -56,8 +56,22 @@
             <img class="icon <?php if($titulo == "Home" || $titulo == "Home Admin" || $titulo== "Estadisticas"){echo "selected";} ?>" src="/img/IconosSidebar/houseLine.svg" alt="Logo 1">
             <span class="sidebar-text">Home</span>
         </a>
-        <a href="/solicitud/view" class="sidebar-item solicitudes">
-            <img class="icon <?php if($titulo == "solicitudes"){echo "selected";} ?>" src="/img/IconosSidebar/SolicitudesLine.svg" alt="Logo 2">
+        <a href="<?php 
+            switch ($_SESSION['rol']) {
+                case 1:
+                    echo '/solicitud/view';
+                    break;
+                case 2:
+                    echo '/solicitud/solicitudEstadisticas';
+                    break;
+                case 3:
+                    echo '/solicitud/view';
+                    break;
+                default:
+                    echo '/solicitud/view';
+            }
+        ?>" class="sidebar-item solicitudes">
+            <img class="icon <?php if($titulo == "solicitudes" || $titulo == "Solicitudes Estadisticas"){echo "selected";} ?>" src="/img/IconosSidebar/SolicitudesLine.svg" alt="Logo 2">
             <span class="sidebar-text">Solicitudes</span>
         </a>
         <a href="/solicitud/new" class="sidebar-item formulario">
