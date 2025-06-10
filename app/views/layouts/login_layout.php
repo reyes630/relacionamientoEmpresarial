@@ -10,7 +10,7 @@
     <div class="contentFormImage">
     <!-- Logo y título centrados en la figura -->
         <div class="login-elements">
-            <img src="../img/LogoSisrel.png" alt="logo SISREL">
+            <img src="../img/LogoSisrel.svg" alt="logo SISREL">
         
             <div class="line"></div>
             

@@ -1,15 +1,13 @@
 <style>
     div .containerWelcome {
             width: 100%;
-            padding: 50px;
             display: flex;
             align-items: center;
             position: relative;
         }
 
         div .textWelcome {
-            margin-top: 200px;
-            margin-left: 80px; 
+           
             width: 80%;
             h1 {
                 font-size: 96px;
@@ -28,12 +26,11 @@
         }
 
         div .imgWelcome img{
-            width: 1000px;
-            height: auto;
+            width: 700px;
             display: flex;
             position: absolute;
             top: 20px;
-            left: 700px
+            left: 600px
         }
 
         @media (max-width: 1200px) {

@@ -48,7 +48,6 @@
     grid-template-rows: repeat(2, auto);
     gap: 20px;
     margin-top: 10px;
-    width: 100%;
     padding: 20px;
   }
 
