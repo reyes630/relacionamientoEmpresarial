@@ -29,9 +29,12 @@
             </div>
         </div> -->
         
-        <div class="cerrar-sesion">
-            <a href="/login/init">
-                <img src="/img/cerrarsesion.png" alt="cerrar-sesion">
+        <div class="header-actions">
+            <button id="toggle-dark-mode" title="Modo oscuro" class="header-action-btn">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="/login/init" title="Cerrar sesión" class="header-action-btn">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
             </a>
         </div>
     </header>
@@ -130,6 +133,22 @@
             if (icons[i].classList.contains("selected")) {
                 icons[i].src = "/img/IconosSidebar/" + arrayImges[i]
             }
+        }
+    </script>
+    <script>
+        const darkModeBtn = document.getElementById('toggle-dark-mode');
+        darkModeBtn.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            // Guardar preferencia en localStorage
+            if(document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', '1');
+            } else {
+                localStorage.removeItem('darkMode');
+            }
+        });
+        // Al cargar, aplicar preferencia si existe
+        if(localStorage.getItem('darkMode')) {
+            document.body.classList.add('dark-mode');
         }
     </script>
 </body>

@@ -20,7 +20,10 @@ body {
     top: 0;
     left: 0;
     right: 0;
+    /* border-bottom: 2px solid #39a900;
+    background: #f3f3f3; */
     background: #39a900;
+    
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 2000; /* Asegúrate que sea mayor que el sidebar */
     padding: 10px 5px;
@@ -162,6 +165,7 @@ main.sidebar-open {
     margin-left: 200px;
 }
 main .Container {
+   /*  background: url(../img/inicioSesion/fondoInicioSesion.png) no-repeat; */
     margin-top: 69px;
     width: 100%;
     border-radius: 2px;
@@ -177,6 +181,9 @@ main .Container {
     flex-shrink: 0;
     background-color: #39a900;
     color: white;
+    /* background-color: #fefefe;
+    border-top: 2px solid #39a900; 
+    color: rgb(0, 0, 0); */
     text-align: center;
     padding: 20px 10px;
     margin-left: 60px;
@@ -344,6 +351,99 @@ body.sidebar-open .site-footer {
   background-color: #09669C;
 }
 
+.modo-oscuro-toggle {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+#toggle-dark-mode {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+#toggle-dark-mode:hover {
+    transform: scale(1.1);
+}
+
+/* Botón de modo oscuro */
+.modo-oscuro-toggle button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: color 0.3s;
+}
+.modo-oscuro-toggle button:hover {
+    color: #ffd700;
+}
+
+/* Estilos para modo oscuro */
+body.dark-mode {
+    background-color: #18191a;
+    color: #e0e0e0;
+}
+body.dark-mode .header {
+    background: #23272a;
+    color: #e0e0e0;
+}
+body.dark-mode .sidebar {
+    background-color: #e0e0e0; /* Gris claro real */
+    border-right: 2px solid #b0b0b0;
+}
+body.dark-mode .sidebar-text,
+body.dark-mode .sidebar-item,
+body.dark-mode .data-container,
+body.dark-mode .record {
+    color: #23272a !important; /* Letra negra */
+}
+body.dark-mode .form-control,
+body.dark-mode input,
+body.dark-mode textarea {
+    color: #23272a !important; /* Letra negra en inputs y formularios */
+}
+body.dark-mode main .Container {
+    color: #23272a !important; /* Letra negra en el contenido principal */
+}
+body.dark-mode .site-footer {
+    background-color: #23272a;
+    color: #b0b0b0;
+    border-top: 1px solid #393e42;
+}
+body.dark-mode .data-container,
+body.dark-mode .record {
+    background: #242526;
+    color: #e0e0e0;
+    border-color: #393e42;
+}
+body.dark-mode .form-control,
+body.dark-mode input,
+body.dark-mode textarea {
+    background: #1e1f20;
+    color: #e0e0e0;
+    border-color: #393e42;
+}
+body.dark-mode .btn-add,
+body.dark-mode .buttons a {
+    background-color: #393e42;
+    color: #fff;
+}
+body.dark-mode .btn-add:hover,
+body.dark-mode .buttons a:hover {
+    background-color: #4b535a;
+}
+body.dark-mode .modo-oscuro-toggle button {
+    color: #b0b0b0;
+}
+body.dark-mode .modo-oscuro-toggle button:hover {
+    color: #ffd700;
+}
+
 @media (max-width: 600px) {
   .record {
     flex-direction: column;
@@ -354,5 +454,32 @@ body.sidebar-open .site-footer {
   .buttons {
     align-self: flex-end;
   }
+}
+
+/* Nuevos estilos para las acciones del header */
+.header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-right: 10px;
+}
+
+.header-action-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+    padding: 0 8px;
+}
+
+.header-action-btn:hover {
+    /* Eliminar color: #ffd700; */
+    transform: scale(1.1);
 }
 
