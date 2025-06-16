@@ -476,10 +476,17 @@ body.dark-mode .modo-oscuro-toggle button:hover {
     cursor: pointer;
     transition: transform 0.3s;
     padding: 0 8px;
+    text-decoration: none;
 }
 
 .header-action-btn:hover {
     /* Eliminar color: #ffd700; */
     transform: scale(1.1);
+}
+
+.header-action-btn:visited,
+.header-action-btn:active,
+.header-action-btn:focus {
+    text-decoration: none !important;
 }
 
