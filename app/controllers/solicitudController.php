@@ -30,7 +30,7 @@ class SolicitudController extends BaseController{
     }
 
     
-    public function view(){
+    /* public function view(){
         $solicitudObj = new SolicitudModel();
         $solicitudes = $solicitudObj->getAll();
         
@@ -52,7 +52,44 @@ class SolicitudController extends BaseController{
         ];
         
         $this->render('solicitud/view.php', $data);
+    } */
+// Este view verifica el rol del usuario y muestra las solicitudes correspondientes
+public function view() {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    $rol = $_SESSION['rol'] ?? null; // 1 = admin, 3 = funcionario, 4 = instructor
+    $idUsuario = $_SESSION['idUsuario'] ?? null;
+
+    $solicitudObj = new SolicitudModel();
+
+    if ($rol == 1) {
+        // Administrador: ver todas las solicitudes
+        $solicitudes = $solicitudObj->getAll();
+    } elseif ($rol == 3 || $rol == 4) {
+        // Funcionario o Instructor: solo las asignadas a él
+        $solicitudes = $solicitudObj->getByAsignacion($idUsuario);
+    } else {
+        $solicitudes = [];
     }
+
+    $clienteObj = new ClienteModel();
+    $clientes = $clienteObj->getAll();
+
+    $servicioObj = new ServicioModel();
+    $servicios = $servicioObj->getAll();
+
+    $estadoObj = new EstadoModel();
+    $estados = $estadoObj->getAll();
+
+    $data = [
+        "solicitudes" => $solicitudes,
+        "clientes" => $clientes,
+        "servicios" => $servicios,
+        "estados" => $estados,
+        "titulo" => "solicitudes"
+    ];
+
+    $this->render('solicitud/view.php', $data);
+}
 
     public function newSolicitud(){
         $clienteObj = new ClienteModel();
@@ -197,6 +234,11 @@ class SolicitudController extends BaseController{
                     $solicitudActual->CorreoCliente, // Mantener el correo actual
                     $solicitudActual->TelefonoCliente // Mantener el teléfono actual
                 );
+
+                // Si el admin asigna un usuario, cambia el estado a "Asignado" (id 7)
+                if ($asignacion) {
+                    $idEstado = 7; // 7 es el idEstado para "Asignado" según tu tabla estado
+                }
 
                 // Actualizamos la solicitud manteniendo el mismo ID de cliente
                 $solicitudObj->editSolicitud(

@@ -300,9 +300,15 @@
             <div>Acciones</div>
         </div>
         <?php if (empty($solicitudes)): ?>
-            <div class="solicitud-row">
-                <div colspan="6" style="text-align:center;">No se encuentran solicitudes en la base de datos</div>
-            </div>
+            <?php if (in_array($_SESSION['rol'], [3, 4])): ?>
+                <div class="solicitud-row">
+                    <div colspan="6" style="text-align:center; width:100%;">Aún no tienes solicitudes asignadas.</div>
+                </div>
+            <?php else: ?>
+                <div class="solicitud-row">
+                    <div colspan="6" style="text-align:center; width:100%;">No se encuentran solicitudes en la base de datos</div>
+                </div>
+            <?php endif; ?>
         <?php else: ?>
             <?php foreach ($solicitudes as $solicitud): ?>
                 <?php

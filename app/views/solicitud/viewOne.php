@@ -58,8 +58,15 @@
 <div class="data-container">
     <h2 class="form-title">Detalles de la Solicitud</h2>
     <?php
+    
+    //Permisos para mostrar cosas segun el rol
+    //Elementos que se le mostraran solo al admin
+    //$esAdmin = (isset($_SESSION['rol']) && $_SESSION['rol'] == 1);
+
     if ($solicitud && is_object($solicitud)) {
-        echo "<div class='record-details'>
+    
+        echo  "
+                <div class='record-details'>
                 <div class='detail-group'>
                     <label>ID de la solicitud</label>
                     <span>{$solicitud->idSolicitud}</span>
@@ -96,6 +103,19 @@
                 <div class='detail-group'>
                     <label>Usuario que realizó la solicitud</label>
                     <span><a href='/usuario/view/{$solicitud->FKusuario}' style='color:#000;text-decoration:none;cursor:pointer'>" . htmlspecialchars($solicitud->NombreUsuario) . "</a></span>
+                </div>
+                
+                <div class='detail-group'>
+                    <label>Responsable Asignado</label>
+                    ";
+
+                    if (!empty($solicitud->Asignacion) && !empty($solicitud->NombreUsuarioAsignado)) {
+                        echo "<a href='/usuario/view/{$solicitud->Asignacion}' style='color:#000;text-decoration:none;cursor:pointer'>" . htmlspecialchars($solicitud->NombreUsuarioAsignado) . "</a>";
+                    } else {
+                        echo "<span>No asignado</span>";
+                    }
+
+                echo "
                 </div>
                 <div class='detail-group'>
                     <label>Lugar</label>

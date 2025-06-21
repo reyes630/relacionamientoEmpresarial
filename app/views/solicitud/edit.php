@@ -101,12 +101,20 @@
 </style>
 
 <div class="data-container ">
+    <?php
+    //Permisos para mostrar cosas segun el rol
+    //Elementos que se le mostraran solo al admin
+    $esAdmin = (isset($_SESSION['rol']) && $_SESSION['rol'] == 1);
+    ?>
     <h2 class="form-title">Editar Solicitud</h2>
     <form action="/solicitud/update" method="post">
+        
         <div class="form-group">
             <label for="idSolicitud">ID de la solicitud</label>
             <input readonly value="<?php echo $solicitud->idSolicitud ?>" type="number" id="idSolicitud" name="idSolicitud" class="form-control">
         </div>
+     
+        
         <div class="form-group">
             <label for="descripcion">Descripción</label>
             <input type="text" value="<?php echo $solicitud->DescripcionNecesidad ?>" id="descripcion" name="Descripcion" class="form-control" maxlength="255">
@@ -154,6 +162,8 @@
                 <?php endforeach; ?>
             </select>
         </div>
+        <!-- Solo el admin ve Asignar solicitud -->
+        <?php if ($esAdmin): ?>
         <div class="form-group">
             <label for="asignacion">Asignar solicitud</label>
             <?php
@@ -172,7 +182,7 @@
                 <?php endforeach; ?>
             </select>
         </div>
-         
+        <?php endif; ?>
         <div class="form-group">
             <label for="lugar">Lugar</label>
             <input type="text" value="<?php echo htmlspecialchars($solicitud->Lugar ?? ''); ?>" id="lugar" name="Lugar" class="form-control">
@@ -227,6 +237,7 @@
         });
     });
 </script>
+
 
 
 

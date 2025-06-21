@@ -66,13 +66,15 @@ class SolicitudModel extends BaseModel {
                        sv.Servicio, 
                        e.Estado, 
                        e.Descripcion as EstadoDescripcion, 
-                       u.NombreUsuario 
+                       u.NombreUsuario,
+                       ua.NombreUsuario AS NombreUsuarioAsignado  -- Agrega esta línea
                 FROM {$this->table} s
                 JOIN cliente c ON s.FKcliente = c.idCliente
                 JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
                 JOIN servicio sv ON ts.FKidServicio = sv.idServicio
                 JOIN estado e ON s.FKestado = e.idEstado
                 JOIN usuario u ON s.FKusuario = u.idUsuario
+                LEFT JOIN usuario ua ON s.Asignacion = ua.idUsuario  -- Agrega esta línea
                 WHERE s.idSolicitud = :id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
@@ -124,5 +126,25 @@ class SolicitudModel extends BaseModel {
         } catch (PDOException $ex) {
             throw new PDOException("Error al eliminar la solicitud: " . $ex->getMessage());
         }
+    }
+
+    public function getByAsignacion($idUsuario) {
+        $sql = "SELECT s.*, 
+                   c.NombreCliente, 
+                   sv.Servicio, 
+                   sv.Color, 
+                   e.Estado,
+                   ua.NombreUsuario AS NombreUsuarioAsignado
+            FROM solicitud s
+            JOIN cliente c ON s.FKcliente = c.idCliente
+            JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
+            JOIN servicio sv ON ts.FKidServicio = sv.idServicio
+            JOIN estado e ON s.FKestado = e.idEstado
+            LEFT JOIN usuario ua ON s.Asignacion = ua.idUsuario
+            WHERE s.Asignacion = :idUsuario";
+        $stmt = $this->dbConnection->prepare($sql); // <--- Cambia aquí
+        $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 }
