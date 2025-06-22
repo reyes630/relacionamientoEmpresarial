@@ -59,6 +59,6 @@ class LoginController extends BaseController{
 
     public function logoutLogin(){
         session_destroy();
-        header("Location: /login/login.php");
+        header("Location: /login/init");
     }
 }

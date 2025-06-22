@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2025 a las 04:40:33
+-- Tiempo de generación: 20-06-2025 a las 06:03:56
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,7 +42,9 @@ CREATE TABLE `cliente` (
 INSERT INTO `cliente` (`idCliente`, `DocumentoCliente`, `NombreCliente`, `CorreoCliente`, `TelefonoCliente`) VALUES
 (21, '1058138879', 'Esteban Reyes A', 'reyesagudeloesteban9@gmail.com', '3127591649'),
 (22, '10687243', 'Maye Agudelo', 'maye@gmail.com', '209034904'),
-(23, '383758374', 'Sebastian', 'sebas@gmail.com', '2326264');
+(23, '383758374', 'Sebastian', 'sebas@gmail.com', '2326264'),
+(24, '1023456789', 'Laura Sánchez', 'laura.sanchez@testmail.com', '3001234567'),
+(25, '1012345678', 'Andrés Martínez', 'andres.martinez@testmail.com', '3112345678');
 
 -- --------------------------------------------------------
 
@@ -108,7 +110,7 @@ CREATE TABLE `servicio` (
 
 INSERT INTO `servicio` (`idServicio`, `Servicio`, `Color`) VALUES
 (4, 'Tecnologo', '#ff0800'),
-(5, 'Tecnico', '#000000'),
+(5, 'Tecnico', '#fff700'),
 (6, 'Cursos Cortos', '#379de1'),
 (7, 'Sennova', '#392de1'),
 (8, 'Emprendimiento', '#24e544');
@@ -136,15 +138,6 @@ CREATE TABLE `solicitud` (
   `FKtipoServicio` int(11) NOT NULL,
   `Asignacion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `solicitud`
---
-
-INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`, `Asignacion`) VALUES
-(46, '2025-06-05', '2025-06-05', 'SENA ', 'Manizales', NULL, NULL, 'Web', 'Tecnologo para 30 personas en manizales', 7, 1, 3, 21, 13, NULL),
-(47, '2025-06-06', '2025-06-06', 'msjdks', 'Manizales', NULL, NULL, 'Web', 'sdksnckmsock', 7, 1, 3, 22, 8, NULL),
-(49, '2025-06-06', '2025-06-06', 'sena', 'Manizales', NULL, NULL, 'Web', 'dhdscsb', 7, 1, 3, 23, 14, NULL);
 
 -- --------------------------------------------------------
 
@@ -186,11 +179,51 @@ CREATE TABLE `tiposervicio` (
 --
 
 INSERT INTO `tiposervicio` (`idTipoServicio`, `TipoServicio`, `FKidServicio`) VALUES
-(8, 'Ventas', 8),
-(10, 'Proyecto', 7),
-(11, 'Monitorias', 7),
-(13, 'ADSO', 4),
-(14, 'Mecanica', 6);
+(8, 'Control de Calidad en Confección Industrial', 5),
+(13, 'Programación de Aplicaciones y Servicios para', 5),
+(14, 'Proyectos Agropecuarios', 5),
+(15, 'Servicios y Operaciones Microfinancieras', 5),
+(18, 'Reparación de Motores', 5),
+(19, 'Técnico en Calzado', 5),
+(20, 'Reparación de Máquinas de Confección', 5),
+(21, 'Manejo Básico de Computadores', 5),
+(22, 'Servicio al Cliente', 5),
+(23, 'Mesa y Bar', 5),
+(24, 'Análisis y Desarrollo de Software', 4),
+(25, 'Animación 3D', 4),
+(26, 'Animación Digital', 4),
+(27, 'Coordinación de Procesos Logísticos', 4),
+(28, 'Desarrollo de Colecciones para la Industria d', 4),
+(29, 'Desarrollo de Productos Electrónicos', 4),
+(30, 'Desarrollo de Videojuegos y Entornos Interact', 4),
+(31, 'Desarrollo Multimedia y Web', 4),
+(32, 'Asesoría para la creación de empresas', 8),
+(33, 'Fondo Emprender (capital semilla)', 8),
+(34, 'Fortalecimiento para PyMEs', 8),
+(35, 'Formación a la medida para empresas', 8),
+(36, 'Formación continua especializada para empresa', 8),
+(37, 'Intermediación y orientación de emprendimient', 8),
+(38, 'Acompañamiento en modelos de negocio', 8),
+(39, 'Red de Investigación, Desarrollo e Innovación', 7),
+(40, 'Centros de Desarrollo Tecnológico (CDT)', 7),
+(41, ' Observatorio de Ciencia, Tecnología e Innova', 7),
+(42, 'Investigación aplicada en formación profesion', 7),
+(43, 'Proyectos de extensión tecnológica', 7),
+(44, 'Tecnoparques (aceleración prototipos)', 7),
+(45, 'Desarrollo de aplicaciones móviles', 6),
+(46, 'Autocad 2D y 3D', 6),
+(47, 'Adobe Illustrator y Photoshop', 6),
+(48, 'Adobe Illustrator y Photoshop', 6),
+(49, 'Corel Draw', 6),
+(50, 'Corel Draw', 6),
+(51, 'Corel Draw', 6),
+(52, 'Corel Draw', 6),
+(53, 'Corel Draw', 6),
+(54, 'Corel Draw', 6),
+(55, 'Corel Draw', 6),
+(56, 'Fotografía', 6),
+(57, 'Inglés (niveles 1 a 13)', 6),
+(58, 'Electrónica y sensores industriales', 6);
 
 -- --------------------------------------------------------
 
@@ -285,7 +318,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
@@ -297,7 +330,7 @@ ALTER TABLE `servicio`
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `tipoevento`
@@ -309,7 +342,7 @@ ALTER TABLE `tipoevento`
 -- AUTO_INCREMENT de la tabla `tiposervicio`
 --
 ALTER TABLE `tiposervicio`
-  MODIFY `idTipoServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idTipoServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
