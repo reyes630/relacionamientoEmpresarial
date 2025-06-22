@@ -1,5 +1,5 @@
 /* Estilo general para el body */
-  html, body {
+html, body {
     height: 100vh;
     min-height: 100vh;
 }
@@ -35,12 +35,6 @@ body {
     gap: 12px;
 }
 
-.logotype img {
-    height: 38px;
-    width: auto;
-    display: block;
-}
-
 .titleSisrel {
     flex: 1;
     text-align: center;
@@ -50,47 +44,18 @@ body {
     letter-spacing: 1px;
     margin: 0 auto;
     position: absolute;
-    left: 0; right: 0;
+    left: 0; 
+    right: 0;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.422); /* Sombra marcada */
-}
-
-.cerrar-sesion {
-    margin-right: 20px;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.422);
 }
 
 header button {
     border: none;
     background: none;
 }
-
-/* Estilo para la barra de búsqueda */
-/* .search-bar {
-    position: relative;
-    flex-grow: 1;
-    max-width: 300px;
-    margin-left: 50px;
-}
-
-.search-bar input[type="text"] {
-    width: 100%;
-    padding: 10px 15px 10px 35px;
-    font-size: 16px;
-    border: none;
-    border-radius: 30px;
-    outline: none;
-    background-color: white;
-}
-
-.search-bar .search-icon {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    color: gray;
-} */
 
 /* Sidebar general */
 .sidebar {
@@ -107,16 +72,13 @@ header button {
     align-items: center;
     transition: width 0.5s ease;
     z-index: 1000;
- 
 }
 
-/* Cuando el sidebar está abierto, se expande */
 .sidebar.open {
     width: 200px;
     align-items: flex-start;
     padding-left: 15px;
 }
-
 
 .sidebar-item {
     display: flex;
@@ -140,7 +102,6 @@ header button {
     background: #e6f0fa;
 }
 
-/* Iconos del sidebar */
 .sidebar-item i,
 .sidebar-item [data-lucide] {
     font-size: 1.7rem;
@@ -150,10 +111,9 @@ header button {
     transition: color 0.2s;
 }
 
-/* Texto del sidebar */
 .sidebar-text {
     display: none;
-    margin-left: 18px; /* Espacio entre icono y texto */
+    margin-left: 18px;
     font-size: 1rem;
     color: #23272a;
     text-align: left;
@@ -165,7 +125,6 @@ header button {
     display: block;
 }
 
-/* Cuando el sidebar está abierto, alinea icono y texto a la izquierda */
 .sidebar.open .sidebar-item {
     justify-content: flex-start;
     padding-left: 8px;
@@ -176,16 +135,15 @@ main {
     flex: 1 0 auto;
     transition: margin-left 0.5s ease;
     display: flex;
-    align-items: flex-start; /* Cambia a flex-start para que el contenido crezca hacia abajo */
+    align-items: flex-start;
     justify-content: center;
-
-    
 }
+
 main.sidebar-open {
     margin-left: 200px;
 }
+
 main .Container {
-   /*  background: url(../img/inicioSesion/fondoInicioSesion.png) no-repeat; */
     margin-top: 69px;
     width: 100%;
     border-radius: 2px;
@@ -194,7 +152,6 @@ main .Container {
     margin-right: 5px;
     margin-bottom: 5px;
     padding: 2rem;
-    /* No height aquí */
 }
 
 .site-footer {
@@ -218,100 +175,20 @@ body.sidebar-open .site-footer {
     width: calc(100% - 200px);
 }
 
-/* Estilos generales para pantallas más pequeñas que 1200px */
-@media (max-width: 1200px) {
-    .header {
-        padding: 10px; 
-    }
-
-    .search-bar {
-        max-width: 200px; 
-        margin-left: 30px; 
-    }
-
-    .sidebar {
-        width: 70px; 
-        padding: 15px 5px;
-    }
-
-    .sidebar button {
-        width: 40px; 
-        height: 20px;
-        margin-bottom: 10px; 
-    }
-
-    .sidebar img {
-        width: 40px; 
-        height: 40px;
-    }
-
-    main .Container {
-        margin-top: 70px; 
-        margin-left: 88px;
-    }
-}
-
-
-@media (max-width: 768px) {
-    .header {
-        padding: 5px;
-    }
-
-    .search-bar {
-        max-width: 150px; 
-        margin-left: 20px;
-    }
-
-    .search-bar input[type="text"] {
-        font-size: 14px; 
-        padding: 8px 12px 8px 30px; 
-    }
-
-    .sidebar {
-        width: 40px; 
-        padding: 10px 5px; 
-    }
-
-    .sidebar button {
-        width: 30px; 
-        height: 30px;
-        margin-bottom: 20px;
-    }
-
-    .sidebar img {
-        width: 40px; 
-        height: 40px;
-    }
-
-    main .Container {
-        margin-right: 20px;
-        margin-left: 55px;
-        margin-top: 40px; 
-    }
-
-    .site-footer {
-        padding: 15px 10px; 
-    }
-}
-
 /* ESTILOS PARA CRUDS */
-
-
-
-
 .btn-add {
-  background-color: #04324D;
-  color: white;
-  text-decoration: none;
-  font-size: 22px;
-  padding: 8px 14px;
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
+    background-color: #04324D;
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    padding: 8px 14px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
 }
 
 .btn-add:hover {
-  background-color: #09669C;
+    background-color: #09669C;
 }
 
 .record {
@@ -326,155 +203,50 @@ body.sidebar-open .site-footer {
     transition: box-shadow 0.2s ease;
     justify-content: space-between;
     margin-top: 10px;
-  }
-  
-  .field {
+}
+
+.field {
     display: flex;
     flex-direction: column;
     flex: 1 1 250px;
-  }
-  
-  .field strong {
+}
+
+.field strong {
     color: #222;
     font-size: 14px;
     margin-bottom: 4px;
-  }
-  
-  .field span {
+}
+
+.field span {
     color: #555;
     font-size: 16px;
-  }
+}
 
 .buttons {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 .buttons a {
-  background-color: #04324D;
-  color: white;
-  text-decoration: none;
-  padding: 0 10px;
-  border-radius: 20px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-  width: 36px;
-  height: 36px;
+    background-color: #04324D;
+    color: white;
+    text-decoration: none;
+    padding: 0 10px;
+    border-radius: 20px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    width: 36px;
+    height: 36px;
 }
 
 .buttons a:hover {
-  background-color: #09669C;
+    background-color: #09669C;
 }
 
-.modo-oscuro-toggle {
-    margin-left: auto;
-    margin-right: 20px;
-}
-
-#toggle-dark-mode {
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-    transition: transform 0.3s ease;
-}
-
-#toggle-dark-mode:hover {
-    transform: scale(1.1);
-}
-
-/* Botón de modo oscuro */
-.modo-oscuro-toggle button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: color 0.3s;
-}
-.modo-oscuro-toggle button:hover {
-    color: #ffd700;
-}
-
-/* Estilos para modo oscuro */
-body.dark-mode {
-    background-color: #18191a;
-    color: #e0e0e0;
-}
-body.dark-mode .header {
-    background: #23272a;
-    color: #e0e0e0;
-}
-body.dark-mode .sidebar {
-    background-color: #e0e0e0; /* Gris claro real */
-    border-right: 2px solid #b0b0b0;
-}
-body.dark-mode .sidebar-text,
-body.dark-mode .sidebar-item,
-body.dark-mode .data-container,
-body.dark-mode .record {
-    color: #23272a !important; /* Letra negra */
-}
-body.dark-mode .form-control,
-body.dark-mode input,
-body.dark-mode textarea {
-    color: #23272a !important; /* Letra negra en inputs y formularios */
-}
-body.dark-mode main .Container {
-    color: #23272a !important; /* Letra negra en el contenido principal */
-}
-body.dark-mode .site-footer {
-    background-color: #23272a;
-    color: #b0b0b0;
-    border-top: 1px solid #393e42;
-}
-body.dark-mode .data-container,
-body.dark-mode .record {
-    background: #242526;
-    color: #e0e0e0;
-    border-color: #393e42;
-}
-body.dark-mode .form-control,
-body.dark-mode input,
-body.dark-mode textarea {
-    background: #1e1f20;
-    color: #e0e0e0;
-    border-color: #393e42;
-}
-body.dark-mode .btn-add,
-body.dark-mode .buttons a {
-    background-color: #393e42;
-    color: #fff;
-}
-body.dark-mode .btn-add:hover,
-body.dark-mode .buttons a:hover {
-    background-color: #4b535a;
-}
-body.dark-mode .modo-oscuro-toggle button {
-    color: #b0b0b0;
-}
-body.dark-mode .modo-oscuro-toggle button:hover {
-    color: #ffd700;
-}
-
-@media (max-width: 600px) {
-  .record {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .buttons {
-    align-self: flex-end;
-  }
-}
-
-/* Nuevos estilos para las acciones del header */
+/* Acciones del header */
 .header-actions {
     display: flex;
     align-items: center;
@@ -494,16 +266,13 @@ body.dark-mode .modo-oscuro-toggle button:hover {
     cursor: pointer;
     transition: transform 0.3s;
     padding: 0 8px;
-<<<<<<< HEAD
     text-decoration: none;
-=======
-    text-decoration: none !important;
->>>>>>> c8fa0ce43391d8bc96858e50f64455dbe5f894c2
 }
 
 .header-action-btn:hover {
     transform: scale(1.1);
 }
+
 .hamburger {
     background: none;
     border: none;
@@ -513,14 +282,167 @@ body.dark-mode .modo-oscuro-toggle button:hover {
     cursor: pointer;
 }
 
-/* Asegúrate de que los iconos del header sean negros */
-.header-action-btn i {
-    color: #23272a !important;
+/* Estilos para modo oscuro */
+body.dark-mode {
+    background-color: #18191a;
+    color: #e0e0e0;
 }
 
-.header-action-btn:visited,
-.header-action-btn:active,
-.header-action-btn:focus {
-    text-decoration: none !important;
+body.dark-mode .header {
+    background: #23272a;
+    color: #e0e0e0;
 }
 
+body.dark-mode .titleSisrel {
+    color: #39a900;
+}
+
+body.dark-mode .sidebar {
+    background-color: #242526;
+    border-right: 2px solid #393e42;
+}
+
+body.dark-mode .sidebar-item {
+    color: #e0e0e0;
+}
+
+body.dark-mode .sidebar-item i,
+body.dark-mode .sidebar-item [data-lucide] {
+    color: #e0e0e0;
+}
+
+body.dark-mode .sidebar-text {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .sidebar-item:hover,
+body.dark-mode .sidebar-item.selected {
+    background: #393e42;
+}
+
+body.dark-mode main .Container {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .site-footer {
+    background-color: #23272a;
+    color: #e0e0e0;
+    border-top: 2px solid #39a900;
+}
+
+body.dark-mode .record {
+    background: #242526;
+    color: #e0e0e0;
+    border-color: #393e42;
+}
+
+body.dark-mode .field strong {
+    color: #e0e0e0;
+}
+
+body.dark-mode .field span {
+    color: #b0b0b0;
+}
+
+body.dark-mode .form-control,
+body.dark-mode input,
+body.dark-mode textarea {
+    background: #1e1f20;
+    color: #e0e0e0 !important;
+    border-color: #393e42;
+}
+
+body.dark-mode .btn-add {
+    background-color: #393e42;
+    color: #fff;
+}
+
+body.dark-mode .btn-add:hover {
+    background-color: #4b535a;
+}
+
+body.dark-mode .buttons a {
+    background-color: #393e42;
+    color: #fff;
+}
+
+body.dark-mode .buttons a:hover {
+    background-color: #4b535a;
+}
+
+body.dark-mode .header-action-btn {
+    color: #e0e0e0;
+}
+
+body.dark-mode .header-action-btn i {
+    color: #facc15;
+}
+
+body.dark-mode .hamburger {
+    color: #e0e0e0;
+}
+
+/* Estilos adicionales para elementos de texto */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode div,
+body.dark-mode span,
+body.dark-mode label {
+    color: #000000;
+}
+
+
+/* Media queries */
+@media (max-width: 1200px) {
+    .header {
+        padding: 10px; 
+    }
+
+    .sidebar {
+        width: 70px; 
+        padding: 15px 5px;
+    }
+
+    main .Container {
+        margin-top: 70px; 
+        margin-left: 88px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 5px;
+    }
+
+    .sidebar {
+        width: 40px; 
+        padding: 10px 5px; 
+    }
+
+    main .Container {
+        margin-right: 20px;
+        margin-left: 55px;
+        margin-top: 40px; 
+    }
+
+    .site-footer {
+        padding: 15px 10px; 
+    }
+}
+
+@media (max-width: 600px) {
+    .record {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .buttons {
+        align-self: flex-end;
+    }
+}
