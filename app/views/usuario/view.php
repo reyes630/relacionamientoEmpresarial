@@ -1,5 +1,3 @@
-
-
 <div class="data-container">
     <h2>Gestión de Usuarios</h2>
     <div class="buttons">
