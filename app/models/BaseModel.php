@@ -75,7 +75,7 @@ abstract class BaseModel {
             return false;
         }
     }
-
+        //delete
     public function delete(int $id): bool {
         try {
             $sql = 'DELETE FROM '.$this->table.' WHERE id'.$this->table.' = :id';
