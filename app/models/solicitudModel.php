@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Models;
+
 use PDO;
 use PDOException;
 
-require_once MAIN_APP_ROUTE."../models/BaseModel.php";
+require_once MAIN_APP_ROUTE . "../models/BaseModel.php";
 
-class SolicitudModel extends BaseModel {
+class SolicitudModel extends BaseModel
+{
     public function __construct(
         ?int $idSolicitud = null,
         ?string $Descripcion = null,
@@ -18,7 +21,8 @@ class SolicitudModel extends BaseModel {
         parent::__construct();
     }
 
-    public function getAll(): array {
+    public function getAll(): array
+    {
         try {
             $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado 
                     FROM {$this->table} s
@@ -33,7 +37,8 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function saveSolicitud($Descripcion, $FechaSolicitud, $IdCliente, $IdServicio, $IdEstado, $IdUsuario, $Lugar, $Municipio) {
+    public function saveSolicitud($Descripcion, $FechaSolicitud, $IdCliente, $IdServicio, $IdEstado, $IdUsuario, $Lugar, $Municipio)
+    {
         try {
             $sql = "INSERT INTO {$this->table} 
                     (DescripcionNecesidad, FechaEvento, FechaCreacion, FKcliente, FKtipoServicio, FKestado, FKtipoEvento, FKusuario, MedioSolicitud, Lugar, Municipio) 
@@ -54,7 +59,8 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function getSolicitud($id) {
+    public function getSolicitud($id)
+    {
         try {
             $sql = "SELECT s.*, 
                        c.idCliente,
@@ -85,7 +91,8 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function editSolicitud($id, $Descripcion, $FechaSolicitud, $IdCliente, $IdTipoServicio, $IdEstado, $Lugar, $Municipio, $Comentarios, $Observaciones, $Asignacion = null) {
+    public function editSolicitud($id, $Descripcion, $FechaSolicitud, $IdCliente, $IdTipoServicio, $IdEstado, $Lugar, $Municipio, $Comentarios, $Observaciones, $Asignacion = null)
+    {
         try {
             $sql = "UPDATE {$this->table} 
                     SET DescripcionNecesidad = :Descripcion, 
@@ -117,7 +124,8 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function deleteSolicitud($id) {
+    public function deleteSolicitud($id)
+    {
         try {
             $sql = "DELETE FROM {$this->table} WHERE idSolicitud = :id";
             $statement = $this->dbConnection->prepare($sql);
@@ -128,7 +136,8 @@ class SolicitudModel extends BaseModel {
         }
     }
 
-    public function getByAsignacion($idUsuario) {
+    public function getByAsignacion($idUsuario)
+    {
         $sql = "SELECT s.*, 
                    c.NombreCliente, 
                    sv.Servicio, 
@@ -146,5 +155,42 @@ class SolicitudModel extends BaseModel {
         $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    public function getSolicitudesPendientes()
+    {
+        try {
+            // Asumiendo que el estado "Pendiente" tiene idEstado = 3
+            $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE FKestado = 3";
+            $result = $this->dbConnection->query($sql)->fetch(PDO::FETCH_OBJ);
+            return $result->total;
+        } catch (PDOException $e) {
+            throw new PDOException("Error al obtener solicitudes pendientes: " . $e->getMessage());
+        }
+    }
+
+    public function getSolicitudesResueltas()
+    {
+        try {
+            // Necesitas verificar qué idEstado corresponde a "Resuelto/Finalizado" en tu BD
+            // Asumiendo que podría ser idEstado = 6 o similar
+            $sql = "SELECT COUNT(*) as total FROM {$this->table} WHERE FKestado = 4";
+            $result = $this->dbConnection->query($sql)->fetch(PDO::FETCH_OBJ);
+            return $result->total;
+        } catch (PDOException $e) {
+            throw new PDOException("Error al obtener solicitudes resueltas: " . $e->getMessage());
+        }
+    }
+
+    public function getSolicitudesEnProceso()
+    {
+        try {
+            $sql = "SELECT COUNT(*) as total FROM {$this->table} 
+                WHERE FKestado IN (5)"; 
+            $result = $this->dbConnection->query($sql)->fetch(PDO::FETCH_OBJ);
+            return $result->total;
+        } catch (PDOException $e) {
+            throw new PDOException("Error al obtener solicitudes en proceso: " . $e->getMessage());
+        }
     }
 }

@@ -1,6 +1,5 @@
-
-    <style>
-         h1 {
+<style>
+    h1 {
       font-size: 28px;
       color: #39A900;
       margin-bottom: 20px;
@@ -97,7 +96,7 @@
         grid-template-columns: 1fr;
       }
     }
-    </style>
+</style>
 
 <div class="container">
 <h1>Estadísticas</h1>
@@ -105,19 +104,19 @@
   <div class="cards">
     <div class="card">
       <div class="title">Usuarios Registrados</div>
-      <div class="value">1,234</div>
+      <div class="value"><?php echo number_format($totalUsuarios); ?></div>
     </div>
     <div class="card">
-      <div class="title">Solicitudes Activas</div>
-      <div class="value">87</div>
+      <div class="title">Solicitudes Pendientes</div>
+      <div class="value"><?php echo number_format($totalSolicitudesPendientes); ?></div>
     </div>
     <div class="card">
       <div class="title">Solicitudes Resueltas</div>
-      <div class="value">20%</div>
+      <div class="value"><?php echo number_format($totalSolicitudesResueltas); ?></div>
     </div>
     <div class="card">
       <div class="title">Solicitudes en proceso</div>
-      <div class="value">50</div>
+      <div class="value"><?php echo number_format($totalSolicitudesEnProceso); ?></div>
     </div>
   </div>
 
@@ -152,4 +151,3 @@
   </div>
 
 </div>
-

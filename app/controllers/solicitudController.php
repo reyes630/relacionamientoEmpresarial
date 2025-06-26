@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controllers;
+
 use App\Models\SolicitudModel;
 use App\Models\ClienteModel;
 use App\Models\ServicioModel;
@@ -7,29 +9,33 @@ use App\Models\EstadoModel;
 use App\Models\TipoServicioModel; // Importar el modelo para los tipos de servicio
 
 require_once "baseController.php";
-require_once MAIN_APP_ROUTE."../models/SolicitudModel.php";
-require_once MAIN_APP_ROUTE."../models/ClienteModel.php";
-require_once MAIN_APP_ROUTE."../models/ServicioModel.php";
-require_once MAIN_APP_ROUTE."../models/EstadoModel.php";
-require_once MAIN_APP_ROUTE."../models/TipoServicioModel.php"; // Requerir el modelo para los tipos de servicio
+require_once MAIN_APP_ROUTE . "../models/SolicitudModel.php";
+require_once MAIN_APP_ROUTE . "../models/ClienteModel.php";
+require_once MAIN_APP_ROUTE . "../models/ServicioModel.php";
+require_once MAIN_APP_ROUTE . "../models/EstadoModel.php";
+require_once MAIN_APP_ROUTE . "../models/TipoServicioModel.php"; // Requerir el modelo para los tipos de servicio
 
-class SolicitudController extends BaseController{
-    public function __construct(){
+class SolicitudController extends BaseController
+{
+    public function __construct()
+    {
         // Se define la plantilla para este controlador
         $this->layout = "admin_layout";
         // Llamamos al constructor del padre
         parent::__construct();
     }
 
-    public function index(){
+    public function index()
+    {
         echo "<br>CONTROLLER> SolicitudController";
         echo "<br>ACTION> index";
     }
-    public function SolicitudEstadisticas(){
+    public function SolicitudEstadisticas()
+    {
         $this->render('solicitud/solicitudEstadisticas.php', ["titulo" => "Solicitudes Estadisticas"]);
     }
 
-    
+
     /* public function view(){
         $solicitudObj = new SolicitudModel();
         $solicitudes = $solicitudObj->getAll();
@@ -53,45 +59,47 @@ class SolicitudController extends BaseController{
         
         $this->render('solicitud/view.php', $data);
     } */
-// Este view verifica el rol del usuario y muestra las solicitudes correspondientes
-public function view() {
-    if (session_status() === PHP_SESSION_NONE) session_start();
-    $rol = $_SESSION['rol'] ?? null; // 1 = admin, 3 = funcionario, 4 = instructor
-    $idUsuario = $_SESSION['idUsuario'] ?? null;
+    // Este view verifica el rol del usuario y muestra las solicitudes correspondientes
+    public function view()
+    {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        $rol = $_SESSION['rol'] ?? null; // 1 = admin, 3 = funcionario, 4 = instructor
+        $idUsuario = $_SESSION['idUsuario'] ?? null;
 
-    $solicitudObj = new SolicitudModel();
+        $solicitudObj = new SolicitudModel();
 
-    if ($rol == 1) {
-        // Administrador: ver todas las solicitudes
-        $solicitudes = $solicitudObj->getAll();
-    } elseif ($rol == 3 || $rol == 4) {
-        // Funcionario o Instructor: solo las asignadas a él
-        $solicitudes = $solicitudObj->getByAsignacion($idUsuario);
-    } else {
-        $solicitudes = [];
+        if ($rol == 1) {
+            // Administrador: ver todas las solicitudes
+            $solicitudes = $solicitudObj->getAll();
+        } elseif ($rol == 3 || $rol == 4) {
+            // Funcionario o Instructor: solo las asignadas a él
+            $solicitudes = $solicitudObj->getByAsignacion($idUsuario);
+        } else {
+            $solicitudes = [];
+        }
+
+        $clienteObj = new ClienteModel();
+        $clientes = $clienteObj->getAll();
+
+        $servicioObj = new ServicioModel();
+        $servicios = $servicioObj->getAll();
+
+        $estadoObj = new EstadoModel();
+        $estados = $estadoObj->getAll();
+
+        $data = [
+            "solicitudes" => $solicitudes,
+            "clientes" => $clientes,
+            "servicios" => $servicios,
+            "estados" => $estados,
+            "titulo" => "solicitudes"
+        ];
+
+        $this->render('solicitud/view.php', $data);
     }
 
-    $clienteObj = new ClienteModel();
-    $clientes = $clienteObj->getAll();
-
-    $servicioObj = new ServicioModel();
-    $servicios = $servicioObj->getAll();
-
-    $estadoObj = new EstadoModel();
-    $estados = $estadoObj->getAll();
-
-    $data = [
-        "solicitudes" => $solicitudes,
-        "clientes" => $clientes,
-        "servicios" => $servicios,
-        "estados" => $estados,
-        "titulo" => "solicitudes"
-    ];
-
-    $this->render('solicitud/view.php', $data);
-}
-
-    public function newSolicitud(){
+    public function newSolicitud()
+    {
         $clienteObj = new ClienteModel();
         $clientes = $clienteObj->getAll();
 
@@ -110,7 +118,8 @@ public function view() {
         $this->render('solicitud/new.php', $data);
     }
 
-    public function createSolicitud() {
+    public function createSolicitud()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $clienteObj = new ClienteModel();
             $documento = $_POST['documento'];
@@ -158,7 +167,8 @@ public function view() {
         }
     }
 
-    public function viewSolicitud($id){
+    public function viewSolicitud($id)
+    {
         $solicitudObj = new SolicitudModel();
         $solicitudInfo = $solicitudObj->getSolicitud($id);
         $data = [
@@ -168,7 +178,8 @@ public function view() {
         $this->render("solicitud/viewOne.php", $data);
     }
 
-    public function editSolicitud($id) {
+    public function editSolicitud($id)
+    {
         $solicitudObj = new SolicitudModel();
         $solicitudInfo = $solicitudObj->getSolicitud($id);
 
@@ -182,12 +193,12 @@ public function view() {
         $estados = $estadoObj->getAll();
 
         // Obtener usuarios
-        require_once MAIN_APP_ROUTE."../models/UsuarioModel.php";
+        require_once MAIN_APP_ROUTE . "../models/UsuarioModel.php";
         $usuarioObj = new \App\Models\UsuarioModel();
         $usuarios = $usuarioObj->getAll();
 
         // Filtrar solo usuarios con FKidRol 3 (Funcionario) o 4 (Instructor)
-        $usuariosAsignables = array_filter($usuarios, function($usuario) {
+        $usuariosAsignables = array_filter($usuarios, function ($usuario) {
             return in_array($usuario->FKidRol, [3, 4]);
         });
 
@@ -202,7 +213,8 @@ public function view() {
         $this->render("solicitud/edit.php", $data);
     }
 
-    public function updateSolicitud() {
+    public function updateSolicitud()
+    {
         if (isset($_POST["Descripcion"])) {
             try {
                 $id = $_POST["idSolicitud"] ?? null;
@@ -262,10 +274,26 @@ public function view() {
         }
     }
 
-    public function deleteSolicitud($id){
+    public function deleteSolicitud($id)
+    {
         $solicitudObj = new SolicitudModel();
         $solicitudObj->deleteSolicitud($id);
         $this->redirectTo("solicitud/view");
     }
+
+    public function dashboard()
+    {
+    // Obtener total de solicitudes pendientes
+    $solicitudObj = new SolicitudModel();
+    $totalSolicitudesPendientes = $solicitudObj->getSolicitudesPendientes();
+    
+    $data = [
+        "totalSolicitudesPendientes" => $totalSolicitudesPendientes,
+        "titulo" => "Dashboard Administrativo"
+    ];
+    
+    $this->render('admin/indexAdministrativo.php', $data);
+    }
+
+    
 }
-?>

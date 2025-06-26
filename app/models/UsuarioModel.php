@@ -134,5 +134,16 @@ class UsuarioModel extends BaseModel {
         }
         return false;
     }
-   
+
+    public function countUsuarios() {
+    try {
+        $sql = "SELECT COUNT(*) AS total_usuarios FROM $this->table";
+        $statement = $this->dbConnection->prepare($sql);
+        $statement->execute();
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        return $row['total_usuarios'];
+    } catch (PDOException $ex) {
+        echo "Error al contar usuarios: " . $ex->getMessage();
+    }
+}
 }

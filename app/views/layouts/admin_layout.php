@@ -16,6 +16,132 @@
         body.dark-mode .hamburger-bar {
             fill: #b0b0b0;
         }
+
+        /* Estilos del modal */
+        .logout-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .logout-modal-overlay.show {
+            display: flex;
+        }
+
+        .logout-modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+
+        .logout-modal-overlay.show .logout-modal-content {
+            transform: scale(1);
+        }
+
+        body.dark-mode .logout-modal-content {
+            background: #2d2d2d;
+            color: #e0e0e0;
+        }
+
+        .logout-modal-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #fef3cd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark-mode .logout-modal-icon {
+            background: #654321;
+        }
+
+        .logout-modal-icon i {
+            font-size: 24px;
+            color: #f59e0b;
+        }
+
+        .logout-modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        body.dark-mode .logout-modal-title {
+            color: #e0e0e0;
+        }
+
+        .logout-modal-message {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        body.dark-mode .logout-modal-message {
+            color: #9ca3af;
+        }
+
+        .logout-modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .logout-modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 80px;
+        }
+
+        .logout-modal-btn-cancel {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .logout-modal-btn-cancel:hover {
+            background: #e5e7eb;
+        }
+
+        body.dark-mode .logout-modal-btn-cancel {
+            background: #4b5563;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .logout-modal-btn-cancel:hover {
+            background: #6b7280;
+        }
+
+        .logout-modal-btn-confirm {
+            background: #dc2626;
+            color: white;
+        }
+
+        .logout-modal-btn-confirm:hover {
+            background: #b91c1c;
+        }
     </style>
 </head>
 
@@ -36,9 +162,9 @@
             <button id="toggle-dark-mode" title="Modo oscuro" class="header-action-btn">
                 <i id="dark-mode-icon" class="fa-solid fa-moon" style="color:#262626;"></i>
             </button>
-            <a href="/login/init" title="Cerrar sesión" class="header-action-btn">
+            <button id="logout-btn" title="Cerrar sesión" class="header-action-btn">
                 <i class="fa-solid fa-arrow-right-from-bracket" style="color: #696969;"></i>
-            </a>
+            </button>
         </div>
     </header>
 
@@ -96,6 +222,23 @@
             <i data-lucide="user-round"></i>
             <span class="sidebar-text">Usuario</span>
         </a>
+    </div>
+
+    <!-- Modal de confirmación para cerrar sesión -->
+    <div id="logout-modal" class="logout-modal-overlay">
+        <div class="logout-modal-content">
+            <div class="logout-modal-icon">
+                <i class="fa-solid fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="logout-modal-title">¿Cerrar sesión?</h3>
+            <p class="logout-modal-message">
+                ¿Estás seguro de que deseas cerrar tu sesión? Tendrás que iniciar sesión nuevamente para acceder al sistema.
+            </p>
+            <div class="logout-modal-buttons">
+                <button id="cancel-logout" class="logout-modal-btn logout-modal-btn-cancel">Cancelar</button>
+                <button id="confirm-logout" class="logout-modal-btn logout-modal-btn-confirm">Salir</button>
+            </div>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -174,6 +317,42 @@
             document.body.classList.add('dark-mode');
         }
         updateDarkModeIcon();
+
+        // Modal de confirmación para cerrar sesión
+        const logoutBtn = document.getElementById('logout-btn');
+        const logoutModal = document.getElementById('logout-modal');
+        const cancelLogout = document.getElementById('cancel-logout');
+        const confirmLogout = document.getElementById('confirm-logout');
+
+        // Mostrar modal al hacer clic en cerrar sesión
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            logoutModal.classList.add('show');
+        });
+
+        // Cancelar cierre de sesión
+        cancelLogout.addEventListener('click', function() {
+            logoutModal.classList.remove('show');
+        });
+
+        // Confirmar cierre de sesión
+        confirmLogout.addEventListener('click', function() {
+            window.location.href = '/login/init';
+        });
+
+        // Cerrar modal al hacer clic en el overlay
+        logoutModal.addEventListener('click', function(e) {
+            if (e.target === logoutModal) {
+                logoutModal.classList.remove('show');
+            }
+        });
+
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && logoutModal.classList.contains('show')) {
+                logoutModal.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>

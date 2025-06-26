@@ -181,6 +181,134 @@
         box-shadow: 0 0 0 2px rgba(9, 102, 156, 0.1);
     }
 
+    /* ESTILOS ESPECÍFICOS PARA EL MODAL DEL ADMIN LAYOUT */
+    /* Renombramos las clases para evitar conflictos */
+    .logout-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000; /* Mayor z-index que el modal original */
+        backdrop-filter: blur(4px);
+    }
+
+    .logout-modal-overlay.show {
+        display: flex;
+    }
+
+    .logout-modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        text-align: center;
+        transform: scale(0.95);
+        transition: transform 0.2s ease;
+    }
+
+    .logout-modal-overlay.show .logout-modal-content {
+        transform: scale(1);
+    }
+
+    body.dark-mode .logout-modal-content {
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    .logout-modal-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #fef3cd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    body.dark-mode .logout-modal-icon {
+        background: #654321;
+    }
+
+    .logout-modal-icon i {
+        font-size: 24px;
+        color: #f59e0b;
+    }
+
+    .logout-modal-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #374151;
+    }
+
+    body.dark-mode .logout-modal-title {
+        color: #e0e0e0;
+    }
+
+    .logout-modal-message {
+        font-size: 16px;
+        color: #6b7280;
+        margin-bottom: 25px;
+        line-height: 1.5;
+    }
+
+    body.dark-mode .logout-modal-message {
+        color: #9ca3af;
+    }
+
+    .logout-modal-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .logout-modal-btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-width: 80px;
+    }
+
+    .logout-modal-btn-cancel {
+        background: #f3f4f6;
+        color: #374151;
+    }
+
+    .logout-modal-btn-cancel:hover {
+        background: #e5e7eb;
+    }
+
+    body.dark-mode .logout-modal-btn-cancel {
+        background: #4b5563;
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .logout-modal-btn-cancel:hover {
+        background: #6b7280;
+    }
+
+    .logout-modal-btn-confirm {
+        background: #dc2626;
+        color: white;
+    }
+
+    .logout-modal-btn-confirm:hover {
+        background: #b91c1c;
+    }
+
+    /* Modal original para otras funcionalidades */
     .modal {
         position: fixed;
         z-index: 9999;
@@ -289,7 +417,6 @@
 
 <main>
 
-
     <div class="table">
         <div class="titulos">
             <div></div>
@@ -390,7 +517,6 @@
                 });
             });
         }); */
-
 
         
         document.addEventListener('DOMContentLoaded', () => {
