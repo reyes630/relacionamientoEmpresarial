@@ -146,6 +146,7 @@ $estados = $estadoModel->getAll();
         #secondForm {
             display: none;
         }
+        
     </style>
 </head>
 
