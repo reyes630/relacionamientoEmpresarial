@@ -68,6 +68,38 @@
     .btn-modificar:hover {
         background-color: #09669C;
     }
+
+    /* Modo oscuro para perfil de usuario */
+    body.dark-mode .profile-container {
+        background-color: #23272a !important;
+        color: #e0e0e0;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    body.dark-mode .profile-container h2 {
+        color: #39A900;
+    }
+
+    body.dark-mode .info-item {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .info-item i {
+        color: #39A900;
+    }
+
+    body.dark-mode .info-item strong {
+        color: #b0b0b0;
+    }
+
+    body.dark-mode .btn-modificar {
+        background-color: #09669C;
+        color: #fff;
+    }
+
+    body.dark-mode .btn-modificar:hover {
+        background-color: #04324D;
+    }
 </style>
 
 <!-- Contenido del perfil -->

@@ -1,4 +1,3 @@
-
 <style> 
     .dashboard-cards {
   display: grid;
@@ -21,9 +20,10 @@
 }
 
 .card {
-  background: white;
+  background: #23272a; /* Gris oscuro */
+  color: #e0e0e0;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.18);
   padding: 15px;
   display: flex;
   flex-direction: column;

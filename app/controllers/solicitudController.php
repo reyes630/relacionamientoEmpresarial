@@ -294,6 +294,60 @@ class SolicitudController extends BaseController
     
     $this->render('admin/indexAdministrativo.php', $data);
     }
+    public function archivadas() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $rol = $_SESSION['rol'] ?? null;
+        $idUsuario = $_SESSION['idUsuario'] ?? null;
 
-    
+        $solicitudModel = new \App\Models\SolicitudModel();
+
+        if ($rol == 1) {
+            // Administrador: ver todas las archivadas
+            $solicitudes = $solicitudModel->getArchivadas();
+        } elseif ($rol == 3 || $rol == 4) {
+            // Instructor o Funcionario: solo las archivadas asignadas a él
+            $solicitudes = $solicitudModel->getArchivadasByAsignacion($idUsuario);
+        } else {
+            $solicitudes = [];
+        }
+
+        // Puedes cargar los demás datos igual que en view()
+        $clienteObj = new \App\Models\ClienteModel();
+        $clientes = $clienteObj->getAll();
+
+        $servicioObj = new \App\Models\ServicioModel();
+        $servicios = $servicioObj->getAll();
+
+        $estadoObj = new \App\Models\EstadoModel();
+        $estados = $estadoObj->getAll();
+
+        $data = [
+            "solicitudes" => $solicitudes,
+            "clientes" => $clientes,
+            "servicios" => $servicios,
+            "estados" => $estados,
+            "titulo" => "Solicitudes Archivadas"
+        ];
+
+        // Reutiliza la vista view.php
+        $this->render('solicitud/view.php', $data);
+    }
+
+    public function archivarSolicitud($idSolicitud) {
+        header('Content-Type: application/json');
+        try {
+            $solicitudModel = new \App\Models\SolicitudModel();
+            $success = $solicitudModel->archivar($idSolicitud);
+            if ($success) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'No se pudo archivar']);
+            }
+        } catch (\Exception $e) {
+            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        }
+        exit;
+    }
 }

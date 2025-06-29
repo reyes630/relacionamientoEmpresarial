@@ -1,4 +1,4 @@
-  <style>
+<style>
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -162,6 +162,32 @@
         max-height: 100px;
       }
     }
+
+    /* Modo oscuro para las cards del administrador */
+body.dark-mode .card,
+body.dark-mode .metric-card,
+body.dark-mode .chart-container {
+    background-color: #23272a !important;
+    color: #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+body.dark-mode .title {
+    color: #39A900;
+}
+
+body.dark-mode .info,
+body.dark-mode .metric-label {
+    color: #b0b0b0;
+}
+
+body.dark-mode .metric-value {
+    color: #39A900;
+}
+
+body.dark-mode .img {
+    filter: brightness(0.92) contrast(1.05);
+}
   </style>
 
 

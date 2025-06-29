@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2025 a las 06:03:56
+-- Tiempo de generación: 29-06-2025 a las 04:12:00
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,13 @@ INSERT INTO `cliente` (`idCliente`, `DocumentoCliente`, `NombreCliente`, `Correo
 (22, '10687243', 'Maye Agudelo', 'maye@gmail.com', '209034904'),
 (23, '383758374', 'Sebastian', 'sebas@gmail.com', '2326264'),
 (24, '1023456789', 'Laura Sánchez', 'laura.sanchez@testmail.com', '3001234567'),
-(25, '1012345678', 'Andrés Martínez', 'andres.martinez@testmail.com', '3112345678');
+(25, '1012345678', 'Andrés Martínez', 'andres.martinez@testmail.com', '3112345678'),
+(26, '1032548796', 'Laura Gómez Restrepo', 'laura.gomez@example.com', '3124567890'),
+(27, '1023987451', 'Andrés Felipe Torres', 'andrestorres93@example.com', '3109876543'),
+(28, '1001346789', 'Mariana Sánchez Pineda', 'mariana.sp@example.com', '3112345678'),
+(29, '18592022', 'Rafael Antonio Agudelo', 'Rafa@example.com', '3127658365'),
+(30, '1234567890', 'Ingeniero del Sabor', 'inmge@example.com', '31254765'),
+(31, '1054134786', 'Maryelly Agudelo Lopez', 'maye@example.com', '3116006357');
 
 -- --------------------------------------------------------
 
@@ -127,8 +133,8 @@ CREATE TABLE `solicitud` (
   `FechaCreacion` date NOT NULL,
   `Lugar` varchar(80) DEFAULT NULL,
   `Municipio` varchar(50) NOT NULL,
-  `Observaciones` varchar(100) DEFAULT NULL,
-  `Comentarios` varchar(100) DEFAULT NULL,
+  `Observaciones` text DEFAULT NULL,
+  `Comentarios` text DEFAULT NULL,
   `MedioSolicitud` varchar(50) DEFAULT NULL,
   `DescripcionNecesidad` varchar(100) DEFAULT NULL,
   `FKusuario` int(11) NOT NULL,
@@ -138,6 +144,17 @@ CREATE TABLE `solicitud` (
   `FKtipoServicio` int(11) NOT NULL,
   `Asignacion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `solicitud`
+--
+
+INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`, `Asignacion`) VALUES
+(52, '2025-06-11', '2025-06-19', 'Centro cultural', 'Manizales', '', '', 'Web', 'Tgo para 30 personas ', 9, 1, 5, 26, 31, 8),
+(53, '2025-06-19', '2025-06-19', 'Hotel san Francisco', 'Villamaria', '', '', 'Web', '20 personas de la empresa', 9, 1, 2, 27, 46, 8),
+(54, '2025-06-09', '2025-06-19', 'Centro cultural', 'Villamaria', '25-06-25, Se comunico con Mariana sanches y se porgramo reunión para el dia 01-07-2025 a la 1:00pm ', '', 'Web', 'Emprendedores del campo', 9, 1, 2, 28, 35, 9),
+(55, '2025-06-19', '2025-06-19', 'Centro cultural', 'Villamaria', '', '', 'Web', 'sin descripción', 7, 1, 2, 29, 42, 9),
+(57, '2025-06-28', '2025-06-28', '', 'Villamaria', '03-7-2025 En la reunción se dice que la microempresa de dieños de zapatos para bata, requiere un cur', '29-06-2025 Se realizo llamada y no hubo respuetsa, se envio correo donde se informa sobre el inicio.', 'Web', 'Curso para microempresa de ingles comunicativo', 7, 1, 8, 31, 57, 9);
 
 -- --------------------------------------------------------
 
@@ -214,13 +231,7 @@ INSERT INTO `tiposervicio` (`idTipoServicio`, `TipoServicio`, `FKidServicio`) VA
 (46, 'Autocad 2D y 3D', 6),
 (47, 'Adobe Illustrator y Photoshop', 6),
 (48, 'Adobe Illustrator y Photoshop', 6),
-(49, 'Corel Draw', 6),
 (50, 'Corel Draw', 6),
-(51, 'Corel Draw', 6),
-(52, 'Corel Draw', 6),
-(53, 'Corel Draw', 6),
-(54, 'Corel Draw', 6),
-(55, 'Corel Draw', 6),
 (56, 'Fotografía', 6),
 (57, 'Inglés (niveles 1 a 13)', 6),
 (58, 'Electrónica y sensores industriales', 6);
@@ -247,7 +258,7 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`idUsuario`, `DocumentoUsuario`, `NombreUsuario`, `CorreoUsuario`, `TelefonoUsuario`, `ContraseñaUsuario`, `FKidRol`) VALUES
 (7, '1058138879', 'jd', 'jd@gmail.com', '3127591649', '$2y$10$LKv.w4CHFyUTSiDfTt/71.fB2qLKoreykPmufqBPKCgC/ZFc4ivZq', 1),
-(8, '10575486', 'Sebitas Ocampo', 'sebitas@gmail.com', '3127591647', '$2y$10$Rp1ilnzpn79WQlGH5bFpCO3OQouDAp/DzkDJXz5svb.1nCYLpkdJ2', 4),
+(8, '10575486', 'Sebitas Ocampo', 'sebitas@instructor.com', '3127591647', '$2y$10$Rp1ilnzpn79WQlGH5bFpCO3OQouDAp/DzkDJXz5svb.1nCYLpkdJ2', 4),
 (9, '1058138879', 'Esteban Reyes', 'reyes@gmail.com', '35487962', '$2y$10$MC1gQYgme3tkXRRnmsItFOtrXwsd3foswKSWy3qFXyA/MjrzST7fS', 3),
 (10, '147852369', 'Yerson Herrera', 'yerson@gmail.com', '35487962', '$2y$10$i8a7bw0lLIQEkHzuUVsb0e2qRYL3nSYPZT0XzM5RwwGyrZW9Y0JGO', 2);
 
@@ -318,7 +329,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
@@ -330,7 +341,7 @@ ALTER TABLE `servicio`
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de la tabla `tipoevento`

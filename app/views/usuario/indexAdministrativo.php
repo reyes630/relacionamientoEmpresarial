@@ -96,6 +96,46 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* Modo oscuro para las cards y contenedores administrativos */
+    body.dark-mode .card,
+    body.dark-mode .chart-container,
+    body.dark-mode .movimientos {
+        background: #23272a !important;
+        color: #e0e0e0;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+
+    body.dark-mode .card .title,
+    body.dark-mode .chart-container h2,
+    body.dark-mode .movimientos h2 {
+        color: #39A900;
+    }
+
+    body.dark-mode .card .value {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .movimiento-header {
+        border-bottom: 2px solid #393e42;
+        color: #b0b0b0;
+        background: #23272a;
+    }
+
+    body.dark-mode .movimiento {
+        border-bottom: 1px solid #393e42;
+        color: #e0e0e0;
+        background: #23272a;
+    }
+
+    body.dark-mode .movimiento:hover {
+        background-color: #2d3238;
+    }
+
+    body.dark-mode .chart-placeholder {
+        background-color: #393e42;
+        color: #b0b0b0;
+    }
 </style>
 
 <div class="container">

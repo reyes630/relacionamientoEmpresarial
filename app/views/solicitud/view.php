@@ -14,27 +14,27 @@
     .solicitud-row {
         border-bottom: 3px solid #f0f0f0;
         display: grid;
-        grid-template-columns: 60px 1fr 1fr 1fr 1fr 1.5fr;
+        grid-template-columns: 40px 1fr 1fr 0.7fr 1fr 1.2fr; /* Estado más angosto */
         align-items: center;
         text-align: center;
-        gap: 10px;
+        gap: 6px;
     }
 
     .titulos div {
         font-weight: bold;
-        padding: 15px 0;
-        font-size: 1rem;
-        letter-spacing: 0.5px;
+        padding: 8px 0;
+        font-size: 0.92rem;
+        letter-spacing: 0.3px;
         text-transform: uppercase;
     }
 
     .solicitud-row div {
-        margin: 6px 0;
-        padding: 12px 8px;
+        margin: 2px 0;
+        padding: 6px 4px;
+        font-size: 0.88rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 0.98rem;
     }
 
     .solicitud-row {
@@ -73,10 +73,10 @@
     }
 
     .service-badge {
-        padding: 6px 12px;
-        border-radius: 20px;
+        padding: 3px 8px;
+        border-radius: 14px;
         display: inline-block;
-        font-size: 0.9rem;
+        font-size: 0.82rem;
         font-weight: 500;
         transition: all 0.2s ease;
     }
@@ -90,15 +90,24 @@
     }
 
     .buttons a {
-        margin: 0 5px;
+        margin: 0 1px;
         color: #fff;
-        font-size: 1.1rem;
-        transition: color 0.2s;
+        font-size: 0.92rem;
+        padding: 1px 7px;   /* Reduce el padding vertical (height) */
+        border-radius: 18px;
+        background: #04324D;
+        display: inline-flex;
+        align-items: center;
+        transition: background 0.2s, color 0.2s;
     }
 
     .buttons a:hover {
         color: #09669C;
         color: #fff;
+    }
+
+    .buttons a i {
+        font-size: 0.8rem;
     }
 
     /* Estilo para la barra de búsqueda */
@@ -347,14 +356,14 @@
 
         .titulos,
         .solicitud-row {
-            grid-template-columns: 30px 1fr 1fr 1fr 1fr 1fr;
-            font-size: 0.95rem;
+            grid-template-columns: 20px 1fr 1fr 0.7fr 1fr 1.2fr;
+            font-size: 0.8rem;
         }
 
         .titulos>div,
         .solicitud-row>div {
-            padding: 8px 2px;
-            font-size: 0.95rem;
+            padding: 4px 1px;
+            font-size: 0.8rem;
         }
 
         .status-indicator {
@@ -371,6 +380,112 @@
         .search-container {
             width: 100%;
         }
+    }
+
+    .archivados-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: #fff;            /* Fondo blanco */
+        color: #09669C;              /* Texto azul */
+        padding: 7px 18px;
+        border-radius: 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        border: 2px solid #09669C;   /* Borde azul */
+        transition: background 0.2s, color 0.2s;
+    }
+
+    .archivados-btn:hover {
+        background: #09669C;         /* Fondo azul al pasar */
+        color: #fff;                 /* Texto blanco al pasar */
+    }
+
+    .archivados-btn i {
+        font-size: 1.1rem;
+    }
+
+    /* MODO OSCURO PARA TABLA Y FILTROS */
+    /* filepath: e:\RelacionamientoEmpresarial\app\views\solicitud\view.php */
+
+    body.dark-mode .table {
+        background: #23272a;
+        color: #e0e0e0;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+    }
+
+    body.dark-mode .titulos,
+    body.dark-mode .solicitud-row {
+        background: #23272a;
+        border-bottom: 3px solid #393e42;
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .titulos div {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .solicitud-row div {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .solicitud-row:hover {
+        background: #2d3238;
+    }
+
+    body.dark-mode .service-badge.light {
+        color: #e0e0e0;
+        background: #393e42;
+    }
+
+    body.dark-mode .service-badge.dark {
+        color: #fff;
+        background: #393e42;
+    }
+
+    body.dark-mode .status-indicator {
+        border: 2px solid #393e42;
+    }
+
+    body.dark-mode .filters {
+        background: #23272a;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+    }
+
+    body.dark-mode .form-group label {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .form-control,
+    body.dark-mode input,
+    body.dark-mode select {
+        background: #393e42;
+        color: #e0e0e0 !important;
+        border-color: #393e42;
+    }
+
+    body.dark-mode .form-control:focus {
+        border-color: #09669C;
+        box-shadow: 0 0 0 2px rgba(9,102,156,0.2);
+    }
+
+    body.dark-mode .search-bar {
+        background: #393e42;
+        border-bottom: 1px solid #393e42;
+    }
+
+    body.dark-mode .search-bar input[type="text"] {
+        background: #393e42;
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .search-bar .search-icon {
+        color: #b0b0b0;
+    }
+
+    body.dark-mode .no-results {
+        color: #ff7675;
     }
 </style>
 
@@ -415,6 +530,13 @@
     </div>
 </div>
 
+<!-- Agrega este botón justo antes del <div class="table"> -->
+<div style="display: flex; justify-content: flex-end; margin-bottom: 18px;">
+    <a href="/solicitud/archivadas" class="archivados-btn">
+        <i class="fas fa-archive"></i> Archivados
+    </a>
+</div>
+
 <main>
 
     <div class="table">
@@ -448,6 +570,10 @@
                 } else {
                     $statusClass = "status-old"; // rojo
                 }
+                // Mostrar botón archivar solo si estado es Resuelto (4) o Cerrado (8)
+                $mostrarArchivar = in_array($solicitud->FKestado ?? $solicitud->idEstado ?? null, [4, 8]);
+                // Mostrar botón eliminar solo si es administrador (rol 1)
+                $mostrarEliminar = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
                 ?>
                 <div class="solicitud-row">
                     <div>
@@ -469,9 +595,16 @@
                         <a href="/solicitud/edit/<?php echo $solicitud->idSolicitud; ?>" class="editar">
                             <i class="fas fa-edit"></i>
                         </a>
+                        <?php if ($mostrarEliminar): ?>
                         <a href="/solicitud/delete/<?php echo $solicitud->idSolicitud; ?>" class="eliminar">
                             <i class="fas fa-trash-alt"></i>
                         </a>
+                        <?php endif; ?>
+                        <?php if ($mostrarArchivar): ?>
+                        <a href="#" class="archivar" title="Archivar" data-id="<?php echo $solicitud->idSolicitud; ?>">
+                            <i class="fas fa-archive"></i>
+                        </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -560,6 +693,29 @@
             estadoSelect.addEventListener('change', filterSolicitudes);
             servicioSelect.addEventListener('change', filterSolicitudes);
         });
+         // JS para archivar solicitudes
+    document.querySelectorAll('.archivar').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = this.getAttribute('data-id');
+            if (confirm('¿Está seguro que desea archivar esta solicitud?')) {
+                fetch(`/solicitud/archivar/${id}`, {
+                    method: 'POST'
+                })
+                .then(res => res.json())
+                .then (data => {
+                    if (data.success) {
+                        // Solo oculta la fila, NO cambies el estado visualmente
+                        const row = this.closest('.solicitud-row');
+                        row.style.display = 'none';
+                    } else {
+                        alert('No se pudo archivar la solicitud.');
+                    }
+                })
+                .catch(() => alert('Error al archivar la solicitud.'));
+            }
+        });
+    });
     </script>
 
 </main>

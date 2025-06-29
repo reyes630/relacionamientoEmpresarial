@@ -147,6 +147,60 @@ $estados = $estadoModel->getAll();
             display: none;
         }
         
+        /* MODO OSCURO PARA FORMULARIO DE NUEVA SOLICITUD */
+        /* No cambia el color de fondo del logo */
+        body.dark-mode {
+            background: #181a1b;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .form-container {
+            background: #23272a !important;
+            color: #e0e0e0;
+            border: 1px solid #393e42;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+        }
+
+        body.dark-mode .form-group label {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .form-group input,
+        body.dark-mode .form-group select,
+        body.dark-mode .form-group textarea {
+            background: #393e42;
+            color: #e0e0e0;
+            border: 1px solid #393e42;
+        }
+
+        body.dark-mode .form-group input:valid,
+        body.dark-mode .form-group select:valid,
+        body.dark-mode .form-group textarea:valid {
+            background-color: #2d3238;
+            border-color: #28a745;
+        }
+
+        body.dark-mode .form-group input:invalid,
+        body.dark-mode .form-group select:invalid,
+        body.dark-mode .form-group textarea:invalid {
+            background-color: #3a2323;
+            border-color: #dc3545;
+        }
+
+        body.dark-mode .continue-btn,
+        body.dark-mode .submit-btn {
+            background-color: #09669C;
+            color: #fff;
+        }
+
+        body.dark-mode .back-btn {
+            color: #e0e0e0;
+        }
+
+        /* No modificar el fondo del logo en modo oscuro */
+        body.dark-mode .logo {
+            background-color: #39a900 !important;
+        }
     </style>
 </head>
 
@@ -202,8 +256,33 @@ $estados = $estadoModel->getAll();
                     <label for="municipality">Municipio *</label>
                     <select id="municipality" name="municipio" required>
                         <option value="">Selecciona una opción</option>
+                        <option value="Aguadas">Aguadas</option>
+                        <option value="Anserma">Anserma</option>
+                        <option value="Aranzazu">Aranzazu</option>
+                        <option value="Belalcázar">Belalcázar</option>
+                        <option value="Chinchiná">Chinchiná</option>
+                        <option value="Filadelfia">Filadelfia</option>
+                        <option value="La Dorada">La Dorada</option>
+                        <option value="La Merced">La Merced</option>
                         <option value="Manizales">Manizales</option>
-                        <option value="Villamaria">Villamaria</option>
+                        <option value="Manzanares">Manzanares</option>
+                        <option value="Marmato">Marmato</option>
+                        <option value="Marquetalia">Marquetalia</option>
+                        <option value="Marulanda">Marulanda</option>
+                        <option value="Neira">Neira</option>
+                        <option value="Norcasia">Norcasia</option>
+                        <option value="Pácora">Pácora</option>
+                        <option value="Palestina">Palestina</option>
+                        <option value="Pensilvania">Pensilvania</option>
+                        <option value="Riosucio">Riosucio</option>
+                        <option value="Risaralda">Risaralda</option>
+                        <option value="Salamina">Salamina</option>
+                        <option value="Samaná">Samaná</option>
+                        <option value="San José">San José</option>
+                        <option value="Supía">Supía</option>
+                        <option value="Victoria">Victoria</option>
+                        <option value="Villamaría">Villamaría</option>
+                        <option value="Viterbo">Viterbo</option>
                     </select>
                 </div>
 

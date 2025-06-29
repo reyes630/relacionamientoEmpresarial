@@ -24,14 +24,16 @@ class SolicitudModel extends BaseModel
     public function getAll(): array
     {
         try {
-            $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado 
-                    FROM {$this->table} s
+            $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado
+                    FROM solicitud s
                     JOIN cliente c ON s.FKcliente = c.idCliente
                     JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
                     JOIN servicio sv ON ts.FKidServicio = sv.idServicio
                     JOIN estado e ON s.FKestado = e.idEstado
-                    ORDER BY s.FechaCreacion DESC";
-            return $this->dbConnection->query($sql)->fetchAll(PDO::FETCH_OBJ);
+                    WHERE s.FKestado != 2"; // Excluir archivadas
+            $stmt = $this->dbConnection->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_OBJ);
         } catch (PDOException $e) {
             throw new PDOException("Error al obtener solicitudes: " . $e->getMessage());
         }
@@ -103,9 +105,11 @@ class SolicitudModel extends BaseModel
                         Lugar = :Lugar,
                         Municipio = :Municipio,
                         Comentarios = :Comentarios,
-                        Observaciones = :Observaciones,
-                        Asignacion = :Asignacion
-                    WHERE idSolicitud = :id";
+                        Observaciones = :Observaciones";
+            if ($Asignacion !== null) {
+                $sql .= ", Asignacion = :Asignacion";
+            }
+            $sql .= " WHERE idSolicitud = :id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             $statement->bindParam(":Descripcion", $Descripcion, PDO::PARAM_STR);
@@ -117,7 +121,9 @@ class SolicitudModel extends BaseModel
             $statement->bindParam(":Municipio", $Municipio, PDO::PARAM_STR);
             $statement->bindParam(":Comentarios", $Comentarios, PDO::PARAM_STR);
             $statement->bindParam(":Observaciones", $Observaciones, PDO::PARAM_STR);
-            $statement->bindParam(":Asignacion", $Asignacion, PDO::PARAM_STR);
+            if ($Asignacion !== null) {
+                $statement->bindParam(":Asignacion", $Asignacion, PDO::PARAM_INT);
+            }
             return $statement->execute();
         } catch (PDOException $ex) {
             throw new PDOException("Error al editar la solicitud: " . $ex->getMessage());
@@ -138,20 +144,14 @@ class SolicitudModel extends BaseModel
 
     public function getByAsignacion($idUsuario)
     {
-        $sql = "SELECT s.*, 
-                   c.NombreCliente, 
-                   sv.Servicio, 
-                   sv.Color, 
-                   e.Estado,
-                   ua.NombreUsuario AS NombreUsuarioAsignado
-            FROM solicitud s
-            JOIN cliente c ON s.FKcliente = c.idCliente
-            JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
-            JOIN servicio sv ON ts.FKidServicio = sv.idServicio
-            JOIN estado e ON s.FKestado = e.idEstado
-            LEFT JOIN usuario ua ON s.Asignacion = ua.idUsuario
-            WHERE s.Asignacion = :idUsuario";
-        $stmt = $this->dbConnection->prepare($sql); // <--- Cambia aquí
+        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado
+                FROM solicitud s
+                JOIN cliente c ON s.FKcliente = c.idCliente
+                JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
+                JOIN servicio sv ON ts.FKidServicio = sv.idServicio
+                JOIN estado e ON s.FKestado = e.idEstado
+                WHERE s.Asignacion = :idUsuario AND s.FKestado != 2"; // Excluir archivadas
+        $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
@@ -192,5 +192,39 @@ class SolicitudModel extends BaseModel
         } catch (PDOException $e) {
             throw new PDOException("Error al obtener solicitudes en proceso: " . $e->getMessage());
         }
+    }
+
+    public function getArchivadas() {
+        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado
+                FROM solicitud s
+                JOIN cliente c ON s.FKcliente = c.idCliente
+                JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
+                JOIN servicio sv ON ts.FKidServicio = sv.idServicio
+                JOIN estado e ON s.FKestado = e.idEstado
+                WHERE s.FKestado = 2"; // 2 = Archivado
+        $stmt = $this->dbConnection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    public function getArchivadasByAsignacion($idUsuario) {
+        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado
+                FROM solicitud s
+                JOIN cliente c ON s.FKcliente = c.idCliente
+                JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
+                JOIN servicio sv ON ts.FKidServicio = sv.idServicio
+                JOIN estado e ON s.FKestado = e.idEstado
+                WHERE s.FKestado = 2 AND s.Asignacion = :idUsuario";
+        $stmt = $this->dbConnection->prepare($sql);
+        $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    public function archivar($idSolicitud) {
+        $sql = "UPDATE solicitud SET FKestado = 2 WHERE idSolicitud = :idSolicitud"; // 2 = Archivado
+        $stmt = $this->dbConnection->prepare($sql);
+        $stmt->bindParam(':idSolicitud', $idSolicitud, \PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }

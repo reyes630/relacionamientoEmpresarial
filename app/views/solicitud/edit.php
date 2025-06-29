@@ -153,12 +153,44 @@
         </div>
         <div class="form-group">
             <label for="estado">Estado</label>
-            <select id="estado" name="IdEstado" class="form-control">
+            <?php
+            // Mapeo de estados permitidos según el estado actual
+            $estadoActual = $solicitud->FKestado;
+            $estadosPermitidos = [];
+
+            switch ($estadoActual) {
+                case 3: // Pendiente
+                    $estadosPermitidos = [7]; // Asignado
+                    break;
+                case 7: // Asignado
+                    $estadosPermitidos = [5]; // En proceso
+                    break;
+                case 5: // En proceso
+                    $estadosPermitidos = [6]; // Ejecutado
+                    break;
+                case 6: // Ejecutado
+                    $estadosPermitidos = [4, 8]; // Resuelto y Cerrado
+                    break;
+                case 4: // Resuelto
+                case 8: // Cerrado
+                    $estadosPermitidos = [2]; // Archivado
+                    break;
+                default:
+                    $estadosPermitidos = [$estadoActual]; // Solo el actual, por seguridad
+            }
+            ?>
+            <select id="estado" name="IdEstado" class="form-control" required>
                 <option value="">Seleccione un estado</option>
                 <?php foreach ($estados as $estado): ?>
-                    <option value="<?php echo $estado->idEstado; ?>" <?php echo ($solicitud->FKestado == $estado->idEstado) ? 'selected' : ''; ?>>
-                        <?php echo $estado->Estado; ?>
-                    </option>
+                    <?php
+                    // Mostrar si es permitido avanzar o si es el estado actual
+                    $mostrar = in_array($estado->idEstado, $estadosPermitidos) || $solicitud->FKestado == $estado->idEstado;
+                    ?>
+                    <?php if ($mostrar): ?>
+                        <option value="<?php echo $estado->idEstado; ?>" <?php echo ($solicitud->FKestado == $estado->idEstado) ? 'selected' : ''; ?>>
+                            <?php echo $estado->Estado; ?>
+                        </option>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </select>
         </div>

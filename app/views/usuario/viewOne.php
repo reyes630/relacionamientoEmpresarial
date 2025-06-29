@@ -8,6 +8,38 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
+    /* Modo oscuro para la vista de usuario */
+    body.dark-mode .data-container {
+        background-color: #23272a !important;
+        color: #e0e0e0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    body.dark-mode .data-container .field strong {
+        color: #b0b0b0;
+    }
+
+    body.dark-mode .data-container .field span {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .btn-primary {
+        background: #09669C;
+        color: #fff;
+        border: none;
+    }
+
+    body.dark-mode .btn-secondary {
+        background: #393e42;
+        color: #e0e0e0;
+        border: none;
+    }
+
+    body.dark-mode .btn-primary:hover,
+    body.dark-mode .btn-secondary:hover {
+        opacity: 0.85;
+    }
 </style>
 <div class="data-container">
     <?php if ($usuario): ?>

@@ -282,6 +282,14 @@ return [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'deleteSolicitud'
     ],
+    '/solicitud/archivadas' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'archivadas'
+    ],
+    '/solicitud/archivar/(\d+)' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'archivarSolicitud'
+    ],
 
     // Formulario
    /*  '/formulario/new' => [
