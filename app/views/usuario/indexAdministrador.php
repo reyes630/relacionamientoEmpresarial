@@ -189,7 +189,7 @@ body.dark-mode .img {
     filter: brightness(0.92) contrast(1.05);
 }
   </style>
-
+ 
 
   <div class="container">
     <!-- Card Usuarios -->
@@ -263,7 +263,9 @@ body.dark-mode .img {
   <section>
     <main class="dashboard-container">
       <div class="metric-card">
-        <img src="../img/resuelto.png" class="img">
+        <canvas id="myChart"  width="400" height="200"></canvas>
+
+        </canvas>
       </div>
       <div class="metric-card">
         <img src="../img/formulariosRecibidos.png" class="img">
@@ -279,3 +281,5 @@ body.dark-mode .img {
       </div>
     </main>
   </section>
+  
+   

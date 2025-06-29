@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/styles_admin_layout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .hamburger-bar {
             fill: #262626;
@@ -354,5 +355,6 @@
             }
         });
     </script>
+    <script src="/js/estadisticas.js"> </script>
 </body>
 </html>
