@@ -356,5 +356,6 @@
         });
     </script>
     <script src="/js/estadisticas.js"> </script>
+    <script src="/js/session-timeout.js"></script>
 </body>
 </html>

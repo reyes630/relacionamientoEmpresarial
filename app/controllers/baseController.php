@@ -1,35 +1,42 @@
 <?php
+
 namespace App\Controllers;
 
 session_start();
-//var_dump(session_status()); //Comprobar si la sesion esta activo 2 => activa 1=> no activa
 
 use ValueError;
 
-class BaseController {
+class BaseController
+{
     public $layout = "default";
 
-    public function __construct() {
-        if (session_status() === PHP_SESSION_NONE) session_start();
+    public function __construct()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-        // Tiempo máximo de inactividad (en segundos)
-        $max_inactive = 15 * 60; // 15 minutos
+        // Tiempo máximo de inactividad (15 minutos)
+        $max_inactive = 15 * 60;
 
-        if (isset($_SESSION['timeOut'])) {
-            if (time() - $_SESSION['timeOut'] > $max_inactive) {
-                // Sesión expirada por inactividad
-                session_unset();
-                session_destroy();
-                header("Location: /login/init?timeout=1");
-                exit();
-            } else {
-                // Actualiza el tiempo de actividad
-                $_SESSION['timeOut'] = time();
-            }
+        // Inicializa el timestamp si no está seteado
+        if (!isset($_SESSION['timeOut'])) {
+            $_SESSION['timeOut'] = time();
+        }
+
+        // Validar inactividad
+        if (time() - $_SESSION['timeOut'] > $max_inactive) {
+            session_unset();
+            session_destroy();
+            header("Location: /login/init?timeout=1");
+            exit();
+        } else {
+            $_SESSION['timeOut'] = time();
         }
     }
 
-    public function render(string $view, array $arrayData = null) {
+    public function render(string $view, array $arrayData = null)
+    {
         if (isset($arrayData) && is_array($arrayData)) {
             foreach ($arrayData as $key => $value) {
                 $$key = $value;
@@ -40,18 +47,19 @@ class BaseController {
         include_once $layout;
     }
 
-    public function formatNumber($number) {
-        // Formatear número con separador de miles y decimales
+    public function formatNumber($number)
+    {
         return number_format($number, 2, ',', '.');
     }
 
-    public function redirectTo($view) {
+    public function redirectTo($view)
+    {
         header("Location: /$view");
         exit();
     }
 
-    // Conexión a la base de datos (usando PDO)
-    protected function dbConnect() {
+    protected function dbConnect()
+    {
         try {
             $dsn = "mysql:host=localhost;dbname=relacionamientoempresarial;charset=utf8mb4";
             $username = "root";
@@ -66,11 +74,12 @@ class BaseController {
         }
     }
 
-    protected function verificarSesion() {
+    protected function verificarSesion()
+    {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
+
         if (!isset($_SESSION['usuario_id'])) {
             header('Location: /login');
             exit();

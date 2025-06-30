@@ -13,13 +13,13 @@ return [
         "action" => 'saludar'
     ],
 
-    
-    
+
+
     '/login/init' => [
         "controller" => 'App\Controllers\LoginController',
         "action" => 'initLogin'
     ],
-   /*  '/login' => [
+    /*  '/login' => [
         "controller" => 'App\Controllers\LoginController',
         "action" => 'index'
     ], */
@@ -292,7 +292,7 @@ return [
     ],
 
     // Formulario
-   /*  '/formulario/new' => [
+    /*  '/formulario/new' => [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'newSolicitud'
     ], */
@@ -310,7 +310,7 @@ return [
         "controller" => 'App\Controllers\UsuarioController',
         "action" => 'Estadisticas'
     ],
-    
+
     '/usuario/indexSolicitudes' => [
         "controller" => 'App\Controllers\UsuarioController',
         "action" => 'solicitudes'
@@ -323,7 +323,15 @@ return [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'SolicitudEstadisticas'
     ],
-/* -------------------- */
+    /* -------------------- */
+    '/session/keep-alive' => [
+        'controller' => 'App\Controllers\LoginController',
+        'action' => 'keepAlive'
+    ],
+    '/session/status' => [
+        'controller' => 'App\Controllers\LoginController',
+        'action' => 'status'
+    ],
 
-   
+
 ];

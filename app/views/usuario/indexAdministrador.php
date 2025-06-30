@@ -281,5 +281,3 @@ body.dark-mode .img {
       </div>
     </main>
   </section>
-  
-   
