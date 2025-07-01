@@ -490,6 +490,21 @@
 </style>
 
 
+<?php
+function adjustBrightness($hex, $steps) {
+    // Steps: -255 (más oscuro) a 255 (más claro)
+    $hex = str_replace('#', '', $hex);
+    if (strlen($hex) == 3) {
+        $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
+    }
+    $r = max(0, min(255, hexdec(substr($hex, 0, 2)) + $steps));
+    $g = max(0, min(255, hexdec(substr($hex, 2, 2)) + $steps));
+    $b = max(0, min(255, hexdec(substr($hex, 4, 2)) + $steps));
+    return sprintf("#%02x%02x%02x", $r, $g, $b);
+}
+?>
+
+
 <!-- Modificación del HTML de los filtros -->
 <div class="filters">
     <div class="search-container">
@@ -583,10 +598,19 @@
                     <div><?php echo htmlspecialchars($solicitud->FechaCreacion); ?></div>
                     <div><?php echo htmlspecialchars($solicitud->Estado); ?></div>
                     <div>
-                        <div class="service-badge <?php echo $textClass; ?>"
-                            style="background-color: <?php echo htmlspecialchars($solicitud->Color); ?>">
+                        <?php
+                        $colorOriginal = $solicitud->Color;
+                        $colorFondo = adjustBrightness($colorOriginal, 80);   // Más claro
+                        $colorBordeYTexto = adjustBrightness($colorOriginal, -60); // Más oscuro
+                        ?>
+                        <span class="service-badge"
+                            style="
+                                background-color: <?php echo $colorFondo; ?>;
+                                color: <?php echo $colorBordeYTexto; ?>;
+                                border: 1.5px solid <?php echo $colorBordeYTexto; ?>;
+                            ">
                             <?php echo htmlspecialchars($solicitud->Servicio); ?>
-                        </div>
+                        </span>
                     </div>
                     <div class="buttons">
                         <a href="/solicitud/view/<?php echo $solicitud->idSolicitud; ?>" class="ver buttons">

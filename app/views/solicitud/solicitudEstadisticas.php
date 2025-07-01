@@ -1,12 +1,4 @@
 <style> 
-    .dashboard-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  background: #f5f5f5;
-}
-
 .dashboard-cards {
   display: grid;
   grid-template-areas:
@@ -15,19 +7,25 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   padding: 20px;
-  background: #f5f5f5;
   height: 100vh; /* Opcional: ajusta a tu gusto */
 }
 
 .card {
-  background: #23272a; /* Gris oscuro */
-  color: #e0e0e0;
+  background: #f9f9f9; /* Fondo claro por defecto */
+  color: #23272a;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
   padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+/* Modo oscuro: fondo oscuro y texto claro */
+body.dark-mode .card {
+  background: #23272a !important;
+  color: #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.18);
 }
 
 .card:nth-child(1) {
@@ -104,38 +102,14 @@
 <section class="dashboard-cards">
   <!-- Ficha: Solicitudes Mensuales -->
  <div class="card solicitudes">
-  <div class="card-text">
-    <p class="title">Solicitudes Mensuales</p>
-    <div class="meses">
-      <div>
-        <p>Enero</p>
-        <p class="numero">400</p>
-      </div>
-      <div>
-        <p>Febrero</p>
-        <p class="numero">50</p>
-      </div>
-    </div>
-  </div>
-  <img src="../img/dona.png" alt="Gráfico de dona" class="card-image" />
+   <canvas id="serviciospedidos" width="600px" height="300px"></canvas>
 </div>
-
-  
     <!-- Ficha: Barras estadísticas -->
     <div class="card">
-      <p class="title">Barras estadísticas</p>
-      <img src="../img/progresosEstados.png" alt="Barras estadísticas" class="card-image" />
-    </div>
-  <!-- Ficha: Trimestre 1 -->
+      <canvas id="topMunicipios" width="500px" height="200px"></canvas>
+      </div>
+
   <div class="card">
-    <div class="card-text">
-      <p class="title">Trimestre 1</p>
-      <ul class="leyenda">
-        <li><span class="dot dot-verde"></span> En Proceso (100)</li>
-        <li><span class="dot dot-celeste"></span> Ejecutados (50)</li>
-        <li><span class="dot dot-gris"></span> Asignados (35)</li>
-      </ul>
+     <canvas id="solicitudesPorEstado" width="500px" height="500px"></canvas>
     </div>
-    <img src="../img/radar.png" alt="Gráfico circular" class="card-image" />
-  </div>
 </section>
