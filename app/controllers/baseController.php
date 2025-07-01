@@ -47,17 +47,15 @@ class BaseController
         include_once $layout;
     }
 
-    public function formatNumber($number)
+    protected function renderPartial($view, $data = [])
     {
-
-    protected function renderPartial($view, $data = []) {
         extract($data);
         require MAIN_APP_ROUTE . "../views/" . $view;
     }
 
-    public function formatNumber($number) {
+    public function formatNumber($number)
+    {
         // Formatear número con separador de miles y decimales
-
         return number_format($number, 2, ',', '.');
     }
 
