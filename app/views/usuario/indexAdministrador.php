@@ -263,21 +263,19 @@ body.dark-mode .img {
   <section>
     <main class="dashboard-container">
       <div class="metric-card">
-        <canvas id="myChart"  width="400" height="200"></canvas>
-
-        </canvas>
+        <canvas id="myChart"  width="400px" height="90px"></canvas>
       </div>
       <div class="metric-card">
-        <img src="../img/formulariosRecibidos.png" class="img">
+        <canvas id="requestinprocess" width="200px" height="90px"></canvas>
       </div>
       <div class="metric-card">
-        <img src="../img/radar.png" class="img">
+        <canvas id="serviciospedidos" width="400px" height="200px"></canvas>
       </div>
       <div class="metric-card">
-        <img src="../img/solicitudes.png" class="img">
+        <canvas id="topMunicipios" width="300px" height="200px"></canvas>
       </div>
       <div class="metric-card">
-        <img src="../img/progresosEstados.png" class="img">
+        <canvas id="solicitudesPorEstado" width="300px" height="200px"></canvas>
       </div>
     </main>
   </section>

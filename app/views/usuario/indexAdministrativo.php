@@ -42,13 +42,13 @@
     }
 
     .chart-placeholder {
-      background-color: #eaeaea;
       height: 200px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #888;
       font-style: italic;
+      border-radius: 10px;
     }
 
     .movimientos {
@@ -163,7 +163,7 @@
   <div class="chart-container">
     <h2>Actividad Mensual</h2>
     <div class="chart-placeholder">
-        <img src="../img/resuelto.png" alt="">
+          <canvas id="myChart"  width="400px" height="90px"></canvas>
     </div>
   </div>
 
