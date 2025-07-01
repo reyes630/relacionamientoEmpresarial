@@ -97,7 +97,18 @@ class UsuarioController extends BaseController
             "titulo" => "Ver Usuario",
             "usuario" => $usuario
         ];
-        $this->render("usuario/viewOne.php", $data);
+
+        // Detectar si es una petición AJAX
+        if (
+            !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
+        ) {
+            // Renderiza solo el fragmento, sin layout
+            $this->renderPartial("usuario/viewOne.php", $data);
+        } else {
+            // Renderiza con layout normalmente
+            $this->render("usuario/viewOne.php", $data);
+        }
     }
 
     public function editUsuario($id)

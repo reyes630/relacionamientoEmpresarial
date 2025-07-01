@@ -55,7 +55,18 @@ class ClienteController extends BaseController{
             "cliente" => $clienteInfo,
             "titulo" => "Ver cliente: ".$clienteInfo->NombreCliente
         ];
-        $this->render("cliente/viewOne.php", $data);
+
+        // Detectar si es una petición AJAX
+        if (
+            !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
+        ) {
+            // Renderiza solo el fragmento, sin layout
+            $this->renderPartial("cliente/viewOne.php", $data);
+        } else {
+            // Renderiza con layout normalmente
+            $this->render("cliente/viewOne.php", $data);
+        }
     }
 
     public function editCliente($id){

@@ -54,6 +54,48 @@
             font-size: 1.5rem;
         }
     }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .modal-content {
+        background: #fff;
+        padding: 24px 32px;
+        border-radius: 10px;
+        min-width: 300px;
+        max-width: 90vw;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 18px;
+        font-size: 2rem;
+        color: #333;
+        cursor: pointer;
+    }
+
+    .close-modal:hover {
+        color: #e74c3c;
+    }
+
+    body.dark-mode .modal-content {
+        background: #23272a;
+        color: #e0e0e0;
+    }
 </style>
 <div class="data-container">
     <h2 class="form-title">Detalles de la Solicitud</h2>
@@ -85,7 +127,7 @@
                 </div>
                 <div class='detail-group'>
                     <label>Cliente</label>
-                    <span><a href='/cliente/view/{$solicitud->FKcliente}' style='color:#000;text-decoration:none;cursor:pointer'>{$solicitud->NombreCliente}</a></span>
+                    <span><a href='#' onclick='mostrarClienteModal({$solicitud->idCliente}); return false;' style='color:#000;text-decoration:none;cursor:pointer'>{$solicitud->NombreCliente}</a></span>
                 </div>
                 
                 <div class='detail-group'>
@@ -137,5 +179,34 @@
     }
     ?>
 </div>
+
+<div id="clienteModal" class="modal-overlay" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal" onclick="cerrarModal()">&times;</span>
+    <div id="modalClienteInfo">
+      <!-- Aquí se cargará la información del cliente -->
+    </div>
+  </div>
+</div>
+
+<script>
+    /* MODAL PARA CLIENTE */
+    function mostrarClienteModal(idCliente) {
+        fetch('/cliente/view/' + idCliente, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('modalClienteInfo').innerHTML = html;
+            document.getElementById('clienteModal').style.display = 'flex';
+        });
+    }
+
+    function cerrarModal() {
+        document.getElementById('clienteModal').style.display = 'none';
+    }
+
+    
+</script>
 
 

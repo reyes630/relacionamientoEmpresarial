@@ -40,6 +40,11 @@ class BaseController {
         include_once $layout;
     }
 
+    protected function renderPartial($view, $data = []) {
+        extract($data);
+        require MAIN_APP_ROUTE . "../views/" . $view;
+    }
+
     public function formatNumber($number) {
         // Formatear número con separador de miles y decimales
         return number_format($number, 2, ',', '.');
