@@ -272,7 +272,7 @@ body.dark-mode .img {
         <canvas id="serviciospedidos" width="400px" height="200px"></canvas>
       </div>
       <div class="metric-card">
-        <canvas id="topMunicipios" width="300px" height="100px"></canvas>
+        <canvas id="topMunicipios" width="300px" height="200px"></canvas>
       </div>
       <div class="metric-card">
         <canvas id="solicitudesPorEstado" width="300px" height="200px"></canvas>
