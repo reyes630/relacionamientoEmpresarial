@@ -233,34 +233,53 @@ const estadosColors = [
 ];
 
 var canvasEstados = document.getElementById('solicitudesPorEstado');
-// Solo crea la gráfica si el canvas existe en la página
 if (canvasEstados) {
-    var ctxEstados = canvasEstados.getContext('2d');
-    var estadosChart = new Chart(ctxEstados, {
-        type: 'pie',
-        data: {
-            labels: estadosLabels,
-            datasets: [{
-                data: estadosData,
-                backgroundColor: estadosColors,
-                borderColor: '#fff',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#333'
-                    }
-                },
-                title: {
-                    display: true,
-                    text: 'Solicitudes por Estado'
-                }
+    fetch('/solicitud/solicitudesPorEstadoAPI') // Ajusta la ruta si tu framework usa otra
+        .then(response => {
+            if (!response.ok) throw new Error('No se pudo obtener los datos');
+            return response.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data) || data.length === 0) {
+                // Si no hay datos, muestra un mensaje o una gráfica vacía
+                canvasEstados.parentNode.innerHTML = "<p style='text-align:center;color:#888;'>No hay datos para mostrar.</p>";
+                return;
             }
-        }
-    });
+            const labels = data.map(item => item.Estado);
+            const cantidades = data.map(item => parseInt(item.cantidad));
+            const colors = data.map(item => item.Color || '#ccc');
+
+            var ctxEstados = canvasEstados.getContext('2d');
+            new Chart(ctxEstados, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: cantidades,
+                        backgroundColor: colors,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#333'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Solicitudes por Estado'
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            canvasEstados.parentNode.innerHTML = "<p style='text-align:center;color:#c00;'>Error cargando la gráfica.</p>";
+            console.error(error);
+        });
 }

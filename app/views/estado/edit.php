@@ -32,6 +32,7 @@
   color: #333;
 }
 
+
 /* Campos de entrada y select */
 .form-control {
   width: 100%;
@@ -43,6 +44,10 @@
   transition: border-color 0.2s ease;
 }
 
+.color-picker {
+  height: 40px;
+  padding: 2px;
+}
 .form-control:focus {
   outline: none;
   border-color: #0b6e99;
@@ -73,22 +78,25 @@
 
 <div class="data-container">
     <form action="/estado/update" method="post">
-        
         <h2 class="form-title">Editar Estado</h2>
+        <input type="hidden" name="idEstado" value="<?php echo $estado->idEstado ?>">
         <div class="form-group">
-            <label for="">ID del estado</label>
-            <input readonly value="<?php echo $estado->idEstado ?>" type="number" name="idEstado" class="form-control">
+            <label for="Estado">Nombre del estado</label>
+            <input type="text" name="Estado" id="Estado" class="form-control" maxlength="45" required value="<?php echo $estado->Estado ?>">
         </div>
         <div class="form-group">
-            <label for="">Nombre del estado</label>
-            <input type="text" value="<?php echo $estado->Estado ?>" name="Estado" class="form-control" maxlength="45">
+            <label for="Descripcion">Descripción del estado</label>
+            <input type="text" name="Descripcion" id="Descripcion" class="form-control" maxlength="100" required value="<?php echo $estado->Descripcion ?>">
         </div>
+        <!-- Nuevo campo de color -->
         <div class="form-group">
-            <label for="">Descripción del estado</label>
-            <input value="<?php echo $estado->Descripcion ?>" type="text" name="Descripcion" class="form-control" maxlength="100">
+            <label for="Color">Color del Estado</label>
+            <input type="color" name="Color" id="Color" required 
+                   class="form-control color-picker" 
+                   value="<?php echo isset($estado->Color) ? $estado->Color : '#4361ee' ?>">
         </div>
         <div class="form-group button-group">
-            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
         </div>
     </form>
 </div>

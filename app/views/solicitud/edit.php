@@ -238,37 +238,139 @@
     </form>
 </div>
 
+<!-- Modal de confirmación para actualizar -->
+<div id="update-modal-overlay" class="delete-modal-overlay">
+    <div class="delete-modal-content">
+        <div class="delete-modal-icon">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="delete-modal-title">¿Actualizar solicitud?</div>
+        <div class="delete-modal-message">
+            ¿Estás seguro de que deseas guardar los cambios realizados en esta solicitud?
+        </div>
+        <div class="delete-modal-buttons">
+            <button type="button" class="delete-modal-btn delete-modal-btn-cancel" id="cancel-update-btn">Cancelar</button>
+            <button type="button" class="delete-modal-btn delete-modal-btn-confirm" id="confirm-update-btn">Actualizar</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const servicioSelect = document.getElementById('servicio');
-        const tipoServicioSelect = document.getElementById('tipoServicio');
+document.addEventListener('DOMContentLoaded', () => {
+    const servicioSelect = document.getElementById('servicio');
+    const tipoServicioSelect = document.getElementById('tipoServicio');
 
-        servicioSelect.addEventListener('change', async () => {
-            const servicioId = servicioSelect.value;
-
-            // Limpiar el campo de Tipo de Servicio
-            tipoServicioSelect.innerHTML = '<option value="">Seleccione un tipo de servicio</option>';
-
-            if (servicioId) {
-                try {
-                    // Llamar al endpoint para obtener los tipos de servicio
-                    const response = await fetch(`/tipoServicio/getTiposServicioByServicio/${servicioId}`);
-                    const tiposServicio = await response.json();
-
-                    // Agregar las opciones al campo de Tipo de Servicio
-                    tiposServicio.forEach(tipo => {
-                        const option = document.createElement('option');
-                        option.value = tipo.idTipoServicio;
-                        option.textContent = tipo.TipoServicio;
-                        tipoServicioSelect.appendChild(option);
-                    });
-                } catch (error) {
-                    console.error('Error al cargar los tipos de servicio:', error);
-                }
+    servicioSelect.addEventListener('change', async () => {
+        const servicioId = servicioSelect.value;
+        tipoServicioSelect.innerHTML = '<option value="">Seleccione un tipo de servicio</option>';
+        if (servicioId) {
+            try {
+                const response = await fetch(`/tipoServicio/getTiposServicioByServicio/${servicioId}`);
+                const tiposServicio = await response.json();
+                tiposServicio.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo.idTipoServicio;
+                    option.textContent = tipo.TipoServicio;
+                    tipoServicioSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error al cargar los tipos de servicio:', error);
             }
-        });
+        }
     });
+
+    // Modal de confirmación para actualizar
+    const form = document.querySelector('form[action="/solicitud/update"]');
+    const updateModal = document.getElementById('update-modal-overlay');
+    const cancelBtn = document.getElementById('cancel-update-btn');
+    const confirmBtn = document.getElementById('confirm-update-btn');
+    const submitBtn = document.querySelector('.btn-submit');
+
+    submitBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        updateModal.classList.add('show');
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        updateModal.classList.remove('show');
+    });
+
+    confirmBtn.addEventListener('click', function() {
+        updateModal.classList.remove('show');
+        form.submit();
+    });
+});
 </script>
+
+<style>
+/* Modal de confirmación (reutiliza estilos del modal de eliminar) */
+.delete-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none; justify-content: center; align-items: center;
+    z-index: 10001;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+.delete-modal-overlay.show { display: flex; }
+.delete-modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    position: relative;
+}
+.delete-modal-overlay.show .delete-modal-content { transform: scale(1); }
+.delete-modal-icon {
+    width: 70px; height: 70px; margin: 0 auto 20px; border-radius: 50%;
+    background: #fee2e2; display: flex; align-items: center; justify-content: center;
+    animation: pulse 2s infinite;
+}
+.delete-modal-icon i { font-size: 28px; color: #dc2626; }
+.delete-modal-title {
+    font-size: 22px; font-weight: 600; margin-bottom: 12px; color: #374151;
+}
+.delete-modal-message {
+    font-size: 16px; color: #6b7280; margin-bottom: 25px; line-height: 1.6;
+}
+.delete-modal-buttons {
+    display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;
+}
+.delete-modal-btn {
+    padding: 12px 24px; border: none; border-radius: 8px; font-size: 15px;
+    font-weight: 500; cursor: pointer; transition: all 0.2s ease; min-width: 100px;
+    position: relative; overflow: hidden;
+}
+.delete-modal-btn-cancel {
+    background: #f3f4f6; color: #374151; border: 2px solid #e5e7eb;
+}
+.delete-modal-btn-cancel:hover {
+    background: #e5e7eb; border-color: #d1d5db;
+}
+.delete-modal-btn-confirm {
+    background: linear-gradient(135deg, #0b5fa4, #003b5c);
+    color: white; border: 2px solid transparent;
+    box-shadow: 0 4px 14px 0 rgba(11, 95, 164, 0.25);
+}
+.delete-modal-btn-confirm:hover {
+    background: linear-gradient(135deg, #003b5c, #0b5fa4);
+    box-shadow: 0 6px 20px rgba(11, 95, 164, 0.3);
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+</style>
 
 
 

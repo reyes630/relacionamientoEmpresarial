@@ -113,3 +113,4 @@ body.dark-mode .card {
      <canvas id="solicitudesPorEstado" width="500px" height="500px"></canvas>
     </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

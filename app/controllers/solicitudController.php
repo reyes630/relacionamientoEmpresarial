@@ -350,4 +350,14 @@ class SolicitudController extends BaseController
         }
         exit;
     }
+
+    public function solicitudesPorEstadoAPI()
+    {
+        header('Content-Type: application/json');
+        $solicitudObj = new \App\Models\SolicitudModel();
+        $data = $solicitudObj->getSolicitudesPorEstado();
+        echo json_encode($data);
+        exit;
+    }
 }
+

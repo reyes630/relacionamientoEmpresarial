@@ -42,13 +42,14 @@ class EstadoModel extends BaseModel{
         }
     }
 
-    public function editEstado($id, $Estado, $Descripcion){
+    public function editEstado($id, $Estado, $Descripcion, $Color){
         try {
-            $sql = "UPDATE {$this->table} SET Estado=:Estado, Descripcion=:Descripcion WHERE idEstado=:id";
+            $sql = "UPDATE {$this->table} SET Estado=:Estado, Descripcion=:Descripcion, Color=:Color WHERE idEstado=:id";
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             $statement->bindParam(":Estado", $Estado, PDO::PARAM_STR);
             $statement->bindParam(":Descripcion", $Descripcion, PDO::PARAM_STR);
+            $statement->bindParam(":Color", $Color, PDO::PARAM_STR);
             $result = $statement->execute();
             return $result;
         } catch (PDOException $ex) {

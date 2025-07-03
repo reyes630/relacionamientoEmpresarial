@@ -71,9 +71,10 @@ class EstadoController extends BaseController {
             $id = $_POST["idEstado"] ?? null;
             $estado = $_POST["Estado"] ?? null;
             $descripcion = $_POST["Descripcion"] ?? null;
-            
+            $color = $_POST["Color"] ?? '#4361ee'; // Nuevo: obtener color
+
             $estadoObj = new EstadoModel();
-            $estadoObj->editEstado($id, $estado, $descripcion);
+            $estadoObj->editEstado($id, $estado, $descripcion, $color); // Pasar color
         }
         $this->redirectTo("estado/view");
     }

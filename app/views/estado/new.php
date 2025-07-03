@@ -69,10 +69,23 @@
   background-color: #00547d;
 }
 
+.color-picker {
+    height: 40px;
+    padding: 2px;
+}
+
+/* Mejora la apariencia del selector de color en diferentes navegadores */
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
 </style>
 <div class="data-container">
     <form action="/estado/create" method="post">
-        
         <h2 class="form-title">Crear Estado</h2>
         <div class="form-group">
             <label for="">Nombre del estado</label>
@@ -81,6 +94,13 @@
         <div class="form-group">
             <label for="">Descripción del estado</label>
             <input type="text" name="Descripcion" class="form-control" maxlength="100" required>
+        </div>
+        <!-- Nuevo campo de color -->
+        <div class="form-group">
+            <label for="Color">Color del Estado</label>
+            <input type="color" name="Color" id="Color" required 
+                   class="form-control color-picker" 
+                   value="<?php echo sprintf('#%06X', mt_rand(0, 0xFFFFFF)); ?>">
         </div>
         <div class="form-group button-group">
             <button type="submit" class="btn btn-primary">Guardar</button>

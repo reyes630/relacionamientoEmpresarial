@@ -290,6 +290,10 @@ return [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'archivarSolicitud'
     ],
+    '/solicitud/solicitudesPorEstadoAPI' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'solicitudesPorEstadoAPI'
+    ],
 
     // Formulario
     /*  '/formulario/new' => [
@@ -332,6 +336,7 @@ return [
         'controller' => 'App\Controllers\LoginController',
         'action' => 'status'
     ],
+    
 
 
 ];

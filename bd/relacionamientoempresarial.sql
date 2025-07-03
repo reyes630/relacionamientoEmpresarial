@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-06-2025 a las 04:12:00
+-- Tiempo de generación: 03-07-2025 a las 02:25:08
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -50,7 +50,11 @@ INSERT INTO `cliente` (`idCliente`, `DocumentoCliente`, `NombreCliente`, `Correo
 (28, '1001346789', 'Mariana Sánchez Pineda', 'mariana.sp@example.com', '3112345678'),
 (29, '18592022', 'Rafael Antonio Agudelo', 'Rafa@example.com', '3127658365'),
 (30, '1234567890', 'Ingeniero del Sabor', 'inmge@example.com', '31254765'),
-(31, '1054134786', 'Maryelly Agudelo Lopez', 'maye@example.com', '3116006357');
+(31, '1054134786', 'Maryelly Agudelo Lopez', 'maye@example.com', '3116006357'),
+(32, '1056123456', 'Miguel Peña', 'miguel@gmail.com', '3116541258'),
+(33, '123', 'Miguel', 'm@gmail.com', '31234'),
+(34, '123132', 'm', '1@gmail.com', '312455'),
+(35, '123443', 'Miguel', 'm1@gmai.com', '331456');
 
 -- --------------------------------------------------------
 
@@ -61,21 +65,22 @@ INSERT INTO `cliente` (`idCliente`, `DocumentoCliente`, `NombreCliente`, `Correo
 CREATE TABLE `estado` (
   `idEstado` int(11) NOT NULL,
   `Estado` varchar(45) NOT NULL,
-  `Descripcion` varchar(100) NOT NULL
+  `Descripcion` varchar(100) NOT NULL,
+  `Color` varchar(7) NOT NULL DEFAULT '#4361ee'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `estado`
 --
 
-INSERT INTO `estado` (`idEstado`, `Estado`, `Descripcion`) VALUES
-(2, 'Archivado', 'La solicitud recibio una solución y ya no es necesaria a la vista'),
-(3, 'Pendiente', 'La solicitud ha llegado al sistema y aun no ha iniciado un proceso'),
-(4, 'Resuelto', 'La solicitud recibio una respuesta y solución'),
-(5, 'En proceso', 'La solicitud se encuentra en medio del proceso de desarollo'),
-(6, 'Ejecutado', 'La solicitud paso el proceso y se espera una respuesta'),
-(7, 'Asignado', 'La solicitud ya fue asiganda a una persona para llevar el proceso'),
-(8, 'Cerrado', 'La solicitud no tuvo una solución esperada, puede encontarse en este estado con o sin una respuesta ');
+INSERT INTO `estado` (`idEstado`, `Estado`, `Descripcion`, `Color`) VALUES
+(2, 'Archivado', 'La solicitud recibio una solución y ya no es necesaria a la vista', '#ff0800'),
+(3, 'Pendiente', 'La solicitud ha llegado al sistema y aun no ha iniciado un proceso', '#fff700'),
+(4, 'Resuelto', 'La solicitud recibio una respuesta y solución', '#379de1'),
+(5, 'En proceso', 'La solicitud se encuentra en medio del proceso de desarollo', '#30248f'),
+(6, 'Ejecutado', 'La solicitud paso el proceso y se espera una respuesta', '#24e544'),
+(7, 'Asignado', 'La solicitud ya fue asiganda a una persona para llevar el proceso', '#003b5c'),
+(8, 'Cerrado', 'La solicitud no tuvo una solución esperada, puede encontarse en este estado con o sin una respuesta ', '#0b5fa4');
 
 -- --------------------------------------------------------
 
@@ -150,11 +155,13 @@ CREATE TABLE `solicitud` (
 --
 
 INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`, `Asignacion`) VALUES
-(52, '2025-06-11', '2025-06-19', 'Centro cultural', 'Manizales', '', '', 'Web', 'Tgo para 30 personas ', 9, 1, 5, 26, 31, 8),
+(52, '2025-06-11', '2025-06-19', 'Centro cultural', 'Manizales', '', '', 'Web', 'Tgo para 30 personas ', 9, 1, 7, 26, 31, 8),
 (53, '2025-06-19', '2025-06-19', 'Hotel san Francisco', 'Villamaria', '', '', 'Web', '20 personas de la empresa', 9, 1, 2, 27, 46, 8),
 (54, '2025-06-09', '2025-06-19', 'Centro cultural', 'Villamaria', '25-06-25, Se comunico con Mariana sanches y se porgramo reunión para el dia 01-07-2025 a la 1:00pm ', '', 'Web', 'Emprendedores del campo', 9, 1, 2, 28, 35, 9),
 (55, '2025-06-19', '2025-06-19', 'Centro cultural', 'Villamaria', '', '', 'Web', 'sin descripción', 7, 1, 2, 29, 42, 9),
-(57, '2025-06-28', '2025-06-28', '', 'Villamaria', '03-7-2025 En la reunción se dice que la microempresa de dieños de zapatos para bata, requiere un cur', '29-06-2025 Se realizo llamada y no hubo respuetsa, se envio correo donde se informa sobre el inicio.', 'Web', 'Curso para microempresa de ingles comunicativo', 7, 1, 8, 31, 57, 9);
+(59, '2025-07-02', '2025-07-02', 'San joaquin', 'Aguadas', '', '', 'Web', 'Hola', 7, 1, 2, 33, 8, 0),
+(60, '2025-07-02', '2025-07-02', 'hj', 'Aguadas', '', '', 'Web', 'ghgh', 7, 1, 4, 34, 46, 0),
+(61, '2025-07-02', '2025-07-02', '123322', 'Aguadas', '', '', 'Web', 'hola', 7, 1, 4, 35, 26, 0);
 
 -- --------------------------------------------------------
 
@@ -329,7 +336,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
@@ -341,7 +348,7 @@ ALTER TABLE `servicio`
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT de la tabla `tipoevento`

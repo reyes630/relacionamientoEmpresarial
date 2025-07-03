@@ -14,7 +14,8 @@
     .solicitud-row {
         border-bottom: 3px solid #f0f0f0;
         display: grid;
-        grid-template-columns: 40px 1fr 1fr 0.7fr 1fr 1.2fr; /* Estado más angosto */
+        grid-template-columns: 40px 1fr 1fr 0.7fr 1fr 1.2fr;
+        /* Estado más angosto */
         align-items: center;
         text-align: center;
         gap: 6px;
@@ -93,7 +94,8 @@
         margin: 0 1px;
         color: #fff;
         font-size: 0.92rem;
-        padding: 1px 7px;   /* Reduce el padding vertical (height) */
+        padding: 1px 7px;
+        /* Reduce el padding vertical (height) */
         border-radius: 18px;
         background: #04324D;
         display: inline-flex;
@@ -202,7 +204,8 @@
         display: none;
         justify-content: center;
         align-items: center;
-        z-index: 10000; /* Mayor z-index que el modal original */
+        z-index: 10000;
+        /* Mayor z-index que el modal original */
         backdrop-filter: blur(4px);
     }
 
@@ -386,20 +389,25 @@
         display: inline-flex;
         align-items: center;
         gap: 7px;
-        background: #fff;            /* Fondo blanco */
-        color: #09669C;              /* Texto azul */
+        background: #fff;
+        /* Fondo blanco */
+        color: #09669C;
+        /* Texto azul */
         padding: 7px 18px;
         border-radius: 20px;
         font-size: 1rem;
         font-weight: 500;
         text-decoration: none;
-        border: 2px solid #09669C;   /* Borde azul */
+        border: 2px solid #09669C;
+        /* Borde azul */
         transition: background 0.2s, color 0.2s;
     }
 
     .archivados-btn:hover {
-        background: #09669C;         /* Fondo azul al pasar */
-        color: #fff;                 /* Texto blanco al pasar */
+        background: #09669C;
+        /* Fondo azul al pasar */
+        color: #fff;
+        /* Texto blanco al pasar */
     }
 
     .archivados-btn i {
@@ -412,7 +420,7 @@
     body.dark-mode .table {
         background: #23272a;
         color: #e0e0e0;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
     }
 
     body.dark-mode .titulos,
@@ -450,7 +458,7 @@
 
     body.dark-mode .filters {
         background: #23272a;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.4);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
     }
 
     body.dark-mode .form-group label {
@@ -467,7 +475,7 @@
 
     body.dark-mode .form-control:focus {
         border-color: #09669C;
-        box-shadow: 0 0 0 2px rgba(9,102,156,0.2);
+        box-shadow: 0 0 0 2px rgba(9, 102, 156, 0.2);
     }
 
     body.dark-mode .search-bar {
@@ -487,15 +495,217 @@
     body.dark-mode .no-results {
         color: #ff7675;
     }
+
+    /* MODAL DE CONFIRMACIÓN DE ELIMINACIÓN */
+    .delete-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10001;
+        /* Mayor que el modal de logout */
+        backdrop-filter: blur(4px);
+        animation: fadeIn 0.3s ease;
+    }
+
+    .delete-modal-overlay.show {
+        display: flex;
+    }
+
+    .delete-modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        max-width: 420px;
+        width: 90%;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        text-align: center;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+        position: relative;
+    }
+
+    .delete-modal-overlay.show .delete-modal-content {
+        transform: scale(1);
+    }
+
+    .delete-modal-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #fee2e2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: pulse 2s infinite;
+    }
+
+    .delete-modal-icon i {
+        font-size: 28px;
+        color: #dc2626;
+    }
+
+    .delete-modal-title {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #374151;
+    }
+
+    .delete-modal-message {
+        font-size: 16px;
+        color: #6b7280;
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+
+    .delete-modal-client-name {
+        font-weight: 600;
+        color: #dc2626;
+    }
+
+    .delete-modal-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .delete-modal-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        min-width: 100px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .delete-modal-btn:hover {
+        transform: translateY(-1px);
+    }
+
+    .delete-modal-btn-cancel {
+        background: #f3f4f6;
+        color: #374151;
+        border: 2px solid #e5e7eb;
+    }
+
+    .delete-modal-btn-cancel:hover {
+        background: #e5e7eb;
+        border-color: #d1d5db;
+    }
+
+    .delete-modal-btn-confirm {
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+        color: white;
+        border: 2px solid transparent;
+        box-shadow: 0 4px 14px 0 rgba(220, 38, 38, 0.39);
+    }
+
+    .delete-modal-btn-confirm:hover {
+        background: linear-gradient(135deg, #b91c1c, #991b1b);
+        box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    /* MODO OSCURO */
+    body.dark-mode .delete-modal-content {
+        background: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .delete-modal-icon {
+        background: #7f1d1d;
+    }
+
+    body.dark-mode .delete-modal-icon i {
+        color: #fca5a5;
+    }
+
+    body.dark-mode .delete-modal-title {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .delete-modal-message {
+        color: #9ca3af;
+    }
+
+    body.dark-mode .delete-modal-client-name {
+        color: #fca5a5;
+    }
+
+    body.dark-mode .delete-modal-btn-cancel {
+        background: #4b5563;
+        color: #e0e0e0;
+        border-color: #6b7280;
+    }
+
+    body.dark-mode .delete-modal-btn-cancel:hover {
+        background: #6b7280;
+        border-color: #9ca3af;
+    }
+
+    body.dark-mode .delete-modal-btn-confirm {
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        .delete-modal-content {
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .delete-modal-buttons {
+            flex-direction: column;
+        }
+
+        .delete-modal-btn {
+            width: 100%;
+        }
+    }
 </style>
 
 
 <?php
-function adjustBrightness($hex, $steps) {
+function adjustBrightness($hex, $steps)
+{
     // Steps: -255 (más oscuro) a 255 (más claro)
     $hex = str_replace('#', '', $hex);
     if (strlen($hex) == 3) {
-        $hex = $hex[0].$hex[0].$hex[1].$hex[1].$hex[2].$hex[2];
+        $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
     }
     $r = max(0, min(255, hexdec(substr($hex, 0, 2)) + $steps));
     $g = max(0, min(255, hexdec(substr($hex, 2, 2)) + $steps));
@@ -545,11 +755,23 @@ function adjustBrightness($hex, $steps) {
     </div>
 </div>
 
-<!-- Agrega este botón justo antes del <div class="table"> -->
+
+<?php
+// Detectar si estamos en la sección de archivadas
+$isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
+    (isset($esArchivadas) && $esArchivadas) ||
+    (strpos($_SERVER['REQUEST_URI'], '/solicitud/archivadas') !== false);
+?>
 <div style="display: flex; justify-content: flex-end; margin-bottom: 18px;">
-    <a href="/solicitud/archivadas" class="archivados-btn">
-        <i class="fas fa-archive"></i> Archivados
-    </a>
+    <?php if ($isArchivadas): ?>
+        <a href="/solicitud/view" class="archivados-btn">
+            <i class="fas fa-list"></i> Mis solicitudes
+        </a>
+    <?php else: ?>
+        <a href="/solicitud/archivadas" class="archivados-btn">
+            <i class="fas fa-archive"></i> Archivados
+        </a>
+    <?php endif; ?>
 </div>
 
 <main>
@@ -589,6 +811,16 @@ function adjustBrightness($hex, $steps) {
                 $mostrarArchivar = in_array($solicitud->FKestado ?? $solicitud->idEstado ?? null, [4, 8]);
                 // Mostrar botón eliminar solo si es administrador (rol 1)
                 $mostrarEliminar = isset($_SESSION['rol']) && $_SESSION['rol'] == 1;
+
+                // Colores para servicio
+                $colorOriginalServicio = $solicitud->Color;
+                $colorFondoServicio = adjustBrightness($colorOriginalServicio, 80);   // Más claro
+                $colorBordeYTextoServicio = adjustBrightness($colorOriginalServicio, -60); // Más oscuro
+
+                // Colores para estado
+                $colorOriginalEstado = $solicitud->ColorEstado ?? '#cccccc';
+                $colorFondoEstado = adjustBrightness($colorOriginalEstado, 80);
+                $colorBordeYTextoEstado = adjustBrightness($colorOriginalEstado, -60);
                 ?>
                 <div class="solicitud-row">
                     <div>
@@ -596,18 +828,22 @@ function adjustBrightness($hex, $steps) {
                     </div>
                     <div><?php echo htmlspecialchars($solicitud->NombreCliente); ?></div>
                     <div><?php echo htmlspecialchars($solicitud->FechaCreacion); ?></div>
-                    <div><?php echo htmlspecialchars($solicitud->Estado); ?></div>
                     <div>
-                        <?php
-                        $colorOriginal = $solicitud->Color;
-                        $colorFondo = adjustBrightness($colorOriginal, 80);   // Más claro
-                        $colorBordeYTexto = adjustBrightness($colorOriginal, -60); // Más oscuro
-                        ?>
                         <span class="service-badge"
                             style="
-                                background-color: <?php echo $colorFondo; ?>;
-                                color: <?php echo $colorBordeYTexto; ?>;
-                                border: 1.5px solid <?php echo $colorBordeYTexto; ?>;
+                                background-color: <?php echo $colorFondoEstado; ?>;
+                                color: <?php echo $colorBordeYTextoEstado; ?>;
+                                border: 1.5px solid <?php echo $colorBordeYTextoEstado; ?>;
+                            ">
+                            <?php echo htmlspecialchars($solicitud->Estado); ?>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="service-badge"
+                            style="
+                                background-color: <?php echo $colorFondoServicio; ?>;
+                                color: <?php echo $colorBordeYTextoServicio; ?>;
+                                border: 1.5px solid <?php echo $colorBordeYTextoServicio; ?>;
                             ">
                             <?php echo htmlspecialchars($solicitud->Servicio); ?>
                         </span>
@@ -620,14 +856,14 @@ function adjustBrightness($hex, $steps) {
                             <i class="fas fa-edit"></i>
                         </a>
                         <?php if ($mostrarEliminar): ?>
-                        <a href="/solicitud/delete/<?php echo $solicitud->idSolicitud; ?>" class="eliminar">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
+                            <a href="/solicitud/delete/<?php echo $solicitud->idSolicitud; ?>" class="eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
                         <?php endif; ?>
                         <?php if ($mostrarArchivar): ?>
-                        <a href="#" class="archivar" title="Archivar" data-id="<?php echo $solicitud->idSolicitud; ?>">
-                            <i class="fas fa-archive"></i>
-                        </a>
+                            <a href="#" class="archivar" title="Archivar" data-id="<?php echo $solicitud->idSolicitud; ?>">
+                                <i class="fas fa-archive"></i>
+                            </a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -675,7 +911,7 @@ function adjustBrightness($hex, $steps) {
             });
         }); */
 
-        
+
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('searchInput');
             const estadoSelect = document.getElementById('estado');
@@ -717,29 +953,269 @@ function adjustBrightness($hex, $steps) {
             estadoSelect.addEventListener('change', filterSolicitudes);
             servicioSelect.addEventListener('change', filterSolicitudes);
         });
-         // JS para archivar solicitudes
+        // JS para archivar solicitudes
+        document.querySelectorAll('.archivar').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const id = this.getAttribute('data-id');
+                const row = this.closest('.solicitud-row');
+                const clientName = row.children[1].textContent.trim();
+                showArchiveModal(id, clientName, row);
+            });
+        });
+        // MODAL DE CONFIRMACIÓN DE ELIMINACIÓN
+        document.addEventListener('DOMContentLoaded', function() {
+            // Crear el modal dinámicamente
+            const deleteModalHTML = `
+        <div id="deleteModal" class="delete-modal-overlay">
+            <div class="delete-modal-content">
+                <div class="delete-modal-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 class="delete-modal-title">¿Confirmar eliminación?</h3>
+                <p class="delete-modal-message">
+                    Esta acción eliminará permanentemente la solicitud de 
+                    <span class="delete-modal-client-name" id="clientName"></span>.
+                    <br><br>
+                    <strong>Esta acción no se puede deshacer.</strong>
+                </p>
+                <div class="delete-modal-buttons">
+                    <button type="button" class="delete-modal-btn delete-modal-btn-cancel" id="cancelDelete">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="button" class="delete-modal-btn delete-modal-btn-confirm" id="confirmDelete">
+                        <i class="fas fa-trash-alt"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+            // Insertar el modal en el DOM
+            document.body.insertAdjacentHTML('beforeend', deleteModalHTML);
+
+            // Referencias a elementos del modal
+            const deleteModal = document.getElementById('deleteModal');
+            const cancelBtn = document.getElementById('cancelDelete');
+            const confirmBtn = document.getElementById('confirmDelete');
+            const clientNameSpan = document.getElementById('clientName');
+
+            let deleteUrl = '';
+            let currentRow = null;
+
+            // Función para mostrar el modal
+            function showDeleteModal(url, clientName, row) {
+                deleteUrl = url;
+                currentRow = row;
+                clientNameSpan.textContent = clientName;
+                deleteModal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Evitar scroll del body
+            }
+
+            // Función para ocultar el modal
+            function hideDeleteModal() {
+                deleteModal.classList.remove('show');
+                document.body.style.overflow = ''; // Restaurar scroll del body
+                deleteUrl = '';
+                currentRow = null;
+            }
+
+            // Event listeners para todos los botones de eliminar
+            document.querySelectorAll('.eliminar').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const url = this.getAttribute('href');
+                    const row = this.closest('.solicitud-row');
+                    const clientName = row.children[1].textContent.trim();
+
+                    showDeleteModal(url, clientName, row);
+                });
+            });
+
+            // Cancelar eliminación
+            cancelBtn.addEventListener('click', hideDeleteModal);
+
+            // Confirmar eliminación
+            confirmBtn.addEventListener('click', function() {
+                if (deleteUrl) {
+                    // Mostrar estado de carga en el botón
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eliminando...';
+                    this.disabled = true;
+
+                    // Hacer la petición de eliminación
+                    window.location.href = deleteUrl;
+                }
+            });
+
+            // Cerrar modal al hacer clic fuera del contenido
+            deleteModal.addEventListener('click', function(e) {
+                if (e.target === deleteModal) {
+                    hideDeleteModal();
+                }
+            });
+
+            // Cerrar modal con la tecla Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && deleteModal.classList.contains('show')) {
+                    hideDeleteModal();
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+    // --- MODAL DE ELIMINACIÓN (ya existente) ---
+    const deleteModalHTML = `
+        <div id="deleteModal" class="delete-modal-overlay">
+            <div class="delete-modal-content">
+                <div class="delete-modal-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 class="delete-modal-title">¿Confirmar eliminación?</h3>
+                <p class="delete-modal-message">
+                    Esta acción eliminará permanentemente la solicitud de 
+                    <span class="delete-modal-client-name" id="clientName"></span>.<br><br>
+                    <strong>Esta acción no se puede deshacer.</strong>
+                </p>
+                <div class="delete-modal-buttons">
+                    <button type="button" class="delete-modal-btn delete-modal-btn-cancel" id="cancelDelete">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="button" class="delete-modal-btn delete-modal-btn-confirm" id="confirmDelete">
+                        <i class="fas fa-trash-alt"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="archiveModal" class="delete-modal-overlay">
+            <div class="delete-modal-content">
+                <div class="delete-modal-icon">
+                    <i class="fas fa-archive"></i>
+                </div>
+                <h3 class="delete-modal-title">¿Archivar solicitud?</h3>
+                <p class="delete-modal-message">
+                    Esta acción archivará la solicitud de 
+                    <span class="delete-modal-client-name" id="archiveClientName"></span>.<br><br>
+                    Podrás consultarla en la sección de archivados.
+                </p>
+                <div class="delete-modal-buttons">
+                    <button type="button" class="delete-modal-btn delete-modal-btn-cancel" id="cancelArchive">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="button" class="delete-modal-btn delete-modal-btn-confirm" id="confirmArchive">
+                        <i class="fas fa-archive"></i> Archivar
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', deleteModalHTML);
+
+    // --- ELIMINAR ---
+    const deleteModal = document.getElementById('deleteModal');
+    const cancelBtn = document.getElementById('cancelDelete');
+    const confirmBtn = document.getElementById('confirmDelete');
+    const clientNameSpan = document.getElementById('clientName');
+    let deleteUrl = '';
+    let currentRow = null;
+
+    function showDeleteModal(url, clientName, row) {
+        deleteUrl = url;
+        currentRow = row;
+        clientNameSpan.textContent = clientName;
+        deleteModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+    function hideDeleteModal() {
+        deleteModal.classList.remove('show');
+        document.body.style.overflow = '';
+        deleteUrl = '';
+        currentRow = null;
+    }
+    document.querySelectorAll('.eliminar').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const url = this.getAttribute('href');
+            const row = this.closest('.solicitud-row');
+            const clientName = row.children[1].textContent.trim();
+            showDeleteModal(url, clientName, row);
+        });
+    });
+    cancelBtn.addEventListener('click', hideDeleteModal);
+    confirmBtn.addEventListener('click', function() {
+        if (deleteUrl) {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eliminando...';
+            this.disabled = true;
+            window.location.href = deleteUrl;
+        }
+    });
+    deleteModal.addEventListener('click', function(e) {
+        if (e.target === deleteModal) hideDeleteModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && deleteModal.classList.contains('show')) hideDeleteModal();
+    });
+
+    // --- ARCHIVAR ---
+    const archiveModal = document.getElementById('archiveModal');
+    const cancelArchiveBtn = document.getElementById('cancelArchive');
+    const confirmArchiveBtn = document.getElementById('confirmArchive');
+    const archiveClientNameSpan = document.getElementById('archiveClientName');
+    let archiveId = '';
+    let archiveRow = null;
+
+    function showArchiveModal(id, clientName, row) {
+        archiveId = id;
+        archiveRow = row;
+        archiveClientNameSpan.textContent = clientName;
+        archiveModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+    function hideArchiveModal() {
+        archiveModal.classList.remove('show');
+        document.body.style.overflow = '';
+        archiveId = '';
+        archiveRow = null;
+    }
     document.querySelectorAll('.archivar').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             const id = this.getAttribute('data-id');
-            if (confirm('¿Está seguro que desea archivar esta solicitud?')) {
-                fetch(`/solicitud/archivar/${id}`, {
-                    method: 'POST'
-                })
-                .then(res => res.json())
-                .then (data => {
-                    if (data.success) {
-                        // Solo oculta la fila, NO cambies el estado visualmente
-                        const row = this.closest('.solicitud-row');
-                        row.style.display = 'none';
-                    } else {
-                        alert('No se pudo archivar la solicitud.');
-                    }
-                })
-                .catch(() => alert('Error al archivar la solicitud.'));
-            }
+            const row = this.closest('.solicitud-row');
+            const clientName = row.children[1].textContent.trim();
+            showArchiveModal(id, clientName, row);
         });
     });
+    cancelArchiveBtn.addEventListener('click', hideArchiveModal);
+    confirmArchiveBtn.addEventListener('click', function() {
+        if (archiveId) {
+            confirmArchiveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Archivando...';
+            confirmArchiveBtn.disabled = true;
+            fetch(`/solicitud/archivar/${archiveId}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        if (archiveRow) archiveRow.style.display = 'none';
+                        hideArchiveModal();
+                    } else {
+                        confirmArchiveBtn.innerHTML = '<i class="fas fa-archive"></i> Archivar';
+                        confirmArchiveBtn.disabled = false;
+                    }
+                })
+                .catch(() => {
+                    confirmArchiveBtn.innerHTML = '<i class="fas fa-archive"></i> Archivar';
+                    confirmArchiveBtn.disabled = false;
+                });
+        }
+    });
+    archiveModal.addEventListener('click', function(e) {
+        if (e.target === archiveModal) hideArchiveModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && archiveModal.classList.contains('show')) hideArchiveModal();
+    });
+});
     </script>
 
 </main>

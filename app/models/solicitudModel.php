@@ -24,7 +24,7 @@ class SolicitudModel extends BaseModel
     public function getAll(): array
     {
         try {
-            $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado
+            $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado, e.Color AS ColorEstado
                     FROM solicitud s
                     JOIN cliente c ON s.FKcliente = c.idCliente
                     JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
@@ -144,13 +144,13 @@ class SolicitudModel extends BaseModel
 
     public function getByAsignacion($idUsuario)
     {
-        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado
+        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado, e.Color AS ColorEstado
                 FROM solicitud s
                 JOIN cliente c ON s.FKcliente = c.idCliente
                 JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
                 JOIN servicio sv ON ts.FKidServicio = sv.idServicio
                 JOIN estado e ON s.FKestado = e.idEstado
-                WHERE s.Asignacion = :idUsuario AND s.FKestado != 2"; // Excluir archivadas
+                WHERE s.Asignacion = :idUsuario AND s.FKestado != 2";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
         $stmt->execute();
@@ -195,7 +195,7 @@ class SolicitudModel extends BaseModel
     }
 
     public function getArchivadas() {
-        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado
+        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado, e.Color AS ColorEstado
                 FROM solicitud s
                 JOIN cliente c ON s.FKcliente = c.idCliente
                 JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
@@ -208,7 +208,7 @@ class SolicitudModel extends BaseModel
     }
 
     public function getArchivadasByAsignacion($idUsuario) {
-        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado
+        $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado, e.Color AS ColorEstado
                 FROM solicitud s
                 JOIN cliente c ON s.FKcliente = c.idCliente
                 JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
@@ -226,5 +226,16 @@ class SolicitudModel extends BaseModel
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':idSolicitud', $idSolicitud, \PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+    public function getSolicitudesPorEstado()
+    {
+        $sql = "SELECT e.Estado, COUNT(*) as cantidad, e.Color
+                FROM solicitud s
+                JOIN estado e ON s.FKestado = e.idEstado
+                GROUP BY s.FKestado";
+        $stmt = $this->dbConnection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
