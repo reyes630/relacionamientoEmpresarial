@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-07-2025 a las 02:25:08
+-- Tiempo de generación: 03-09-2025 a las 15:16:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -264,10 +264,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idUsuario`, `DocumentoUsuario`, `NombreUsuario`, `CorreoUsuario`, `TelefonoUsuario`, `ContraseñaUsuario`, `FKidRol`) VALUES
-(7, '1058138879', 'jd', 'jd@gmail.com', '3127591649', '$2y$10$LKv.w4CHFyUTSiDfTt/71.fB2qLKoreykPmufqBPKCgC/ZFc4ivZq', 1),
-(8, '10575486', 'Sebitas Ocampo', 'sebitas@instructor.com', '3127591647', '$2y$10$Rp1ilnzpn79WQlGH5bFpCO3OQouDAp/DzkDJXz5svb.1nCYLpkdJ2', 4),
-(9, '1058138879', 'Esteban Reyes', 'reyes@gmail.com', '35487962', '$2y$10$MC1gQYgme3tkXRRnmsItFOtrXwsd3foswKSWy3qFXyA/MjrzST7fS', 3),
-(10, '147852369', 'Yerson Herrera', 'yerson@gmail.com', '35487962', '$2y$10$i8a7bw0lLIQEkHzuUVsb0e2qRYL3nSYPZT0XzM5RwwGyrZW9Y0JGO', 2);
+(7, '1058138879', 'jd', 'admin@example.com', '3127591649', '$2y$10$HlPNCJBJ0c.x50MGXYXTrONd6XP0U9rwEaUQ8TgyGxcMaPwZBBmba', 1),
+(8, '10575486', 'Sebitas Ocampo', 'instructor@example.com', '3127591647', '$2y$10$76yqpMz0nDV8pN.IkS7MDeI.X9i23o8cblPir3s2H1dzoKsmWdT/S', 4),
+(9, '1058138879', 'Esteban Reyes', 'funcionario@example.com', '35487962', '$2y$10$jkFDUtx5e27fWDHuQhOEaecKWu75HNjZa0Jvf1eO4eDptK0IPffTe', 3),
+(10, '147852369', 'Yerson Herrera', 'administrativo@example.com', '35487962', '$2y$10$ocXnM/eSmvsJLKr5c5eWxeUbpOU9LfuRXCeRszYD2YG94oFwoJ1lu', 2);
 
 --
 -- Índices para tablas volcadas
