@@ -82,7 +82,7 @@ class UsuarioController extends BaseController
                 $_POST['NombreUsuario'],
                 $_POST['CorreoUsuario'],
                 $_POST['TelefonoUsuario'],
-                password_hash($_POST['ContraseñaUsuario'], PASSWORD_DEFAULT),
+                $_POST['ContraseñaUsuario'],
                 $_POST['FKidRol']
             );
             $this->redirectTo("usuario/view");
@@ -128,24 +128,46 @@ class UsuarioController extends BaseController
         $this->render("usuario/edit.php", $data);
     }
 
-    public function updateUsuario()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $usuarioObj = new UsuarioModel();
-            $contraseña = isset($_POST['ContraseñaUsuario']) ? $_POST['ContraseñaUsuario'] : null;
-
-            $usuarioObj->editUsuario(
-                $_POST['idUsuario'],
-                $_POST['DocumentoUsuario'],
-                $_POST['NombreUsuario'],
-                $_POST['CorreoUsuario'],
-                $_POST['TelefonoUsuario'],
-                $contraseña,
-                $_POST['FKidRol']
-            );
-            $this->redirectTo("usuario/perfil");
+public function updateUsuario()
+{
+    error_log("=== INICIO updateUsuario ===");
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        error_log("POST recibido: " . print_r($_POST, true));
+        
+        $usuarioObj = new UsuarioModel();
+        
+        // Usar el nombre correcto del campo (sin ñ)
+        $nuevaContrasena = null;
+        if (isset($_POST['ContrasenaUsuario']) && !empty(trim($_POST['ContrasenaUsuario']))) {
+            $nuevaContrasena = trim($_POST['ContrasenaUsuario']);
+            error_log("Nueva contraseña detectada: " . $nuevaContrasena);
+        } else {
+            error_log("No se proporcionó nueva contraseña");
         }
+
+        $resultado = $usuarioObj->editUsuario(
+            $_POST['idUsuario'],
+            $_POST['DocumentoUsuario'],
+            $_POST['NombreUsuario'],
+            $_POST['CorreoUsuario'],
+            $_POST['TelefonoUsuario'],
+            $nuevaContrasena,
+            $_POST['FKidRol']
+        );
+        
+        error_log("Resultado final: " . ($resultado ? 'ÉXITO' : 'ERROR'));
+        
+        if ($resultado) {
+            // Agregar mensaje de éxito (opcional)
+            $_SESSION['mensaje'] = 'Usuario actualizado correctamente';
+        } else {
+            $_SESSION['error'] = 'Error al actualizar usuario';
+        }
+        
+        $this->redirectTo("usuario/perfil");
     }
+}
 
     public function deleteUsuario($id)
     {

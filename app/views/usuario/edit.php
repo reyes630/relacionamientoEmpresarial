@@ -91,8 +91,8 @@
             <input type="tel" name="TelefonoUsuario" value="<?php echo $usuario->TelefonoUsuario ?>" required maxlength="10" class="form-control">
         </div>
         <div class="form-group">
-            <label for="ContraseñaUsuario">Contraseña (dejar vacío para mantener la actual)</label>
-            <input type="password" name="ContraseñaUsuario" class="form-control">
+            <label for="ContrasenaUsuario">Contraseña (dejar vacío para mantener la actual)</label>
+            <input type="password" name="ContrasenaUsuario" id="ContrasenaUsuario" class="form-control" placeholder="Ingrese nueva contraseña">
         </div>
         <div class="form-group">
             <label for="FKidRol">Rol</label>

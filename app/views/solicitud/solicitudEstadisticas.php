@@ -7,7 +7,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   padding: 20px;
-  height: 100vh; /* Opcional: ajusta a tu gusto */
+  height: 100vh; 
 }
 
 .card {

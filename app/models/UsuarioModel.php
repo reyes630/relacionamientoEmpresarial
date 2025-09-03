@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Models;
+
 use PDO;
 use PDOException;
 
-require_once MAIN_APP_ROUTE."../models/BaseModel.php";
+require_once MAIN_APP_ROUTE . "../models/BaseModel.php";
 
-class UsuarioModel extends BaseModel {
+class UsuarioModel extends BaseModel
+{
     public function __construct(
         ?int $idUsuario = null,
         ?string $DocumentoUsuario = null,
@@ -19,35 +22,40 @@ class UsuarioModel extends BaseModel {
         parent::__construct();
     }
 
-    
 
-    public function saveUsuario($DocumentoUsuario, $NombreUsuario, $CorreoUsuario, $TelefonoUsuario, $ContraseñaUsuario, $FKidRol) {
+
+    public function saveUsuario($DocumentoUsuario, $NombreUsuario, $CorreoUsuario, $TelefonoUsuario, $ContraseñaUsuario, $FKidRol)
+    {
         try {
-            $sql = "INSERT INTO usuario (DocumentoUsuario, NombreUsuario, CorreoUsuario, TelefonoUsuario, ContraseñaUsuario, FKidRol) 
-                    VALUES (:doc, :nombre, :correo, :telefono, :pass, :rol)";
-            
+            $hashedPassword = password_hash($ContraseñaUsuario, PASSWORD_DEFAULT);
+
+            $sql = "INSERT INTO usuario 
+                (DocumentoUsuario, NombreUsuario, CorreoUsuario, TelefonoUsuario, ContraseñaUsuario, FKidRol) 
+                VALUES (:doc, :nombre, :correo, :telefono, :pass, :rol)";
+
             $statement = $this->dbConnection->prepare($sql);
-            
             $statement->bindParam(':doc', $DocumentoUsuario);
             $statement->bindParam(':nombre', $NombreUsuario);
             $statement->bindParam(':correo', $CorreoUsuario);
             $statement->bindParam(':telefono', $TelefonoUsuario);
-            $statement->bindParam(':pass', $ContraseñaUsuario);
+            $statement->bindParam(':pass', $hashedPassword);
             $statement->bindParam(':rol', $FKidRol);
-            
+
             return $statement->execute();
         } catch (PDOException $ex) {
             echo "Error al guardar el usuario: " . $ex->getMessage();
         }
     }
 
-    public function getUsuario($id) {
+
+    public function getUsuario($id)
+    {
         try {
             $sql = "SELECT u.*, r.Rol as NombreRol 
                     FROM $this->table u 
                     LEFT JOIN rol r ON u.FKidRol = r.idRol 
                     WHERE u.idUsuario = :id";
-                    
+
             $statement = $this->dbConnection->prepare($sql);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             $statement->execute();
@@ -57,48 +65,79 @@ class UsuarioModel extends BaseModel {
         }
     }
 
-    public function editUsuario($id, $DocumentoUsuario, $NombreUsuario, $CorreoUsuario, $TelefonoUsuario, $ContraseñaUsuario = null, $FKidRol) {
+    public function editUsuario($id, $DocumentoUsuario, $NombreUsuario, $CorreoUsuario, $TelefonoUsuario, $ContrasenaUsuario = null, $FKidRol)
+    {
         try {
-            if ($ContraseñaUsuario) {
+            error_log("=== MODELO editUsuario ===");
+            error_log("ID: $id");
+            error_log("Contraseña recibida: " . ($ContrasenaUsuario === null ? 'NULL' : "'$ContrasenaUsuario'"));
+
+            // Validar si se debe actualizar la contraseña
+            $actualizarContrasena = ($ContrasenaUsuario !== null && !empty(trim($ContrasenaUsuario)));
+
+            error_log("¿Actualizar contraseña?: " . ($actualizarContrasena ? 'SÍ' : 'NO'));
+
+            if ($actualizarContrasena) {
+                // SQL con contraseña
                 $sql = "UPDATE $this->table 
-                        SET DocumentoUsuario=:DocumentoUsuario, 
-                            NombreUsuario=:NombreUsuario, 
-                            CorreoUsuario=:CorreoUsuario, 
-                            TelefonoUsuario=:TelefonoUsuario, 
-                            ContraseñaUsuario=:ContraseñaUsuario, 
-                            FKidRol=:FKidRol 
-                        WHERE idUsuario=:id";
+                    SET DocumentoUsuario = :DocumentoUsuario, 
+                        NombreUsuario = :NombreUsuario, 
+                        CorreoUsuario = :CorreoUsuario, 
+                        TelefonoUsuario = :TelefonoUsuario, 
+                        ContraseñaUsuario = :ContrasenaUsuario, 
+                        FKidRol = :FKidRol 
+                    WHERE idUsuario = :id";
             } else {
+                // SQL sin contraseña
                 $sql = "UPDATE $this->table 
-                        SET DocumentoUsuario=:DocumentoUsuario, 
-                            NombreUsuario=:NombreUsuario, 
-                            CorreoUsuario=:CorreoUsuario, 
-                            TelefonoUsuario=:TelefonoUsuario, 
-                            FKidRol=:FKidRol 
-                        WHERE idUsuario=:id";
+                    SET DocumentoUsuario = :DocumentoUsuario, 
+                        NombreUsuario = :NombreUsuario, 
+                        CorreoUsuario = :CorreoUsuario, 
+                        TelefonoUsuario = :TelefonoUsuario, 
+                        FKidRol = :FKidRol 
+                    WHERE idUsuario = :id";
             }
-            
+
+            error_log("SQL a ejecutar: " . $sql);
+
             $statement = $this->dbConnection->prepare($sql);
+
+            // Bind de parámetros comunes
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             $statement->bindParam(":DocumentoUsuario", $DocumentoUsuario, PDO::PARAM_STR);
             $statement->bindParam(":NombreUsuario", $NombreUsuario, PDO::PARAM_STR);
             $statement->bindParam(":CorreoUsuario", $CorreoUsuario, PDO::PARAM_STR);
             $statement->bindParam(":TelefonoUsuario", $TelefonoUsuario, PDO::PARAM_STR);
             $statement->bindParam(":FKidRol", $FKidRol, PDO::PARAM_INT);
-            
-            if ($ContraseñaUsuario) {
-                $hashedPassword = password_hash($ContraseñaUsuario, PASSWORD_DEFAULT);
-                $statement->bindParam(":ContraseñaUsuario", $hashedPassword, PDO::PARAM_STR);
+
+            // Bind de contraseña solo si se va a actualizar
+            if ($actualizarContrasena) {
+                $hashedPassword = password_hash($ContrasenaUsuario, PASSWORD_DEFAULT);
+                error_log("Hash generado: " . substr($hashedPassword, 0, 20) . "...");
+                $statement->bindParam(":ContrasenaUsuario", $hashedPassword, PDO::PARAM_STR);
             }
-            
-            return $statement->execute();
+
+            $resultado = $statement->execute();
+
+            if (!$resultado) {
+                $errorInfo = $statement->errorInfo();
+                error_log("Error SQL: " . print_r($errorInfo, true));
+            } else {
+                error_log("UPDATE ejecutado correctamente");
+                error_log("Filas afectadas: " . $statement->rowCount());
+            }
+
+            return $resultado;
         } catch (PDOException $ex) {
+            error_log("Excepción PDO: " . $ex->getMessage());
             echo "Error al editar usuario: " . $ex->getMessage();
+            return false;
         }
     }
 
 
-    public function deleteUsuario($id) {
+    public function deleteUsuario($id)
+    {
         try {
             $sql = "DELETE FROM $this->table WHERE idUsuario = :id";
             $statement = $this->dbConnection->prepare($sql);
@@ -108,13 +147,14 @@ class UsuarioModel extends BaseModel {
             echo "Error al eliminar usuario: " . $ex->getMessage();
         }
     }
-    public function validarLogin($CorreoUsuario, $ContraseñaUsuario){ //Contraseña que llega del formulario
+    public function validarLogin($CorreoUsuario, $ContraseñaUsuario)
+    { //Contraseña que llega del formulario
         $sql = "SELECT * FROM $this->table WHERE CorreoUsuario=:CorreoUsuario";
         $statement = $this->dbConnection->prepare($sql);
         $statement->bindParam(":CorreoUsuario", $CorreoUsuario);
         $statement->execute();
         $resultSet = [];
-        while($row = $statement->fetch(PDO::FETCH_OBJ)){
+        while ($row = $statement->fetch(PDO::FETCH_OBJ)) {
             $resultSet[] = $row;
         }
         if (count($resultSet) > 0) {
@@ -135,15 +175,16 @@ class UsuarioModel extends BaseModel {
         return false;
     }
 
-    public function countUsuarios() {
-    try {
-        $sql = "SELECT COUNT(*) AS total_usuarios FROM $this->table";
-        $statement = $this->dbConnection->prepare($sql);
-        $statement->execute();
-        $row = $statement->fetch(PDO::FETCH_ASSOC);
-        return $row['total_usuarios'];
-    } catch (PDOException $ex) {
-        echo "Error al contar usuarios: " . $ex->getMessage();
+    public function countUsuarios()
+    {
+        try {
+            $sql = "SELECT COUNT(*) AS total_usuarios FROM $this->table";
+            $statement = $this->dbConnection->prepare($sql);
+            $statement->execute();
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+            return $row['total_usuarios'];
+        } catch (PDOException $ex) {
+            echo "Error al contar usuarios: " . $ex->getMessage();
+        }
     }
-}
 }
