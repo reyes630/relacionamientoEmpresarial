@@ -205,12 +205,10 @@ $estados = $estadoModel->getAll();
                     <input type="date" id="request-date" name="fecha_evento" required>
                 </div>
 
-                <div class="form-group">
+               <div class="form-group">
                     <label for="municipality">Municipio *</label>
                     <select id="municipality" name="municipio" required>
-                        <option value="">Selecciona una opción</option>
-                        <option value="Manizales">Manizales</option>
-                        <option value="Villamaria">Villamaria</option>
+                        <option value="">Cargando municipios...</option>
                     </select>
                 </div>
 
@@ -301,7 +299,10 @@ $estados = $estadoModel->getAll();
                 <?php endforeach; ?>
             }
         });
+        
     </script>
+    <script src="/js/API-municipios.js"></script>
+
 </body>
 
 </html>
