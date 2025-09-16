@@ -90,27 +90,27 @@
         color: #fff;
     }
 
-    .buttons a {
+ /*    .buttons a {
         margin: 0 1px;
         color: #fff;
         font-size: 0.92rem;
-        padding: 1px 7px;
+        padding: 1px 7px; */
         /* Reduce el padding vertical (height) */
-        border-radius: 18px;
+      /*   border-radius: 18px;
         background: #04324D;
         display: inline-flex;
         align-items: center;
         transition: background 0.2s, color 0.2s;
-    }
+    } */
 
-    .buttons a:hover {
+    /* .buttons a:hover {
         color: #09669C;
         color: #fff;
     }
 
     .buttons a i {
         font-size: 0.8rem;
-    }
+    } */
 
     /* Estilo para la barra de búsqueda */
     .search-bar {
@@ -187,10 +187,10 @@
         display: none;
     }
 
-    .form-control:focus {
+    /* .form-control:focus {
         border-color: #09669C;
         box-shadow: 0 0 0 2px rgba(9, 102, 156, 0.1);
-    }
+    } */
 
     /* ESTILOS ESPECÍFICOS PARA EL MODAL DEL ADMIN LAYOUT */
     /* Renombramos las clases para evitar conflictos */
@@ -696,6 +696,75 @@
             width: 100%;
         }
     }
+
+    /* Botón de tres puntos */
+.action-dropdown {
+    position: relative; /* Esto hace que el menú se posicione relativo al botón */
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+    padding: 6px 10px;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+}
+
+.dropdown-menu {
+    display: none;
+    list-style: none;
+    position: fixed; /* antes: absolute */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    min-width: 120px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    z-index: 99999; /* encima de todo */
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+
+.dropdown-menu li a:hover {
+    background-color: #f0f0f0;
+}
+ul {
+  list-style: none; /* quita los bullets */
+  padding-left: 0;  /* quita el espacio interno */
+  margin: 0;        /* quita margen externo */
+}
+
+
+body.dark-mode .dropdown-menu {
+    background: #2d2d2d;
+}
+
+body.dark-mode .dropdown-menu li a {
+    color: #e0e0e0;
+}
+
+body.dark-mode .dropdown-menu li a:hover {
+    background: #3a3a3a;
+}
+
+
 </style>
 
 
@@ -848,24 +917,22 @@ $isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
                             <?php echo htmlspecialchars($solicitud->Servicio); ?>
                         </span>
                     </div>
-                    <div class="buttons">
-                        <a href="/solicitud/view/<?php echo $solicitud->idSolicitud; ?>" class="ver buttons">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        <a href="/solicitud/edit/<?php echo $solicitud->idSolicitud; ?>" class="editar">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <?php if ($mostrarEliminar): ?>
-                            <a href="/solicitud/delete/<?php echo $solicitud->idSolicitud; ?>" class="eliminar">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        <?php endif; ?>
-                        <?php if ($mostrarArchivar): ?>
-                            <a href="#" class="archivar" title="Archivar" data-id="<?php echo $solicitud->idSolicitud; ?>">
-                                <i class="fas fa-archive"></i>
-                            </a>
-                        <?php endif; ?>
+                  <div class="action-dropdown">
+                        <button class="dropdown-toggle">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/solicitud/view/<?php echo $solicitud->idSolicitud; ?>">Ver</a></li>
+                            <li><a href="/solicitud/edit/<?php echo $solicitud->idSolicitud; ?>">Editar</a></li>
+                            <?php if ($mostrarEliminar): ?>
+                                <li><a href="/solicitud/delete/<?php echo $solicitud->idSolicitud; ?>" class="eliminar">Eliminar</a></li>
+                            <?php endif; ?>
+                            <?php if ($mostrarArchivar): ?>
+                                <li><a href="#" class="archivar" data-id="<?php echo $solicitud->idSolicitud; ?>">Archivar</a></li>
+                            <?php endif; ?>
+                        </ul>
                     </div>
+
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -1217,5 +1284,7 @@ $isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
     });
 });
     </script>
+    <script src="/js/ActionsRequest.js"></script>
+
 
 </main>
