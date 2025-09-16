@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     dropdownToggles.forEach(toggle => {
         const menu = toggle.nextElementSibling;
+        const container = toggle.closest('.action-dropdown');
+        const table = container.closest('.table');
 
         toggle.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -12,20 +14,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (m !== menu) m.style.display = 'none';
             });
 
-            const rect = toggle.getBoundingClientRect();
-            const menuHeight = menu.offsetHeight;
-            const spaceBelow = window.innerHeight - rect.bottom;
-            const spaceAbove = rect.top;
+            // Mostrar menú para medirlo
+            menu.style.display = 'block';
+            menu.style.position = 'fixed'; // Cambia a fixed para que no se corte
+            menu.style.top = '';
+            menu.style.left = '';
+            menu.style.right = '';
+            menu.style.bottom = '';
 
-            // Mostrar arriba o abajo según el espacio
-            if (spaceBelow < menuHeight && spaceAbove > menuHeight) {
-                menu.style.top = `${rect.top - menuHeight}px`;
-            } else {
-                menu.style.top = `${rect.bottom}px`;
+            // Obtener posición absoluta del botón
+            const btnRect = toggle.getBoundingClientRect();
+            const menuRect = menu.getBoundingClientRect();
+            const tableRect = table.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            // Por defecto: a la derecha del botón
+            let top = btnRect.top;
+            let left = btnRect.right + 4;
+
+            // Si no cabe a la derecha, mostrar a la izquierda
+            if (left + menuRect.width > tableRect.right && btnRect.left - menuRect.width > tableRect.left) {
+                left = btnRect.left - menuRect.width - 4;
             }
-            menu.style.left = `${rect.left}px`;
 
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+            // Si no cabe abajo, mostrar arriba
+            if (top + menuRect.height > tableRect.bottom && btnRect.bottom - menuRect.height > tableRect.top) {
+                top = btnRect.bottom - menuRect.height;
+            }
+
+            // Ajustar si se sale del viewport por la derecha
+            if (left + menuRect.width > viewportWidth) {
+                left = viewportWidth - menuRect.width - 8;
+            }
+            // Ajustar si se sale por la izquierda
+            if (left < 0) left = 8;
+
+            // Ajustar si se sale por abajo del viewport
+            if (top + menuRect.height > viewportHeight) {
+                top = viewportHeight - menuRect.height - 8;
+            }
+            // Ajustar si se sale por arriba
+            if (top < 0) top = 8;
+
+            menu.style.left = `${left}px`;
+            menu.style.top = `${top}px`;
         });
     });
 
@@ -33,4 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', () => {
         document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
     });
+
+    // Cerrar menú al hacer scroll
+    document.addEventListener('scroll', () => {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
+    }, true);
 });

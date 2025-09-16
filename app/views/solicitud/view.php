@@ -7,7 +7,9 @@
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
         width: 100%;
         margin-top: 20px;
-        overflow: hidden;
+        overflow-y: auto;      /* Habilita scroll vertical */
+        max-height: 420px;     /* Ajusta la altura máxima según tu preferencia */
+        overflow-x: hidden;    /* Opcional: oculta scroll horizontal */
     }
 
     .titulos,
@@ -714,57 +716,77 @@
 .dropdown-menu {
     display: none;
     list-style: none;
-    position: fixed; /* antes: absolute */
+    position: absolute;
     background-color: #fff;
-    border: 1px solid #ccc;
-    min-width: 120px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    z-index: 99999; /* encima de todo */
+    border: 1px solid #e5e7eb;
+    min-width: 80px;           /* Más angosto para caber al lado derecho */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+    z-index: 99999;
+    border-radius: 12px;
+    padding: 4px 0;
+    padding-left: 2px;         /* Menor padding lateral */
+    padding-right: 2px;
+    top: 100%;
+    left: unset;
+    right: 10px;                  /* Siempre pegado al lado derecho del contenedor */
+    overflow: hidden;
 }
 
-.dropdown-menu a {
-    display: block;
-    padding: 8px 12px;
-    color: #333;
-    text-decoration: none;
+.dropdown-menu li {
+    border-bottom: 1px solid #f0f0f0;
 }
 
-.dropdown-menu a:hover {
-    background-color: #f0f0f0;
+.dropdown-menu li:last-child {
+    border-bottom: none;
 }
 
+.dropdown-menu a,
 .dropdown-menu li a {
-    display: block;
-    padding: 8px 12px;
-    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 8px;          /* Menos padding horizontal */
+    color: #222;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    transition: background 0.18s, color 0.18s;
+    border-radius: 0;
+    justify-content: flex-start;
 }
 
+.dropdown-menu a i,
+.dropdown-menu li a i {
+    font-size: 1.08em;
+    color: #888;
+    min-width: 18px;
+    text-align: center;
+}
 
+.dropdown-menu a:hover,
 .dropdown-menu li a:hover {
-    background-color: #f0f0f0;
+    background-color: #f5f7fa;
+    color: #09669C;
 }
-ul {
-  list-style: none; /* quita los bullets */
-  padding-left: 0;  /* quita el espacio interno */
-  margin: 0;        /* quita margen externo */
-}
-
 
 body.dark-mode .dropdown-menu {
-    background: #2d2d2d;
+    background: #23272a;
+    border-color: #393e42;
 }
 
+body.dark-mode .dropdown-menu li {
+    border-bottom: 1px solid #393e42;
+}
+
+body.dark-mode .dropdown-menu a,
 body.dark-mode .dropdown-menu li a {
     color: #e0e0e0;
 }
 
+body.dark-mode .dropdown-menu a:hover,
 body.dark-mode .dropdown-menu li a:hover {
-    background: #3a3a3a;
+    background: #2d3238;
+    color: #4fc3f7;
 }
-
-
 </style>
 
 
@@ -917,21 +939,38 @@ $isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
                             <?php echo htmlspecialchars($solicitud->Servicio); ?>
                         </span>
                     </div>
-                  <div class="action-dropdown">
-                        <button class="dropdown-toggle">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/solicitud/view/<?php echo $solicitud->idSolicitud; ?>">Ver</a></li>
-                            <li><a href="/solicitud/edit/<?php echo $solicitud->idSolicitud; ?>">Editar</a></li>
-                            <?php if ($mostrarEliminar): ?>
-                                <li><a href="/solicitud/delete/<?php echo $solicitud->idSolicitud; ?>" class="eliminar">Eliminar</a></li>
-                            <?php endif; ?>
-                            <?php if ($mostrarArchivar): ?>
-                                <li><a href="#" class="archivar" data-id="<?php echo $solicitud->idSolicitud; ?>">Archivar</a></li>
-                            <?php endif; ?>
-                        </ul>
-                    </div>
+                 <div class="action-dropdown">
+    <button class="dropdown-toggle">
+        <i class="fas fa-ellipsis-h"></i> <!-- Cambiado a horizontal -->
+    </button>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="/solicitud/view/<?php echo $solicitud->idSolicitud; ?>">
+                <i class="fas fa-eye" style="margin-right: 8px;"></i> Ver
+            </a>
+        </li>
+        <li>
+            <a href="/solicitud/edit/<?php echo $solicitud->idSolicitud; ?>">
+                <i class="fas fa-edit" style="margin-right: 8px;"></i> Editar
+            </a>
+        </li>
+        <?php if ($mostrarEliminar): ?>
+            <li>
+                <a href="/solicitud/delete/<?php echo $solicitud->idSolicitud; ?>" class="eliminar">
+                    <i class="fas fa-trash-alt" style="margin-right: 8px;"></i> Eliminar
+                </a>
+            </li>
+        <?php endif; ?>
+        <?php if ($mostrarArchivar): ?>
+            <li>
+                <a href="#" class="archivar" data-id="<?php echo $solicitud->idSolicitud; ?>">
+                    <i class="fas fa-archive" style="margin-right: 8px;"></i> Archivar
+                </a>
+            </li>
+        <?php endif; ?>
+    </ul>
+</div>
+
 
                 </div>
             <?php endforeach; ?>
@@ -949,34 +988,6 @@ $isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
     </div>
 
     <script>
-        /*  document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('modal');
-            const modalBody = document.getElementById('modal-body');
-            const closeModal = document.querySelector('.close');
-
-            // Cerrar modal
-            closeModal.addEventListener('click', () => {
-                modal.style.display = 'none';
-                modalBody.innerHTML = ''; 
-            });
-
-            // Capturar clic en cualquier botón editar
-            document.querySelectorAll('.editar').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    e.preventDefault();
-                    const url = btn.getAttribute('href');
-
-                    try {
-                        const response = await fetch(url);
-                        const html = await response.text();
-                        modalBody.innerHTML = html;
-                        modal.style.display = 'flex';
-                    } catch (error) {
-                        modalBody.innerHTML = "<p>Error al cargar el contenido 😞</p>";
-                    }
-                });
-            });
-        }); */
 
 
         document.addEventListener('DOMContentLoaded', () => {
