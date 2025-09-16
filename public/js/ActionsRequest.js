@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (m !== menu) m.style.display = 'none';
             });
 
-            // Mostrar menú para medirlo
+            // Mostrar menú para medirlo 
             menu.style.display = 'block';
             menu.style.position = 'fixed'; // Cambia a fixed para que no se corte
             menu.style.top = '';
