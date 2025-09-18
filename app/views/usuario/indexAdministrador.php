@@ -188,6 +188,111 @@ body.dark-mode .metric-value {
 body.dark-mode .img {
     filter: brightness(0.92) contrast(1.05);
 }
+
+/* Desktop grande (1400px y superior) */
+@media screen and (min-width: 1400px) {
+    .container {
+        max-width: 1360px;
+        margin: 0 auto;
+        gap: 30px;
+    }
+
+    .dashboard-container {
+        max-width: 1360px;
+        margin: 20px auto;
+        gap: 25px;
+    }
+}
+
+/* Desktop normal y laptop (1024px - 1399px) */
+@media screen and (max-width: 1399px) {
+    .container {
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .dashboard-container {
+        padding: 15px;
+        gap: 20px;
+    }
+}
+
+/* Tablet (768px - 1023px) */
+@media screen and (max-width: 1023px) {
+    .container {
+        gap: 15px;
+    }
+
+    .card {
+        width: calc(33.33% - 20px);
+        min-width: 220px;
+    }
+
+    .dashboard-container {
+        grid-template-columns: 1fr; /* Cambiado a 1 columna */
+        gap: 20px;
+    }
+
+    .metric-card {
+        min-height: 300px; /* Altura ajustada */
+    }
+
+    .metric-card:nth-child(1) {
+        grid-column: auto; /* Eliminamos el span */
+    }
+
+    canvas {
+        width: 100% !important;
+        max-height: 280px !important; /* Altura máxima ajustada */
+    }
+}
+
+/* Tablet pequeña y móvil grande (481px - 767px) */
+@media screen and (max-width: 767px) {
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        width: calc(50% - 15px);
+        min-width: 200px;
+    }
+
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .metric-card {
+        min-height: 250px;
+    }
+
+    canvas {
+        width: 100% !important;
+        max-height: 230px !important;
+    }
+}
+
+/* Móvil (480px y menor) */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 10px 5px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .metric-card {
+        padding: 15px;
+    }
+
+    canvas {
+        max-height: 200px !important;
+    }
+}
   </style>
  
 

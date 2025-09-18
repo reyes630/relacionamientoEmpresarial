@@ -30,6 +30,9 @@ body.dark-mode .card {
 
 .card:nth-child(1) {
   grid-area: top-left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card:nth-child(2) {
@@ -38,6 +41,9 @@ body.dark-mode .card {
 
 .card:nth-child(3) {
   grid-area: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .dashboard-cards {

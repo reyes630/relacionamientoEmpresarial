@@ -238,4 +238,78 @@ class SolicitudModel extends BaseModel
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function getServiciosMasSolicitados() {
+        try {
+            $sql = "SELECT sv.Servicio, COUNT(*) as cantidad, sv.Color
+                    FROM solicitud s
+                    JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
+                    JOIN servicio sv ON ts.FKidServicio = sv.idServicio
+                    GROUP BY sv.idServicio, sv.Servicio, sv.Color
+                    ORDER BY cantidad DESC
+                    LIMIT 5";
+            $stmt = $this->dbConnection->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new PDOException("Error al obtener servicios más solicitados: " . $e->getMessage());
+        }
+    }
+
+    public function getSolicitudesPorMes() {
+        try {
+            $sql = "SELECT 
+                MONTH(FechaCreacion) as mes,
+                SUM(CASE WHEN FKestado = 5 THEN 1 ELSE 0 END) as en_proceso,
+                SUM(CASE WHEN FKestado = 6 THEN 1 ELSE 0 END) as ejecutadas
+                FROM solicitud
+                WHERE FechaCreacion >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                GROUP BY MONTH(FechaCreacion)
+                ORDER BY FechaCreacion ASC";
+            $stmt = $this->dbConnection->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new PDOException("Error al obtener solicitudes por mes: " . $e->getMessage());
+        }
+    }
+
+    public function getMunicipiosMasSolicitudes() {
+        try {
+            $sql = "SELECT 
+                COALESCE(Municipio, 'Sin Especificar') as Municipio,
+                COUNT(*) as cantidad
+                FROM solicitud
+                WHERE Municipio IS NOT NULL AND Municipio != ''
+                GROUP BY Municipio
+                ORDER BY cantidad DESC";
+        
+            $stmt = $this->dbConnection->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new PDOException("Error al obtener municipios: " . $e->getMessage());
+        }
+    }
+
+    public function getUltimosMovimientos($limit = 5) {
+        try {
+            $sql = "SELECT 
+                    s.idSolicitud,
+                    u.NombreUsuario,
+                    'Nueva Solicitud' as accion,
+                    s.FechaCreacion as fecha
+                    FROM solicitud s
+                    JOIN usuario u ON s.FKusuario = u.idUsuario
+                    ORDER BY s.FechaCreacion DESC
+                    LIMIT :limit";
+            
+            $stmt = $this->dbConnection->prepare($sql);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new PDOException("Error al obtener últimos movimientos: " . $e->getMessage());
+        }
+    }
 }
