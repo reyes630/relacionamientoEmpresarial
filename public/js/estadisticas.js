@@ -43,58 +43,76 @@ if (canvas) {
 
 /* SOLICITUDES EN PROCESO /EJECUTADAS */
 
-// Simulación de datos por mes (reemplaza estos datos por los reales desde tu backend si lo deseas)
-const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'];
-const solicitudesEnProceso = [5, 8, 6, 7, 4, 9];   // Cantidad por mes (estado 5)
-const solicitudesEjecutadas = [2, 4, 5, 3, 6, 7];  // Cantidad por mes (estado 6)
-
 var canvasLine = document.getElementById('requestinprocess');
-// Solo crea la gráfica si el canvas existe en la página
 if (canvasLine) {
-    var ctxLine = canvasLine.getContext('2d');
-    var lineChart = new Chart(ctxLine, {
-        type: 'line',
-        data: {
-            labels: meses,
-            datasets: [
-                {
-                    label: 'En Proceso',
-                    data: solicitudesEnProceso,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
-                    fill: false,
-                    tension: 0.3
+    fetch('/solicitud/solicitudesPorMesAPI')
+        .then(response => {
+            if (!response.ok) throw new Error('No se pudo obtener los datos');
+            return response.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data) || data.length === 0) {
+                canvasLine.parentNode.innerHTML = "<p style='text-align:center;color:#888;'>No hay datos para mostrar.</p>";
+                return;
+            }
+
+            const meses = data.map(item => item.mes);
+            const enProceso = data.map(item => item.en_proceso);
+            const ejecutadas = data.map(item => item.ejecutadas);
+
+            var ctxLine = canvasLine.getContext('2d');
+            var lineChart = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: meses,
+                    datasets: [
+                        {
+                            label: 'En Proceso',
+                            data: enProceso,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                            fill: false,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Ejecutadas',
+                            data: ejecutadas,
+                            borderColor: 'rgba(39, 169, 0, 1)',
+                            backgroundColor: 'rgba(39, 169, 0, 0.1)',
+                            fill: false,
+                            tension: 0.3
+                        }
+                    ]
                 },
-                {
-                    label: 'Ejecutadas',
-                    data: solicitudesEjecutadas,
-                    borderColor: 'rgba(39, 169, 0, 1)',
-                    backgroundColor: 'rgba(39, 169, 0, 0.1)',
-                    fill: false,
-                    tension: 0.3
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#333'
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#333'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Solicitudes En Proceso y Ejecutadas por Mes'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#333' }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#333' }
+                        }
                     }
                 }
-            },
-            scales: {
-                x: {
-                    ticks: { color: '#333' }
-                },
-                y: {
-                    beginAtZero: true,
-                    ticks: { color: '#333' }
-                }
-            }
-        }
-    });
+            });
+        })
+        .catch(error => {
+            canvasLine.parentNode.innerHTML = "<p style='text-align:center;color:#c00;'>Error cargando la gráfica.</p>";
+            console.error(error);
+        });
 }
 
 /* SERVICIOS MÁS PEDIDOS - Pie/Doughnut Chart */
@@ -118,93 +136,148 @@ const serviciosColors = [
 ];
 
 var canvasServicios = document.getElementById('serviciospedidos');
-// Solo crea la gráfica si el canvas existe en la página
 if (canvasServicios) {
-    var ctxServicios = canvasServicios.getContext('2d');
-    var serviciosChart = new Chart(ctxServicios, {
-        type: 'doughnut',
-        data: {
-            labels: serviciosLabels,
-            datasets: [{
-                data: serviciosData,
-                backgroundColor: serviciosColors,
-                borderColor: '#fff',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#333'
-                    }
-                },
-                title: {
-                    display: true,
-                    text: 'Most Requested Services'
-                }
+    fetch('/solicitud/serviciosMasSolicitadosAPI')
+        .then(response => {
+            if (!response.ok) throw new Error('No se pudo obtener los datos');
+            return response.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data) || data.length === 0) {
+                canvasServicios.parentNode.innerHTML = "<p style='text-align:center;color:#888;'>No hay datos para mostrar.</p>";
+                return;
             }
-        }
-    });
+
+            const labels = data.map(item => item.Servicio);
+            const cantidades = data.map(item => parseInt(item.cantidad));
+            const colors = data.map(item => item.Color || '#cccccc');
+
+            var ctxServicios = canvasServicios.getContext('2d');
+            new Chart(ctxServicios, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: cantidades,
+                        backgroundColor: colors,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#333'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Servicios más Solicitados'
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            canvasServicios.parentNode.innerHTML = "<p style='text-align:center;color:#c00;'>Error cargando la gráfica.</p>";
+            console.error(error);
+        });
 }
 
-// MUNICIPIOS CON MÁS DE 10 SOLICITUDES (solo 5 municipios de Caldas, ejemplo)
-const municipiosLabels = [
-    'Manizales',
-    'Chinchiná',
-    'La Dorada',
-    'Riosucio',
-    'Villamaría'
-];
-
-const municipiosData = [32, 25, 18, 15, 12]; // Ejemplo de cantidades
-
-const municipiosColors = [
-    'rgba(54, 162, 235, 0.7)',
-    'rgba(255, 206, 86, 0.7)',
-    'rgba(39, 169, 0, 0.7)',
-    'rgba(255, 99, 132, 0.7)',
-    'rgba(153, 102, 255, 0.7)'
-];
-
+// MUNICIPIOS CON MÁS SOLICITUDES
 var canvasMunicipios = document.getElementById('topMunicipios');
-// Solo crea la gráfica si el canvas existe en la página
 if (canvasMunicipios) {
-    var ctxMunicipios = canvasMunicipios.getContext('2d');
-    var municipiosChart = new Chart(ctxMunicipios, {
-        type: 'bar',
-        data: {
-            labels: municipiosLabels,
-            datasets: [{
-                label: 'Solicitudes',
-                data: municipiosData,
-                backgroundColor: municipiosColors,
-                borderColor: '#fff',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            indexAxis: 'y', // Barras horizontales
-            responsive: true,
-            plugins: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: 'Municipios con más de 10 solicitudes'
-                }
+    function generateColors(total) {
+        const colors = [];
+        for(let i = 0; i < total; i++) {
+            const hue = (i * 360 / total) % 360;
+            colors.push(`hsla(${hue}, 70%, 60%, 0.7)`);
+        }
+        return colors;
+    }
+
+    // Obtener solo los municipios con solicitudes
+    async function loadMunicipiosData() {
+        try {
+            // Obtener datos de solicitudes
+            const statsResponse = await fetch('/solicitud/municipiosMasSolicitudesAPI');
+            if (!statsResponse.ok) throw new Error('Error obteniendo estadísticas');
+            const solicitudesData = await statsResponse.json();
+
+            // Filtrar solo municipios con solicitudes y ordenar
+            const datasetFinal = solicitudesData
+                .filter(item => item.cantidad > 0)
+                .sort((a, b) => b.cantidad - a.cantidad);
+
+            return datasetFinal;
+
+        } catch (error) {
+            console.error("Error:", error);
+            throw error;
+        }
+    }
+
+    // Crear la gráfica con los datos
+    loadMunicipiosData().then(data => {
+        if (data.length === 0) {
+            canvasMunicipios.parentNode.innerHTML = "<p style='text-align:center;color:#888;'>No hay solicitudes registradas en ningún municipio.</p>";
+            return;
+        }
+
+        const municipiosLabels = data.map(item => item.Municipio);
+        const municipiosData = data.map(item => item.cantidad);
+        const municipiosColors = generateColors(data.length);
+
+        // Ajustar alto del canvas
+        canvasMunicipios.height = Math.max(300, municipiosLabels.length * 25);
+
+        var ctxMunicipios = canvasMunicipios.getContext('2d');
+        var municipiosChart = new Chart(ctxMunicipios, {
+            type: 'bar',
+            data: {
+                labels: municipiosLabels,
+                datasets: [{
+                    label: 'Solicitudes',
+                    data: municipiosData,
+                    backgroundColor: municipiosColors,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
             },
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    ticks: { color: '#333' }
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: 'Solicitudes por Municipio'
+                    }
                 },
-                y: {
-                    ticks: { color: '#333' }
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { color: '#333' }
+                    },
+                    y: {
+                        ticks: { 
+                            color: '#333',
+                            callback: function(value) {
+                                const label = this.getLabelForValue(value);
+                                return label.length > 15 ? label.substr(0, 12) + '...' : label;
+                            }
+                        }
+                    }
                 }
             }
-        }
+        });
+    }).catch(error => {
+        canvasMunicipios.parentNode.innerHTML = "<p style='text-align:center;color:#c00;'>Error cargando la gráfica.</p>";
+        console.error(error);
     });
 }
 
