@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-09-2025 a las 15:16:30
+-- Tiempo de generación: 16-09-2025 a las 19:07:43
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -54,7 +54,9 @@ INSERT INTO `cliente` (`idCliente`, `DocumentoCliente`, `NombreCliente`, `Correo
 (32, '1056123456', 'Miguel Peña', 'miguel@gmail.com', '3116541258'),
 (33, '123', 'Miguel', 'm@gmail.com', '31234'),
 (34, '123132', 'm', '1@gmail.com', '312455'),
-(35, '123443', 'Miguel', 'm1@gmai.com', '331456');
+(35, '123443', 'Miguel', 'm1@gmai.com', '331456'),
+(36, '1223221', 'Mario Agudelo', 'Maario@example.com', '8876545'),
+(37, '099000967', 'Fabian Alonso', 'fabi@example.com', '000994763');
 
 -- --------------------------------------------------------
 
@@ -74,7 +76,6 @@ CREATE TABLE `estado` (
 --
 
 INSERT INTO `estado` (`idEstado`, `Estado`, `Descripcion`, `Color`) VALUES
-(2, 'Archivado', 'La solicitud recibio una solución y ya no es necesaria a la vista', '#ff0800'),
 (3, 'Pendiente', 'La solicitud ha llegado al sistema y aun no ha iniciado un proceso', '#fff700'),
 (4, 'Resuelto', 'La solicitud recibio una respuesta y solución', '#379de1'),
 (5, 'En proceso', 'La solicitud se encuentra en medio del proceso de desarollo', '#30248f'),
@@ -124,7 +125,8 @@ INSERT INTO `servicio` (`idServicio`, `Servicio`, `Color`) VALUES
 (5, 'Tecnico', '#fff700'),
 (6, 'Cursos Cortos', '#379de1'),
 (7, 'Sennova', '#392de1'),
-(8, 'Emprendimiento', '#24e544');
+(8, 'Emprendimiento', '#24e544'),
+(9, 'Operario', '#d21eba');
 
 -- --------------------------------------------------------
 
@@ -156,12 +158,11 @@ CREATE TABLE `solicitud` (
 
 INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`, `Asignacion`) VALUES
 (52, '2025-06-11', '2025-06-19', 'Centro cultural', 'Manizales', '', '', 'Web', 'Tgo para 30 personas ', 9, 1, 7, 26, 31, 8),
-(53, '2025-06-19', '2025-06-19', 'Hotel san Francisco', 'Villamaria', '', '', 'Web', '20 personas de la empresa', 9, 1, 2, 27, 46, 8),
-(54, '2025-06-09', '2025-06-19', 'Centro cultural', 'Villamaria', '25-06-25, Se comunico con Mariana sanches y se porgramo reunión para el dia 01-07-2025 a la 1:00pm ', '', 'Web', 'Emprendedores del campo', 9, 1, 2, 28, 35, 9),
-(55, '2025-06-19', '2025-06-19', 'Centro cultural', 'Villamaria', '', '', 'Web', 'sin descripción', 7, 1, 2, 29, 42, 9),
-(59, '2025-07-02', '2025-07-02', 'San joaquin', 'Aguadas', '', '', 'Web', 'Hola', 7, 1, 2, 33, 8, 0),
 (60, '2025-07-02', '2025-07-02', 'hj', 'Aguadas', '', '', 'Web', 'ghgh', 7, 1, 4, 34, 46, 0),
-(61, '2025-07-02', '2025-07-02', '123322', 'Aguadas', '', '', 'Web', 'hola', 7, 1, 4, 35, 26, 0);
+(61, '2025-07-02', '2025-07-02', '123322', 'Aguadas', '', '', 'Web', 'hola', 7, 1, 4, 35, 60, 0),
+(62, '2025-09-15', '2025-09-15', 'Barrio Buena vista', 'Chinchiná', '', '', 'Web', 'Curso para jovenes', 8, 1, 4, 36, 25, 9),
+(63, '2025-09-11', '2025-09-15', 'asa del don', 'Belalcázar', NULL, NULL, 'Web', 'quiere estudiar desde la casa', 7, 1, 3, 37, 47, NULL),
+(64, '2025-09-13', '2025-09-15', 'asa del don', 'Belalcázar', NULL, NULL, 'Web', 'quiere que sea ya', 7, 1, 3, 37, 42, NULL);
 
 -- --------------------------------------------------------
 
@@ -241,7 +242,9 @@ INSERT INTO `tiposervicio` (`idTipoServicio`, `TipoServicio`, `FKidServicio`) VA
 (50, 'Corel Draw', 6),
 (56, 'Fotografía', 6),
 (57, 'Inglés (niveles 1 a 13)', 6),
-(58, 'Electrónica y sensores industriales', 6);
+(58, 'Electrónica y sensores industriales', 6),
+(59, 'Contruccion', 9),
+(60, 'Operario Nivel 1', 9);
 
 -- --------------------------------------------------------
 
@@ -336,19 +339,19 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --
 ALTER TABLE `servicio`
-  MODIFY `idServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud`
 --
 ALTER TABLE `solicitud`
-  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `idSolicitud` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT de la tabla `tipoevento`
@@ -360,7 +363,7 @@ ALTER TABLE `tipoevento`
 -- AUTO_INCREMENT de la tabla `tiposervicio`
 --
 ALTER TABLE `tiposervicio`
-  MODIFY `idTipoServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `idTipoServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

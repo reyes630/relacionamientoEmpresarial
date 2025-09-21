@@ -339,11 +339,27 @@ class SolicitudController extends BaseController
         header('Content-Type: application/json');
         try {
             $solicitudModel = new \App\Models\SolicitudModel();
-            $success = $solicitudModel->archivar($idSolicitud);
+            $success = $solicitudModel->archivar($idSolicitud); // Solo marca como archivada
             if ($success) {
                 echo json_encode(['success' => true]);
             } else {
                 echo json_encode(['success' => false, 'error' => 'No se pudo archivar']);
+            }
+        } catch (\Exception $e) {
+            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+        }
+        exit;
+    }
+    
+    public function desarchivarSolicitud($idSolicitud) {
+        header('Content-Type: application/json');
+        try {
+            $solicitudModel = new \App\Models\SolicitudModel();
+            $success = $solicitudModel->desarchivar($idSolicitud);
+            if ($success) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'No se pudo desarchivar']);
             }
         } catch (\Exception $e) {
             echo json_encode(['success' => false, 'error' => $e->getMessage()]);

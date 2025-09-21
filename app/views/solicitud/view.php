@@ -941,7 +941,7 @@ $isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
                     </div>
                  <div class="action-dropdown">
     <button class="dropdown-toggle">
-        <i class="fas fa-ellipsis-h"></i> <!-- Cambiado a horizontal -->
+        <i class="fas fa-ellipsis-h"></i>
     </button>
     <ul class="dropdown-menu">
         <li>
@@ -961,7 +961,13 @@ $isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
                 </a>
             </li>
         <?php endif; ?>
-        <?php if ($mostrarArchivar): ?>
+        <?php if ($isArchivadas): ?>
+            <li>
+                <a href="#" class="desarchivar" data-id="<?php echo $solicitud->idSolicitud; ?>">
+                    <i class="fas fa-box-open" style="margin-right: 8px;"></i> Desarchivar
+                </a>
+            </li>
+        <?php elseif ($mostrarArchivar): ?>
             <li>
                 <a href="#" class="archivar" data-id="<?php echo $solicitud->idSolicitud; ?>">
                     <i class="fas fa-archive" style="margin-right: 8px;"></i> Archivar
@@ -970,6 +976,7 @@ $isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
         <?php endif; ?>
     </ul>
 </div>
+
 
 
                 </div>
@@ -1294,6 +1301,22 @@ $isArchivadas = (isset($_GET['archivadas']) && $_GET['archivadas'] == '1') ||
         if (e.key === 'Escape' && archiveModal.classList.contains('show')) hideArchiveModal();
     });
 });
+        document.querySelectorAll('.desarchivar').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const id = this.dataset.id;
+                fetch(`/solicitud/desarchivarSolicitud/${id}`, { method: 'POST' })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Quita la fila o recarga la página
+                            this.closest('.solicitud-row').remove();
+                        } else {
+                            alert('No se pudo desarchivar');
+                        }
+                    });
+            });
+        });
     </script>
     <script src="/js/ActionsRequest.js"></script>
 

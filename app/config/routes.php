@@ -294,6 +294,10 @@ return [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'solicitudesPorEstadoAPI'
     ],
+    '/solicitud/desarchivarSolicitud/(\d+)' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'desarchivarSolicitud'
+    ],
 
     // Formulario
     /*  '/formulario/new' => [

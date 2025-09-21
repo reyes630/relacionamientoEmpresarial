@@ -30,7 +30,7 @@ class SolicitudModel extends BaseModel
                     JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
                     JOIN servicio sv ON ts.FKidServicio = sv.idServicio
                     JOIN estado e ON s.FKestado = e.idEstado
-                    WHERE s.FKestado != 2"; // Excluir archivadas
+                    WHERE s.Archivado = 0"; // Solo NO archivadas
             $stmt = $this->dbConnection->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_OBJ);
@@ -201,7 +201,7 @@ class SolicitudModel extends BaseModel
                 JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
                 JOIN servicio sv ON ts.FKidServicio = sv.idServicio
                 JOIN estado e ON s.FKestado = e.idEstado
-                WHERE s.FKestado = 2"; // 2 = Archivado
+                WHERE s.Archivado = 1"; // Solo archivadas
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
@@ -222,7 +222,14 @@ class SolicitudModel extends BaseModel
     }
 
     public function archivar($idSolicitud) {
-        $sql = "UPDATE solicitud SET FKestado = 2 WHERE idSolicitud = :idSolicitud"; // 2 = Archivado
+        $sql = "UPDATE solicitud SET Archivado = 1 WHERE idSolicitud = :idSolicitud";
+        $stmt = $this->dbConnection->prepare($sql);
+        $stmt->bindParam(':idSolicitud', $idSolicitud, \PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function desarchivar($idSolicitud) {
+        $sql = "UPDATE solicitud SET Archivado = 0 WHERE idSolicitud = :idSolicitud";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':idSolicitud', $idSolicitud, \PDO::PARAM_INT);
         return $stmt->execute();
