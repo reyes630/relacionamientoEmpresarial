@@ -433,9 +433,15 @@ body.dark-mode label {
     .site-footer {
         padding: 15px 10px; 
     }
+
+    /* Media queries para el título */
+    .titleSisrel {
+        font-size: 1.2rem; /* Reducción del tamaño de fuente */
+        margin: 0 50px; /* Espacio para los botones laterales */
+    }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
     .record {
         flex-direction: column;
         align-items: flex-start;
@@ -444,5 +450,21 @@ body.dark-mode label {
 
     .buttons {
         align-self: flex-end;
+    }
+
+    .titleSisrel {
+        font-size: 1rem; /* Aún más pequeño para móviles */
+        margin: 0 40px;
+        letter-spacing: 0.5px; /* Reduce el espaciado entre letras */
+    }
+
+    .header-actions {
+        gap: 5px; /* Reduce el espacio entre botones */
+        margin-right: 5px;
+    }
+
+    .header-action-btn {
+        padding: 0 5px; /* Reduce el padding de los botones */
+        font-size: 18px; /* Reduce el tamaño de los íconos */
     }
 }

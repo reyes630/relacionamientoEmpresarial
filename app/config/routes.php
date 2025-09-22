@@ -294,6 +294,18 @@ return [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'solicitudesPorEstadoAPI'
     ],
+    '/solicitud/serviciosMasSolicitadosAPI' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'serviciosMasSolicitadosAPI'
+    ],
+    '/solicitud/solicitudesPorMesAPI' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'solicitudesPorMesAPI'
+    ],
+    '/solicitud/municipiosMasSolicitudesAPI' => [
+        "controller" => 'App\Controllers\SolicitudController',
+        "action" => 'municipiosMasSolicitudesAPI'
+    ],
     '/solicitud/desarchivarSolicitud/(\d+)' => [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'desarchivarSolicitud'

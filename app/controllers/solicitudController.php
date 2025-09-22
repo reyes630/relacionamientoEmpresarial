@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controllers;
-
 use App\Models\SolicitudModel;
 use App\Models\ClienteModel;
 use App\Models\ServicioModel;
@@ -373,6 +372,60 @@ class SolicitudController extends BaseController
         $solicitudObj = new \App\Models\SolicitudModel();
         $data = $solicitudObj->getSolicitudesPorEstado();
         echo json_encode($data);
+        exit;
+    }
+  
+
+    
+    public function serviciosMasSolicitadosAPI() {
+        header('Content-Type: application/json');
+        try {
+            $solicitudObj = new \App\Models\SolicitudModel();
+            $data = $solicitudObj->getServiciosMasSolicitados();
+            echo json_encode($data);
+        } catch (\Exception $e) {
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+        exit;
+    }
+    public function solicitudesPorMesAPI() {
+        header('Content-Type: application/json');
+        try {
+            $solicitudObj = new \App\Models\SolicitudModel();
+            $data = $solicitudObj->getSolicitudesPorMes();
+            
+            // Convertir números de mes a nombres
+            $meses = [
+                1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo',
+                4 => 'Abril', 5 => 'Mayo', 6 => 'Junio',
+                7 => 'Julio', 8 => 'Agosto', 9 => 'Septiembre',
+                10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+            ];
+            
+            $formattedData = [];
+            foreach ($data as $row) {
+                $formattedData[] = [
+                    'mes' => $meses[$row['mes']],
+                    'en_proceso' => (int)$row['en_proceso'],
+                    'ejecutadas' => (int)$row['ejecutadas']
+                ];
+            }
+            
+            echo json_encode($formattedData);
+        } catch (\Exception $e) {
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+        exit;
+    }
+    public function municipiosMasSolicitudesAPI() {
+        header('Content-Type: application/json');
+        try {
+            $solicitudObj = new \App\Models\SolicitudModel();
+            $data = $solicitudObj->getMunicipiosMasSolicitudes();
+            echo json_encode($data);
+        } catch (\Exception $e) {
+            echo json_encode(['error' => $e->getMessage()]);
+        }
         exit;
     }
 }

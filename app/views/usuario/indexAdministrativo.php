@@ -176,18 +176,20 @@
       <div>Fecha</div>
     </div>
 
-    <div class="movimiento">
-      <div>001</div>
-      <div>Juan Pérez</div>
-      <div>Nueva Solicitud</div>
-      <div>2025-04-08</div>
-    </div>
-    <div class="movimiento">
-      <div>002</div>
-      <div>María Gómez</div>
-      <div>Nuevo Usuario</div>
-      <div>2025-04-07</div>
-    </div>
-  </div>
+    <?php if (!empty($ultimosMovimientos)): ?>
+        <?php foreach ($ultimosMovimientos as $movimiento): ?>
+            <div class="movimiento">
+                <div><?php echo htmlspecialchars($movimiento['idSolicitud']); ?></div>
+                <div><?php echo htmlspecialchars($movimiento['NombreUsuario']); ?></div>
+                <div><?php echo htmlspecialchars($movimiento['accion']); ?></div>
+                <div><?php echo date('Y-m-d', strtotime($movimiento['fecha'])); ?></div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="movimiento">
+            <div colspan="4">No hay movimientos recientes</div>
+        </div>
+    <?php endif; ?>
+</div>
 
 </div>
