@@ -35,29 +35,7 @@ class SolicitudController extends BaseController
     }
 
 
-    /* public function view(){
-        $solicitudObj = new SolicitudModel();
-        $solicitudes = $solicitudObj->getAll();
-        
-        $clienteObj = new ClienteModel();
-        $clientes = $clienteObj->getAll();
-        
-        $servicioObj = new ServicioModel();
-        $servicios = $servicioObj->getAll();
-        
-        $estadoObj = new EstadoModel();
-        $estados = $estadoObj->getAll();
-        
-        $data = [
-            "solicitudes" => $solicitudes,
-            "clientes" => $clientes,
-            "servicios" => $servicios,
-            "estados" => $estados,
-            "titulo" => "solicitudes"
-        ];
-        
-        $this->render('solicitud/view.php', $data);
-    } */
+   
     // Este view verifica el rol del usuario y muestra las solicitudes correspondientes
     public function view()
     {
