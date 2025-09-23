@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-09-2025 a las 19:07:43
+-- Tiempo de generación: 23-09-2025 a las 14:32:36
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -149,20 +149,21 @@ CREATE TABLE `solicitud` (
   `FKestado` int(11) NOT NULL,
   `FKcliente` int(11) NOT NULL,
   `FKtipoServicio` int(11) NOT NULL,
-  `Asignacion` int(11) DEFAULT NULL
+  `Asignacion` int(11) DEFAULT NULL,
+  `Archivado` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `solicitud`
 --
 
-INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`, `Asignacion`) VALUES
-(52, '2025-06-11', '2025-06-19', 'Centro cultural', 'Manizales', '', '', 'Web', 'Tgo para 30 personas ', 9, 1, 7, 26, 31, 8),
-(60, '2025-07-02', '2025-07-02', 'hj', 'Aguadas', '', '', 'Web', 'ghgh', 7, 1, 4, 34, 46, 0),
-(61, '2025-07-02', '2025-07-02', '123322', 'Aguadas', '', '', 'Web', 'hola', 7, 1, 4, 35, 60, 0),
-(62, '2025-09-15', '2025-09-15', 'Barrio Buena vista', 'Chinchiná', '', '', 'Web', 'Curso para jovenes', 8, 1, 4, 36, 25, 9),
-(63, '2025-09-11', '2025-09-15', 'asa del don', 'Belalcázar', NULL, NULL, 'Web', 'quiere estudiar desde la casa', 7, 1, 3, 37, 47, NULL),
-(64, '2025-09-13', '2025-09-15', 'asa del don', 'Belalcázar', NULL, NULL, 'Web', 'quiere que sea ya', 7, 1, 3, 37, 42, NULL);
+INSERT INTO `solicitud` (`idSolicitud`, `FechaEvento`, `FechaCreacion`, `Lugar`, `Municipio`, `Observaciones`, `Comentarios`, `MedioSolicitud`, `DescripcionNecesidad`, `FKusuario`, `FKtipoEvento`, `FKestado`, `FKcliente`, `FKtipoServicio`, `Asignacion`, `Archivado`) VALUES
+(52, '2025-06-11', '2025-06-19', 'Centro cultural', 'Manizales', '', '', 'Web', 'Tgo para 30 personas ', 9, 1, 7, 26, 31, 8, 0),
+(60, '2025-07-02', '2025-07-02', 'hj', 'Aguadas', '', '', 'Web', 'ghgh', 7, 1, 4, 34, 46, 0, 1),
+(61, '2025-07-02', '2025-07-02', '123322', 'Aguadas', '', '', 'Web', 'hola', 7, 1, 4, 35, 60, 0, 1),
+(62, '2025-09-15', '2025-09-15', 'Barrio Buena vista', 'Chinchiná', '', '', 'Web', 'Curso para jovenes', 8, 1, 4, 36, 25, 9, 0),
+(63, '2025-09-11', '2025-09-15', 'asa del don', 'Belalcázar', '', '', 'Web', 'quiere estudiar desde la casa', 7, 1, 6, 37, 47, 8, 0),
+(64, '2025-09-13', '2025-09-15', 'asa del don', 'Belalcázar', NULL, NULL, 'Web', 'quiere que sea ya', 7, 1, 3, 37, 42, NULL, 0);
 
 -- --------------------------------------------------------
 
