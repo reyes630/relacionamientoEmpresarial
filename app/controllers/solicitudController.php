@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\SolicitudModel;
 use App\Models\ClienteModel;
 use App\Models\ServicioModel;
@@ -35,7 +36,7 @@ class SolicitudController extends BaseController
     }
 
 
-   
+
     // Este view verifica el rol del usuario y muestra las solicitudes correspondientes
     public function view()
     {
@@ -260,18 +261,19 @@ class SolicitudController extends BaseController
 
     public function dashboard()
     {
-    // Obtener total de solicitudes pendientes
-    $solicitudObj = new SolicitudModel();
-    $totalSolicitudesPendientes = $solicitudObj->getSolicitudesPendientes();
-    
-    $data = [
-        "totalSolicitudesPendientes" => $totalSolicitudesPendientes,
-        "titulo" => "Dashboard Administrativo"
-    ];
-    
-    $this->render('admin/indexAdministrativo.php', $data);
+        // Obtener total de solicitudes pendientes
+        $solicitudObj = new SolicitudModel();
+        $totalSolicitudesPendientes = $solicitudObj->getSolicitudesPendientes();
+
+        $data = [
+            "totalSolicitudesPendientes" => $totalSolicitudesPendientes,
+            "titulo" => "Dashboard Administrativo"
+        ];
+
+        $this->render('admin/indexAdministrativo.php', $data);
     }
-    public function archivadas() {
+    public function archivadas()
+    {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -312,7 +314,8 @@ class SolicitudController extends BaseController
         $this->render('solicitud/view.php', $data);
     }
 
-    public function archivarSolicitud($idSolicitud) {
+    public function archivarSolicitud($idSolicitud)
+    {
         header('Content-Type: application/json');
         try {
             $solicitudModel = new \App\Models\SolicitudModel();
@@ -327,8 +330,9 @@ class SolicitudController extends BaseController
         }
         exit;
     }
-    
-    public function desarchivarSolicitud($idSolicitud) {
+
+    public function desarchivarSolicitud($idSolicitud)
+    {
         header('Content-Type: application/json');
         try {
             $solicitudModel = new \App\Models\SolicitudModel();
@@ -352,10 +356,11 @@ class SolicitudController extends BaseController
         echo json_encode($data);
         exit;
     }
-  
 
-    
-    public function serviciosMasSolicitadosAPI() {
+
+
+    public function serviciosMasSolicitadosAPI()
+    {
         header('Content-Type: application/json');
         try {
             $solicitudObj = new \App\Models\SolicitudModel();
@@ -366,20 +371,29 @@ class SolicitudController extends BaseController
         }
         exit;
     }
-    public function solicitudesPorMesAPI() {
+    public function solicitudesPorMesAPI()
+    {
         header('Content-Type: application/json');
         try {
             $solicitudObj = new \App\Models\SolicitudModel();
             $data = $solicitudObj->getSolicitudesPorMes();
-            
+
             // Convertir números de mes a nombres
             $meses = [
-                1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo',
-                4 => 'Abril', 5 => 'Mayo', 6 => 'Junio',
-                7 => 'Julio', 8 => 'Agosto', 9 => 'Septiembre',
-                10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+                1 => 'Enero',
+                2 => 'Febrero',
+                3 => 'Marzo',
+                4 => 'Abril',
+                5 => 'Mayo',
+                6 => 'Junio',
+                7 => 'Julio',
+                8 => 'Agosto',
+                9 => 'Septiembre',
+                10 => 'Octubre',
+                11 => 'Noviembre',
+                12 => 'Diciembre'
             ];
-            
+
             $formattedData = [];
             foreach ($data as $row) {
                 $formattedData[] = [
@@ -388,14 +402,15 @@ class SolicitudController extends BaseController
                     'ejecutadas' => (int)$row['ejecutadas']
                 ];
             }
-            
+
             echo json_encode($formattedData);
         } catch (\Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
         exit;
     }
-    public function municipiosMasSolicitudesAPI() {
+    public function municipiosMasSolicitudesAPI()
+    {
         header('Content-Type: application/json');
         try {
             $solicitudObj = new \App\Models\SolicitudModel();
@@ -406,5 +421,34 @@ class SolicitudController extends BaseController
         }
         exit;
     }
-}
 
+public function enviadas()
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+    $rol = $_SESSION['rol'] ?? null;
+    $idUsuario = $_SESSION['idUsuario'] ?? null;
+
+    $solicitudObj = new SolicitudModel();
+    $clienteObj = new ClienteModel();
+    $servicioObj = new ServicioModel();
+    $estadoObj = new EstadoModel();
+
+    // Aquí solo obtenemos las solicitudes creadas por el usuario actual
+    $solicitudes = $solicitudObj->getByUsuarioCreador($idUsuario);
+
+    $data = [
+        "solicitudes" => $solicitudes,
+        "clientes" => $clienteObj->getAll(),
+        "servicios" => $servicioObj->getAll(),
+        "estados" => $estadoObj->getAll(),
+        "titulo" => "Solicitudes Enviadas",
+        "esEnviadas" => true,
+        "mostrarBotonArchivadas" => false
+    ];
+
+    $this->render('solicitud/view.php', $data);
+}
+}
