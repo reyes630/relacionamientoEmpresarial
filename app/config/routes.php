@@ -310,10 +310,6 @@ return [
         "controller" => 'App\Controllers\SolicitudController',
         "action" => 'desarchivarSolicitud'
     ],
-    '/solicitud/enviadas' => [
-        "controller" => 'App\Controllers\SolicitudController',
-        "action" => 'enviadas'
-    ],
 
     // Formulario
     /*  '/formulario/new' => [

@@ -79,23 +79,15 @@ class UsuarioController extends BaseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuarioObj = new UsuarioModel();
-            
-            // Convertir el valor del select a booleano
-            $coordinador = isset($_POST['Coordinador']) && $_POST['Coordinador'] == '1';
-            
-            $resultado = $usuarioObj->saveUsuario(
+            $usuarioObj->saveUsuario(
                 $_POST['DocumentoUsuario'],
                 $_POST['NombreUsuario'],
                 $_POST['CorreoUsuario'],
                 $_POST['TelefonoUsuario'],
                 $_POST['ContraseñaUsuario'],
-                $_POST['FKidRol'],
-                $coordinador
+                $_POST['FKidRol']
             );
-            
-            if ($resultado) {
-                $this->redirectTo("usuario/view");
-            }
+            $this->redirectTo("usuario/view");
         }
     }
 
@@ -137,12 +129,21 @@ class UsuarioController extends BaseController
 
     public function updateUsuario()
     {
+        error_log("=== INICIO updateUsuario ===");
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            error_log("POST recibido: " . print_r($_POST, true));
+            
             $usuarioObj = new UsuarioModel();
             
-            $nuevaContrasena = !empty($_POST['ContrasenaUsuario']) ? $_POST['ContrasenaUsuario'] : null;
-            $coordinador = isset($_POST['Coordinador']) && $_POST['Coordinador'] == '1';
-            
+            $nuevaContrasena = null;
+            if (isset($_POST['ContrasenaUsuario']) && !empty(trim($_POST['ContrasenaUsuario']))) {
+                $nuevaContrasena = trim($_POST['ContrasenaUsuario']);
+                error_log("Nueva contraseña detectada: " . $nuevaContrasena);
+            } else {
+                error_log("No se proporcionó nueva contraseña");
+            }
+
             $resultado = $usuarioObj->editUsuario(
                 $_POST['idUsuario'],
                 $_POST['DocumentoUsuario'],
@@ -150,9 +151,10 @@ class UsuarioController extends BaseController
                 $_POST['CorreoUsuario'],
                 $_POST['TelefonoUsuario'],
                 $nuevaContrasena,
-                $_POST['FKidRol'],
-                $coordinador
+                $_POST['FKidRol']
             );
+            
+            error_log("Resultado final: " . ($resultado ? 'ÉXITO' : 'ERROR'));
             
             if ($resultado) {
                 $_SESSION['mensaje'] = 'Usuario actualizado correctamente';
