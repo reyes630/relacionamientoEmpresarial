@@ -157,33 +157,6 @@ class SolicitudModel extends BaseModel
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function getByUsuarioCreador($idUsuario)
-{
-    try {
-        $sql = "SELECT s.*, 
-                       c.NombreCliente, 
-                       sv.Servicio, 
-                       sv.Color, 
-                       e.Estado, 
-                       e.Color AS ColorEstado
-                FROM solicitud s
-                JOIN cliente c ON s.FKcliente = c.idCliente
-                JOIN tiposervicio ts ON s.FKtipoServicio = ts.idTipoServicio
-                JOIN servicio sv ON ts.FKidServicio = sv.idServicio
-                JOIN estado e ON s.FKestado = e.idEstado
-                WHERE s.FKusuario = :idUsuario
-                ORDER BY s.FechaCreacion DESC";
-        
-        $stmt = $this->dbConnection->prepare($sql);
-        $stmt->bindParam(':idUsuario', $idUsuario, \PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_OBJ);
-    } catch (PDOException $e) {
-        error_log("Error en getByUsuarioCreador: " . $e->getMessage());
-        return [];
-    }
-}
-
     public function getSolicitudesPendientes()
     {
         try {
@@ -213,7 +186,7 @@ class SolicitudModel extends BaseModel
     {
         try {
             $sql = "SELECT COUNT(*) as total FROM {$this->table} 
-                WHERE FKestado IN (5)";
+                WHERE FKestado IN (5)"; 
             $result = $this->dbConnection->query($sql)->fetch(PDO::FETCH_OBJ);
             return $result->total;
         } catch (PDOException $e) {
@@ -221,8 +194,7 @@ class SolicitudModel extends BaseModel
         }
     }
 
-    public function getArchivadas()
-    {
+    public function getArchivadas() {
         $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado, e.Color AS ColorEstado
                 FROM solicitud s
                 JOIN cliente c ON s.FKcliente = c.idCliente
@@ -235,8 +207,7 @@ class SolicitudModel extends BaseModel
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function getArchivadasByAsignacion($idUsuario)
-    {
+    public function getArchivadasByAsignacion($idUsuario) {
         $sql = "SELECT s.*, c.NombreCliente, sv.Servicio, sv.Color, e.Estado, e.Color AS ColorEstado
                 FROM solicitud s
                 JOIN cliente c ON s.FKcliente = c.idCliente
@@ -250,22 +221,20 @@ class SolicitudModel extends BaseModel
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    public function archivar($idSolicitud)
-    {
+    public function archivar($idSolicitud) {
         $sql = "UPDATE solicitud SET Archivado = 1 WHERE idSolicitud = :idSolicitud";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':idSolicitud', $idSolicitud, \PDO::PARAM_INT);
         return $stmt->execute();
     }
 
-    public function desarchivar($idSolicitud)
-    {
+    public function desarchivar($idSolicitud) {
         $sql = "UPDATE solicitud SET Archivado = 0 WHERE idSolicitud = :idSolicitud";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':idSolicitud', $idSolicitud, \PDO::PARAM_INT);
         return $stmt->execute();
     }
-
+    
 
     public function getSolicitudesPorEstado()
     {
@@ -278,8 +247,7 @@ class SolicitudModel extends BaseModel
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function getServiciosMasSolicitados()
-    {
+    public function getServiciosMasSolicitados() {
         try {
             $sql = "SELECT sv.Servicio, COUNT(*) as cantidad, sv.Color
                     FROM solicitud s
@@ -296,8 +264,7 @@ class SolicitudModel extends BaseModel
         }
     }
 
-    public function getSolicitudesPorMes()
-    {
+    public function getSolicitudesPorMes() {
         try {
             $sql = "SELECT 
                 MONTH(FechaCreacion) as mes,
@@ -315,8 +282,7 @@ class SolicitudModel extends BaseModel
         }
     }
 
-    public function getMunicipiosMasSolicitudes()
-    {
+    public function getMunicipiosMasSolicitudes() {
         try {
             $sql = "SELECT 
                 COALESCE(Municipio, 'Sin Especificar') as Municipio,
@@ -325,7 +291,7 @@ class SolicitudModel extends BaseModel
                 WHERE Municipio IS NOT NULL AND Municipio != ''
                 GROUP BY Municipio
                 ORDER BY cantidad DESC";
-
+        
             $stmt = $this->dbConnection->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -334,8 +300,7 @@ class SolicitudModel extends BaseModel
         }
     }
 
-    public function getUltimosMovimientos($limit = 5)
-    {
+    public function getUltimosMovimientos($limit = 5) {
         try {
             $sql = "SELECT 
                     s.idSolicitud,
@@ -346,7 +311,7 @@ class SolicitudModel extends BaseModel
                     JOIN usuario u ON s.FKusuario = u.idUsuario
                     ORDER BY s.FechaCreacion DESC
                     LIMIT :limit";
-
+            
             $stmt = $this->dbConnection->prepare($sql);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->execute();
